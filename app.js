@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/frontend/build"));
 
 app.get("/", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "/frontend/build", "index.html"));
+    res.sendFile(path.resolve(__dirname, "/frontend/build", index.html));
 });
 
 //export and start the site in start.js
