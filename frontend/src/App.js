@@ -12,6 +12,7 @@ import {
     Route,
     Link
 } from "react-router-dom";
+import Calendar from './components/calendar.js';
 
 export default class App extends React.Component {
 
