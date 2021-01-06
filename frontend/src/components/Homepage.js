@@ -5,7 +5,7 @@
 
 import React from 'react';
 import CoursesSelectedList from './views/CoursesSelectedList.js';
-import CourseNameRecommendation from './views/CourseNameRecommendation';
+import CourseNameRecommendation from './views/CourseNameRecommendation.js';
 import OptionsMainList from './views/OptionsMainList.js';
 import style from './views/styles/Homepage.module.css';
 
@@ -72,37 +72,19 @@ class Homepage extends React.Component {
     }
     
     async getListCourseIDs() {
-        var API_URL = process.env.REACT_APP_API_URL + "/courses/list";
+        var API_URL = process.env.REACT_APP_API_URL + "/courses/alg/search-table";
         fetch(API_URL)
             .then(
                 (response) => response.json()
             )
             .then(result => {
                 //if the request is valid
-                if (result.status === "200") {
-                    this.mapCourseIDs(result.list_courseids);
-                }
+                this.setState({
+                    listCourseIDs: result
+                });
             },
             (error) => {
                 console.log("error", error);
-        });
-    }
-
-    // O(n)
-    mapCourseIDs(list_courseids) {
-        var mapAlphabetical = {};
-        for (let index in list_courseids) {
-            let firstLetter = list_courseids[index][0];
-
-            if (mapAlphabetical[firstLetter] == undefined) {
-                mapAlphabetical[firstLetter] = [];
-            }
-
-            mapAlphabetical[firstLetter].push(list_courseids[index]);
-        }
-        //initialize {listCourseIDs} with list of all course ids
-        this.setState({
-            listCourseIDs: mapAlphabetical
         });
     }
 

@@ -25,39 +25,23 @@ class CourseNameRecommendation extends React.Component {
             // recommend if there is at least one character in input
             if (courseID[0] != undefined) {
                 let courseIDLength = courseID.length;
-                let firstLetter = courseID[0];
 
-
-                // check there is a course that matches the first letter of user input
-                var courseIDsMatchingFirstLetter = listCourseIDs[firstLetter];
-                if (courseIDsMatchingFirstLetter != undefined) {
-
-                    // iterate over every course ID with first letter matching input
-                    for (let index = 0; index < courseIDsMatchingFirstLetter.length; index++) {
-                        let currentCourseIDMatching = courseIDsMatchingFirstLetter[index];
-
-                        // if the beginning substring of matched Course ID is equal to the input, recommend course id
-                        let substr = "";
-                        for (let i = 0; i < courseIDLength; i++) {
-                            substr += currentCourseIDMatching[i];
-                        }
-
-                        if (substr == courseID) {
-                            courseIDsRecommended.push(courseIDsMatchingFirstLetter[index]);
-
-                            // cap recommendation to reduce lag
-                            if (courseIDsRecommended.length > 20)
-                                break
-                        }
-
-                    }
-
-                    if (courseIDsRecommended.length == 1) {
-                        courseIDsRecommended = [];
-                    }
-
+                let mappedResults = listCourseIDs.data[courseID];
+                var len = 5; 
+                // if (listCourseIDs.length < 5)
+                // {
+                //     len = listCourseIDs.length() - 1;
+                // }
+                console.log("mappedResukt: " + mappedResults);
+                //console.log("listCourseIDs: " + listCourseIDs);
+                courseIDsRecommended = [];
+                for (let i = 0; i < 5; i++) {
+                    console.log("in here: " + mappedResults);
+                    console.log("listCourseIDs: " + listCourseIDs);
+                    courseIDsRecommended.push(mappedResults);
                 }
-                //console.log(courseIDsRecommended);
+
+               
             }
             else {
                 courseIDsRecommended = [];
