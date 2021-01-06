@@ -20,29 +20,7 @@ class Homepage extends React.Component {
         }
 
         this.handleAdd = this.handleAdd.bind(this);
-        this.recommendSearch = this.recommendSearch.bind(this);
-    }
-
-    // O(n)
-    checkCourseID(courseID) {
-        if (courseID != "") {
-            let firstLetter = courseID[0];
-            let listMatches = this.state.listCourseIDs[firstLetter];
-            if (listMatches != undefined) {
-                let exists = false;
-                for (let index in listMatches) {
-                    if (listMatches[index] == courseID)
-                        exists = true;
-                }
-                return exists;
-            }
-            else {
-                return false;
-            }
-        }
-        else {
-            return false;
-        }
+        this.handleChange = this.handleChange.bind(this);
     }
 
     handleAdd(event) {
@@ -52,11 +30,9 @@ class Homepage extends React.Component {
         let nameField = document.getElementById("input");
         let name = nameField.value.toUpperCase(); // get user input
 
-        // Check existence of user input and UPDATE STATE selectedCourses 
-        if (this.checkCourseID(name)) {
-            var arrayJoined = this.state.selectedCourses.concat(name);
-            this.setState({ selectedCourses: arrayJoined });
-        }
+        // UPDATE STATE selectedCourses 
+        var arrayJoined = this.state.selectedCourses.concat(name);
+        this.setState({ selectedCourses: arrayJoined });
 
         nameField.value = "";
     }
@@ -80,7 +56,7 @@ class Homepage extends React.Component {
             .then(result => {
                 //if the request is valid
                 this.setState({
-                    listCourseIDs: result
+                    listCourseIDs: result.data
                 });
             },
             (error) => {
@@ -90,22 +66,11 @@ class Homepage extends React.Component {
 
     /* CourseID input scripts */
 
-    /* TODO: improve coverage beyond first letter */
-    /* TODO: move script to recommendation */
-    /* recommendSearch() is defined in this compoenent because 
-    it is the event listener for input change*/
-    async recommendSearch() {
-        let nameField = document.getElementById("input");
-        let name = nameField.value.toUpperCase(); // get user input
-
-        this.setState((state) => ({ currentInput: name })); // update state (currentInput)
-    }
-
     // todo: link
     handleChange() {
+        console.log("handling change");
         let nameField = document.getElementById("input");
-        let name = nameField.value.toUpperCase(); // get user input
-        let nameLength = name.length;
+        let name = nameField.value.toLowerCase(); // get user input
         this.setState((state) => ({ currentInput: name })); // update state (currentInput)
     }
 
@@ -132,7 +97,7 @@ class Homepage extends React.Component {
                             <div>
                                 <form onSubmit={this.handleAdd}>
                                     <div>
-                                        <input onChange={this.recommendSearch} list='recommendedCourseIDs' id="input" className={style.courseInput} type="text" autoComplete="off" placeholder="COMP-0015" />
+                                        <input onChange={this.handleChange} list='recommendedCourseIDs' id="input" className={style.courseInput} type="text" autoComplete="off" placeholder="COMP-0015" />
                                         <CourseNameRecommendation listCourseIDs = {this.state.listCourseIDs} currentInput = {this.state.currentInput}></CourseNameRecommendation>
                                     </div>
                                     <div>
