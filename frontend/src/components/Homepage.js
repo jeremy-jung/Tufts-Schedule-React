@@ -9,7 +9,6 @@ import CoursesSelectedList from './views/CoursesSelectedList.js';
 import CourseNameRecommendation from './views/CourseNameRecommendation.js';
 import OptionsMainList from './views/OptionsMainList.js';
 import style from './views/styles/Homepage.module.css';
-import e from 'express';
 
 class Homepage extends React.Component {
     constructor(props) {
