@@ -14,20 +14,28 @@ class CourseNameRecommendation extends React.Component {
         console.log("render");
 
         this.state = {
-            recommendedCourseIDs: null
+            recommendedCourseIDs: null,
+
         }
     }
 
     // O(k) where k is length of courseID
+    // courseID is the user input
+    // listCourseIDs takes in the courseID
     recommendSearch (listCourseIDs, courseID) {
         var courseIDsRecommended = [];
+        let mappedResults = [];
 
         if (courseID != undefined || courseID != null) {
 
             // recommend if there is at least one character in input
             if (courseID[0] != undefined) {
 
-                let mappedResults = listCourseIDs[courseID];
+                // mapperResults is an array of "matched" courses (from API) by the user input 
+                mappedResults = listCourseIDs[courseID];
+                // console.log("listCourseIDs: " + listCourseIDs);
+                // console.log("courseID: " + courseID);
+
 
                 if (mappedResults != undefined) {
 
@@ -35,7 +43,7 @@ class CourseNameRecommendation extends React.Component {
                     
                     // lower maximum results length if one specified is greater than what's possible
                     if (resultsMaxDisplay > mappedResults.length)
-                        resultsMaxDisplay = mappedResults.length
+                        resultsMaxDisplay = mappedResults.length;
 
                     /* DEBUG: list all info */
                     // console.log("resultsMaxDisplay: ", resultsMaxDisplay)
@@ -53,13 +61,13 @@ class CourseNameRecommendation extends React.Component {
                             break; 
 
                         let courseId = mappedResults[i].course_id;
+                        console.log("mappedResults:", mappedResults);
 
                         /* check if the courseId already exists in courseIDsRecommended */
                         let doesNotExist = true;
                         for (let j = 0; j < courseIDsRecommended.length; j++) {
 
                             if (courseIDsRecommended[j] == courseId) {
-
                                 doesNotExist = false;
                                 break;
                             }
@@ -86,8 +94,11 @@ class CourseNameRecommendation extends React.Component {
             courseIDsRecommended = [];
         }
 
-        return courseIDsRecommended
+        return courseIDsRecommended;
+
     }
+
+    
 
     render() {
 
@@ -97,8 +108,8 @@ class CourseNameRecommendation extends React.Component {
 
         var recommendedCourseIDs = this.recommendSearch(listCourseIDs, currentInput);
 
-        console.log(recommendedCourseIDs);
-
+        console.log("recommendedCourseIDs: " + recommendedCourseIDs);
+        
         return(
             <datalist id="recommendedCourseIDs">
                 {recommendedCourseIDs.map(function (id) {
