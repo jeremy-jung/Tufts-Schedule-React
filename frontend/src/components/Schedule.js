@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import Event from 'Event.js';
+import Event from './Event.js';
 
 
 class Schedule extends React.Component {
@@ -11,27 +11,38 @@ class Schedule extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-       
+            TimeRangeView: false,
 
-            
+        };
 
-        }
+        this.handleTimeRangeView = this.handleTimeRangeView.bind(this);
 
+    }
+
+    handleTimeRangeView() {
+  
+        this.setState({
+            TimeRangeView: !this.state.TimeRangeView
+        });
+        console.log(this.TimeRangeView);
+    
     }
 
    
 
 
     render() {
+
         
 
         return (
             <main>
                 <h1>
-                    hi
+                    Schedule!
                 </h1>
                 <div className="navbar">
-                    <input type="checkbox" />
+                    <button onClick={this.handleTimeRangeView}>{`${this.state.TimeRangeView ? 'My Schedule' : 'Time Range Selector'}`}</button>
+
                 </div>
                 
                 <div>

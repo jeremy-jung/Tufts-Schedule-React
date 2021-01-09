@@ -12,6 +12,9 @@ import {
 class CoursesSelectedList extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            listCourseIDs: this.props.listCourseIDs
+        }
     }
 
     render() {
@@ -20,7 +23,7 @@ class CoursesSelectedList extends React.Component {
                 <h1>Your selected courses</h1>
                 <div>
                     {this.props.selectedCourses.map(function (courseID) {
-                        return <CourseSelected courseID = {courseID}></CourseSelected>
+                        return <CourseSelected courseID = {courseID} ></CourseSelected>
                     })}
                 </div>
                 <Link className = {style.button} onClick = {this.props.handleGenerate} to = "/schedule">

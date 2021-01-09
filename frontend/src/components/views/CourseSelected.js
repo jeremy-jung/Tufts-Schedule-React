@@ -8,6 +8,7 @@ import style from './styles/CourseSelected.module.css';
 class CourseSelected extends React.Component {
     constructor(props) {
         super(props);
+       
     }
 
     handleSubmit(event) {
@@ -15,12 +16,16 @@ class CourseSelected extends React.Component {
         event.preventDefault();
     }
 
+   
+
     render() {
+       
         return (
-            <div className={style.course}>
-                {this.props.courseID}
-            </div>
+        <div className={style.course}>
+            {this.props.courseID}
+        </div>
         );
+      
     }
 }
 
