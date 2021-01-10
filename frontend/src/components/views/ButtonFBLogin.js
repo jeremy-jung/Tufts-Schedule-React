@@ -1,5 +1,10 @@
-import React, {useState, useEffect, useCallback} from 'react';
+/* Written by Jeremy (9/1/2021)
+    Facebook Login button
+*/
+
+import React from 'react';
 import style from './styles/ButtonFBLogin.module.css';
+
 class ButtonFBLogin extends React.Component {
     constructor (props) {
         super(props);
