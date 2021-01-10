@@ -8,8 +8,10 @@ import Popup from 'reactjs-popup';
 import CoursesSelectedList from './views/CoursesSelectedList.js';
 import CourseNameRecommendation from './views/CourseNameRecommendation.js';
 import OptionsMainList from './views/OptionsMainList.js';
+import ButtonFBLogin from './views/ButtonFBLogin.js';
 import style from './views/styles/Homepage.module.css';
-import e from 'express';
+
+/* scripts */
 
 class Homepage extends React.Component {
     constructor(props) {
@@ -26,7 +28,6 @@ class Homepage extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         
     }
-
 
     /*
      * handleCheckID
@@ -137,6 +138,7 @@ class Homepage extends React.Component {
     componentDidMount() {
         // initialize {listCourseIDs} in this component's state
         this.getListCourseIDs();
+
     }
     
     async getListCourseIDs() {
@@ -182,6 +184,7 @@ class Homepage extends React.Component {
             let pop;
                 return (
                     <div className={style.container}>
+                        
                         <CoursesSelectedList handleGenerate = {this.handleGenerate.bind(this)} selectedCourses={this.state.selectedCourses} listCourseIDs = {this.state.listCourseIDs}>
                             <input type = "submit"></input>
                         </CoursesSelectedList>
@@ -199,7 +202,8 @@ class Homepage extends React.Component {
                                 </form>
                             </div>
                         </div>
-                        <OptionsMainList></OptionsMainList>
+                        <ButtonFBLogin></ButtonFBLogin>
+
                     </div>
                 );
         }

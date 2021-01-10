@@ -1,3 +1,5 @@
 node_modules
 .DS_Store
-frontend.code-workspace
+schedulefront.code-workspace
+.eslintcache
+frontend/.eslintcache
