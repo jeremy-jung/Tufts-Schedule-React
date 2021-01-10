@@ -15,7 +15,6 @@ export default function initFBSDK () {
         }(document, 'script', 'facebook-jssdk'));
 
         window.fbAsyncInit = function () {
-            console.log(facebookAppId);
             window.FB.init({
                 appId: facebookAppId,
                 cookie: true,
