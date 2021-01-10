@@ -7,13 +7,12 @@ import React from 'react';
 import Popup from 'reactjs-popup';
 import CoursesSelectedList from './views/CoursesSelectedList.js';
 import CourseNameRecommendation from './views/CourseNameRecommendation.js';
-import OptionsMainList from './views/OptionsMainList.js';
-import ButtonFBLogin from './views/ButtonFBLogin.js';
 import style from './views/styles/Homepage.module.css';
 
 /* scripts */
 
 class Homepage extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -26,7 +25,6 @@ class Homepage extends React.Component {
 
         this.handleAdd = this.handleAdd.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        
     }
 
     /*
@@ -34,8 +32,7 @@ class Homepage extends React.Component {
      * checks if user is entering a valid courseID.
      * effect: sets checkSameID to false if multiple courses with different ID 
      *          is found, meaning that the user hasn't entered the exact courseID
-    */
-
+     */
     handleCheckID(mappedResults) {
         // Debug purpose
         console.log("mappedResults length: " + mappedResults.length);
@@ -52,7 +49,7 @@ class Homepage extends React.Component {
         {
             console.log(this.state.checkSameID);
             console.log("the length of mappedReusults:" + mappedResults.length);
-            if (mappedResults[i].course_id != checkID)
+            if (mappedResults[i].course_id !== checkID)
             {
                 console.log("it went in here");
                 // prevent user from adding incomplete course ID 
@@ -64,7 +61,6 @@ class Homepage extends React.Component {
             console.log(this.state.checkSameID);
 
         }
-        
 
     }
 
@@ -76,7 +72,7 @@ class Homepage extends React.Component {
         let nameField = document.getElementById("input");
         let mappedResults = this.state.listCourseIDs[this.state.currentInput];
         // checks if user input is valid
-        if (mappedResults != undefined)
+        if (mappedResults !== undefined)
         {
             // needs checkSameID to be up to date. always.
             await this.handleCheckID(mappedResults);
@@ -101,7 +97,7 @@ class Homepage extends React.Component {
             {
                 window.alert("This course has already been added!");
             }
-            else if (this.state.checkSameID || mappedResults.length == 1)
+            else if (this.state.checkSameID || mappedResults.length === 1)
             {
                 let name = this.state.currentInput.toUpperCase(); // get user input
 
@@ -127,12 +123,12 @@ class Homepage extends React.Component {
             window.alert("Please enter a VALID COURSE ID!");
         }
 
-        
     }
 
     handleGenerate() {
         var selectedCourses = this.state.selectedCourses;
         console.log("handling generate");
+        console.log("selectedCourses: ", selectedCourses);
     }
 
     componentDidMount() {
@@ -168,7 +164,6 @@ class Homepage extends React.Component {
         this.setState((state) => ({ currentInput: name })); // update state (currentInput)
     }
 
-
     render() {
         /* asynchronously render home page after getting courseIDs*/
         if (this.state.listCourseIDs == null) {
@@ -181,31 +176,28 @@ class Homepage extends React.Component {
         }
         else {
             // render real UI..
-            let pop;
-                return (
-                    <div className={style.container}>
-                        
-                        <CoursesSelectedList handleGenerate = {this.handleGenerate.bind(this)} selectedCourses={this.state.selectedCourses} listCourseIDs = {this.state.listCourseIDs}>
-                            <input type = "submit"></input>
-                        </CoursesSelectedList>
-                        <div className={style.containerInput}>
-                            <h1>Choose a course</h1>
-                            <div>
-                                <form onSubmit={this.handleAdd}>
-                                    <div>
-                                        <input onChange={this.handleChange} list='recommendedCourseIDs' id="input" className={style.courseInput} type="text" autoComplete="off" placeholder="COMP-0015" />
-                                        <CourseNameRecommendation listCourseIDs = {this.state.listCourseIDs} currentInput = {this.state.currentInput}></CourseNameRecommendation>
-                                    </div>
-                                    <div>
-                                        <input className={style.courseSubmit} type="submit" value="Add" />
-                                    </div>
-                                </form>
-                            </div>
+            return (
+                <div className={style.container}>
+                    
+                    <CoursesSelectedList handleGenerate = {this.handleGenerate.bind(this)} selectedCourses={this.state.selectedCourses} listCourseIDs = {this.state.listCourseIDs}>
+                        <input type = "submit"></input>
+                    </CoursesSelectedList>
+                    <div className={style.containerInput}>
+                        <h1>Choose a course</h1>
+                        <div>
+                            <form onSubmit={this.handleAdd}>
+                                <div>
+                                    <input onChange={this.handleChange} list='recommendedCourseIDs' id="input" className={style.courseInput} type="text" autoComplete="off" placeholder="COMP-0015" />
+                                    <CourseNameRecommendation listCourseIDs = {this.state.listCourseIDs} currentInput = {this.state.currentInput}></CourseNameRecommendation>
+                                </div>
+                                <div>
+                                    <input className={style.courseSubmit} type="submit" value="Add" />
+                                </div>
+                            </form>
                         </div>
-                        <ButtonFBLogin></ButtonFBLogin>
-
                     </div>
-                );
+                </div>
+            );
         }
     }
 }
