@@ -16,14 +16,15 @@ class CoursesSelectedList extends React.Component {
             listCourseIDs: this.props.listCourseIDs
         }
     }
+    
 
     render() {
         return (
             <div className = {style.container} id = "coursesSelectedList">
                 <h1>Your selected courses</h1>
                 <div>
-                    {this.props.selectedCourses.map(function (courseID) {
-                        return <CourseSelected courseID = {courseID} ></CourseSelected>
+                    {this.props.selectedCourses.map(function (courseInfo) {
+                        return <CourseSelected courseInfo = {courseInfo} pop={false} ></CourseSelected>
                     })}
                 </div>
                 <Link className = {style.button} onClick = {this.props.handleGenerate} to = "/schedule">

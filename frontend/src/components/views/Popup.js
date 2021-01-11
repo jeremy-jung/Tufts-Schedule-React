@@ -1,0 +1,64 @@
+/*
+    Popup
+    Created by Duncan Chang
+*/
+import React from 'react';
+import style from './styles/Popup.module.css';
+
+
+class Popup extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { 
+            showPop: true,
+        }
+        this.closePop = this.closePop.bind(this);
+       
+    }
+
+    // handleSubmit(event) {
+    //     //prevent default event handler
+    //     event.preventDefault();
+    // }
+  
+    async closePop()
+    {
+        console.log("test here:");
+        if (this.state.showPop)
+        {
+            await this.props.closePop();
+            this.props.updateSelectedPop("hey");
+            
+        }
+
+    }
+   
+
+    render() {
+        
+        return (
+            <div className={style.popupContainer} >
+                
+                <div className={style.closeContainer}>
+                    <button className={style.close} onClick={this.closePop}>X</button>
+                </div>
+                <p className={style.tit} >Please select a class from the list!</p>
+                <div >
+                    {this.props.popMap.map(function (courseInfo) {
+                    
+                        return <input className={style.popOptions} type="submit" item={courseInfo} onClick={() => this.props.updateSelectedPop(courseInfo)} value={courseInfo.course_id + ":    " + courseInfo.course_name}/>
+
+                        }, this)
+                    }
+                 
+                    
+                </div>
+                
+
+            </div>
+        );
+      
+    }
+}
+
+export default Popup;

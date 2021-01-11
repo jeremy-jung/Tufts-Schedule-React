@@ -4,11 +4,12 @@
 */
 
 import React from 'react';
-import Popup from 'reactjs-popup';
+// import Popup from 'reactjs-popup';
 import CoursesSelectedList from './views/CoursesSelectedList.js';
 import CourseNameRecommendation from './views/CourseNameRecommendation.js';
 import OptionsMainList from './views/OptionsMainList.js';
 import style from './views/styles/Homepage.module.css';
+import Popup from './views/Popup.js';
 
 class Homepage extends React.Component {
     constructor(props) {
@@ -18,8 +19,11 @@ class Homepage extends React.Component {
             currentInput: null,
             recommendedCourseIDs: null,
             selectedCourses: [],
-            checkSameID: true
+            checkSameID: true,
+            popUp: false,
+            popMap: [],
         }
+
 
         this.handleAdd = this.handleAdd.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -76,35 +80,31 @@ class Homepage extends React.Component {
         // checks if user input is valid
         if (mappedResults != undefined)
         {
+            // resets the state of popUp
+            this.setState({
+                popUp: false,
+            })
             // needs checkSameID to be up to date. always.
             await this.handleCheckID(mappedResults);
-            // if(this.state.checkSameID && mappedResults.length > 1)
-            // {
-            //     return <Popup 
-            //     trigger={<div className="popUp">Add</div>} 
-            //     position="right top"
-            //     on="hover"
-            //     closeOnDocumentClick
-            //     mouseLeaveDelay={300}
-            //     mouseEnterDelay={0}
-            //     contentStyle={{ padding: "0px", border: "none" }}
-            //     arrow={false} >
-
-                    
-            //     </Popup>;
-            // }
+            if(this.state.checkSameID && mappedResults.length > 1)
+            {
+                this.setState({
+                    popUp: true,
+                    popMap: mappedResults,
+                })
+            }
             // console.log("selectedCourses: " + this.state.selectedCourses);
             // console.log("include? " + ( (this.state.selectedCourses.includes(mappedResults[0].course_id))));
-            if (this.state.checkSameID && (this.state.selectedCourses.includes(mappedResults[0].course_id)))
+            else if (this.state.checkSameID && (this.state.selectedCourses.includes(mappedResults[0])))
             {
                 window.alert("This course has already been added!");
             }
             else if (this.state.checkSameID || mappedResults.length == 1)
             {
-                let name = this.state.currentInput.toUpperCase(); // get user input
-
+                // let name = this.state.currentInput.toUpperCase(); // get user input
+                let courseToAdd = mappedResults[0];
                 // UPDATE STATE selectedCourses 
-                var arrayJoined = this.state.selectedCourses.concat(name);
+                var arrayJoined = this.state.selectedCourses.concat(courseToAdd);
                 this.setState({ selectedCourses: arrayJoined });
 
                 nameField.value = "";
@@ -124,11 +124,45 @@ class Homepage extends React.Component {
             console.log("here 1");
             window.alert("Please enter a VALID COURSE ID!");
         }
+        
+        
+    }
 
+    closePop()
+    {
+        this.setState({
+            popUp: false
+        })
+    }
+   
+    // updates selected list
+    updateSelectedPop(popSelected)
+    {
+        console.log("close: " + popSelected);
+        if (this.state.popUp && !this.state.selectedCourses.includes(popSelected))
+        {
+            
+            var arrayJoined = this.state.selectedCourses.concat(popSelected);
+            console.log("test: " , popSelected);
+            this.setState({ 
+                selectedCourses: arrayJoined,
+                popUp: false 
+            });
+            document.getElementById("input").value = "";
+        }
+        else if (this.state.popUp){
+            window.alert("This course has already been added!");
+        }
+        else{
+            document.getElementById("input").value = "";
+        }
+        
+        
         
     }
 
     handleGenerate() {
+        
         var selectedCourses = this.state.selectedCourses;
         console.log("handling generate");
     }
@@ -163,10 +197,12 @@ class Homepage extends React.Component {
         let nameField = document.getElementById("input");
         let name = nameField.value.toLowerCase(); // get user input
         this.setState((state) => ({ currentInput: name })); // update state (currentInput)
+        
     }
 
 
     render() {
+
         /* asynchronously render home page after getting courseIDs*/
         if (this.state.listCourseIDs == null) {
             // render loading state...
@@ -178,7 +214,6 @@ class Homepage extends React.Component {
         }
         else {
             // render real UI..
-            let pop;
                 return (
                     <div className={style.container}>
                         <CoursesSelectedList handleGenerate = {this.handleGenerate.bind(this)} selectedCourses={this.state.selectedCourses} listCourseIDs = {this.state.listCourseIDs}>
@@ -192,8 +227,10 @@ class Homepage extends React.Component {
                                         <input onChange={this.handleChange} list='recommendedCourseIDs' id="input" className={style.courseInput} type="text" autoComplete="off" placeholder="COMP-0015" />
                                         <CourseNameRecommendation listCourseIDs = {this.state.listCourseIDs} currentInput = {this.state.currentInput}></CourseNameRecommendation>
                                     </div>
-                                    <div>
-                                        <input className={style.courseSubmit} type="submit" value="Add" />
+                                    
+                                    <div id = "addPop">
+                                        {this.state.popUp ? <Popup popMap={this.state.popMap} updateSelectedPop={this.updateSelectedPop.bind(this)} closePop={this.closePop.bind(this)}  /> : <input className={style.courseSubmit} type="submit" value="Add" />}
+                                        
                                     </div>
                                 </form>
                             </div>
