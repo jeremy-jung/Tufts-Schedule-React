@@ -8,8 +8,10 @@ import ButtonFBLogin from './views/ButtonFBLogin.js';
 
 class Schedule extends React.Component {
 
-    constructor(props){
+    constructor (props) {
+
         super(props);
+
         this.state = {
             TimeRangeView: false,
             accessToken_FB: undefined,
