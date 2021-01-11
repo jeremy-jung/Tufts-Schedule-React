@@ -4,18 +4,64 @@
 
 import React from 'react';
 import Event from './Event.js';
-
+import ButtonFBLogin from './views/ButtonFBLogin.js';
 
 class Schedule extends React.Component {
 
-    constructor(props){
+    constructor (props) {
+
         super(props);
+
         this.state = {
             TimeRangeView: false,
-
+            accessToken_FB: undefined,
+            dataAccessExpirationTime_FB: undefined,
+            userID_FB: undefined
         };
 
         this.handleTimeRangeView = this.handleTimeRangeView.bind(this);
+        this.getFBAuthDetails = this.getFBAuthDetails.bind(this);
+        this.getGroupsFB = this.getGroupsFB.bind(this);
+    }
+    
+    getFBAuthDetails (state) {
+        this.setState({
+            accessToken_FB: state.accessToken_FB,
+            dataAccessExpirationTime_FB:  state.dataAccessExpirationTime_FB,
+            userID_FB: state.userID_FB
+        })
+
+        this.getGroupsFB();
+    }
+
+    getGroupsFB () {
+        /*
+        var API_URL = "https://graph.facebook.com/"+ this.state.userID_FB + "/groups";
+
+        fetch(API_URL)
+        .then(
+            (response) => response.json()
+        )
+        .then(result => {
+            //if the request is valid
+            console.log(result);
+        },
+        (error) => {
+            console.log("error", error);
+        });
+        */
+
+        window.FB.api(
+            "/" + this.state.userID_FB + "/groups", 
+            function (response) {
+
+                if (response & !response.error) {
+
+                    console.log("response: ", response);
+                    
+                }
+            }
+        )
 
     }
 
@@ -28,13 +74,7 @@ class Schedule extends React.Component {
     
     }
 
-   
-
-
     render() {
-
-        
-
         return (
             <main>
                 <h1>
@@ -47,6 +87,9 @@ class Schedule extends React.Component {
                 
                 <div>
                     <Event />
+                </div>
+                <div>
+                    <ButtonFBLogin getGroupsFB = {this.getGroupsFB} ></ButtonFBLogin>
                 </div>
             </main>
             

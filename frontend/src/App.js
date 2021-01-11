@@ -7,10 +7,8 @@ import Homepage from "./components/Homepage.js";
 import Schedule from "./components/Schedule.js";
 
 import {
-    BrowserRouter as Router,
     Switch,
-    Route,
-    Link
+    Route
 } from "react-router-dom";
 import Calendar from './components/Event.js';
 

@@ -4,10 +4,14 @@ import App from './App'
 import {
   BrowserRouter
 } from "react-router-dom";
+import initFBSDK from './components/views/scripts/fb.js';
 
-ReactDOM.render(
-  <BrowserRouter>
-  <App/>
-  </BrowserRouter>,
-  document.getElementById('root')
+/* load React App after FB SDK is received */
+initFBSDK().then(
+  ReactDOM.render(
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>,
+    document.getElementById('root')
+  )
 );

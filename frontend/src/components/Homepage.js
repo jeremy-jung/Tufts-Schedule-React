@@ -7,11 +7,13 @@ import React from 'react';
 // import Popup from 'reactjs-popup';
 import CoursesSelectedList from './views/CoursesSelectedList.js';
 import CourseNameRecommendation from './views/CourseNameRecommendation.js';
-import OptionsMainList from './views/OptionsMainList.js';
 import style from './views/styles/Homepage.module.css';
 import Popup from './views/Popup.js';
 
+/* scripts */
+
 class Homepage extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -27,17 +29,14 @@ class Homepage extends React.Component {
 
         this.handleAdd = this.handleAdd.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        
     }
-
 
     /*
      * handleCheckID
      * checks if user is entering a valid courseID.
      * effect: sets checkSameID to false if multiple courses with different ID 
      *          is found, meaning that the user hasn't entered the exact courseID
-    */
-
+     */
     handleCheckID(mappedResults) {
         // Debug purpose
         console.log("mappedResults length: " + mappedResults.length);
@@ -54,7 +53,7 @@ class Homepage extends React.Component {
         {
             console.log(this.state.checkSameID);
             console.log("the length of mappedReusults:" + mappedResults.length);
-            if (mappedResults[i].course_id != checkID)
+            if (mappedResults[i].course_id !== checkID)
             {
                 console.log("it went in here");
                 // prevent user from adding incomplete course ID 
@@ -66,7 +65,6 @@ class Homepage extends React.Component {
             console.log(this.state.checkSameID);
 
         }
-        
 
     }
 
@@ -78,7 +76,7 @@ class Homepage extends React.Component {
         let nameField = document.getElementById("input");
         let mappedResults = this.state.listCourseIDs[this.state.currentInput];
         // checks if user input is valid
-        if (mappedResults != undefined)
+        if (mappedResults !== undefined)
         {
             // resets the state of popUp
             this.setState({
@@ -99,7 +97,7 @@ class Homepage extends React.Component {
             {
                 window.alert("This course has already been added!");
             }
-            else if (this.state.checkSameID || mappedResults.length == 1)
+            else if (this.state.checkSameID || mappedResults.length === 1)
             {
                 // let name = this.state.currentInput.toUpperCase(); // get user input
                 let courseToAdd = mappedResults[0];
@@ -165,11 +163,13 @@ class Homepage extends React.Component {
         
         var selectedCourses = this.state.selectedCourses;
         console.log("handling generate");
+        console.log("selectedCourses: ", selectedCourses);
     }
 
     componentDidMount() {
         // initialize {listCourseIDs} in this component's state
         this.getListCourseIDs();
+
     }
     
     async getListCourseIDs() {
@@ -199,7 +199,6 @@ class Homepage extends React.Component {
         this.setState((state) => ({ currentInput: name })); // update state (currentInput)
         
     }
-
 
     render() {
 
@@ -234,10 +233,11 @@ class Homepage extends React.Component {
                                     </div>
                                 </form>
                             </div>
+
                         </div>
-                        <OptionsMainList></OptionsMainList>
                     </div>
-                );
+                </div>
+            );
         }
     }
 }

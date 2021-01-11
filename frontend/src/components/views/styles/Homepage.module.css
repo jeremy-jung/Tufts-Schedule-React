@@ -19,7 +19,7 @@
     for page centering CourseNameInput 
     (will go off "center" with more columns or vertical wrapping due to smaller screen size)
     */
-    left: -5vw; 
+    left: -10vw; 
 }
 
 .courseInput {
