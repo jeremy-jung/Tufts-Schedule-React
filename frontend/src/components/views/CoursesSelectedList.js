@@ -13,18 +13,30 @@ class CoursesSelectedList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            listCourseIDs: this.props.listCourseIDs
+            listCourseIDs: this.props.listCourseIDs,
+            coursePopDetail: false,
+            popUp: this.props.popUp,
         }
+        this.handlePop = this.handlePop.bind(this);
+    }
+
+    async handlePop()
+    {
+        
+        await this.setState({
+            popup: !this.state.popUp,
+        })
     }
     
 
     render() {
+       
         return (
-            <div className = {style.container} id = "coursesSelectedList">
-                <h1>Your selected courses</h1>
+            <div className = {this.props.popUp ? style.popContainer : style.container}id = "coursesSelectedList">
+                <h2>Your selected courses</h2>
                 <div>
                     {this.props.selectedCourses.map(function (courseInfo) {
-                        return <CourseSelected courseInfo = {courseInfo} pop={false} ></CourseSelected>
+                        return <CourseSelected courseInfo = {courseInfo} pop={false} handlePop = {()=>this.handlePop.bind(this)}></CourseSelected>
                     })}
                 </div>
                 <Link className = {style.button} onClick = {this.props.handleGenerate} to = "/schedule">

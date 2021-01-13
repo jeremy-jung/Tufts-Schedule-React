@@ -4,51 +4,51 @@
 */
 import React from 'react';
 import style from './styles/CourseSelected.module.css';
-import popStyle from './styles/Popup.module.css';
-
+import CourseDetailPop from './CourseDetailPop'
 
 class CourseSelected extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            highlight: false
+        this.state = { 
+            popDetail: false,
         }
-        this.changeHighlight = this.changeHighlight.bind(this);
+
+        this.showDetail = this.showDetail.bind(this);
+
     }
 
     handleSubmit(event) {
         //prevent default event handler
         event.preventDefault();
     }
-    // updateSelectedPop(courseInfo)
-    // {
-    //     this.props.updateSelectedPop(courseInfo);
-    // }
 
-    changeHighlight() {
+    showDetail()
+    {
         this.setState({
-            highlight: !this.state.highlight,
+            popDetail: !this.popDetail,
         })
     }
+    
    
 
     render() {
 
-        if (this.props.pop)
-        {
-            return (
-                // <input type="radio" value={this.props.courseInfo.course_name} id={this.props.courseInfo.course_name}/>
-                <input type="submit" item={this.props.courseInfo} className={this.state.highlight? popStyle.highlightButt: popStyle.butt} onClick={this.changeHighlight} value={this.props.courseInfo.course_id + "    " + this.props.courseInfo.course_name}/>
+      
+
+        return (
+            <div className={style.all}>
+
+                <div >
+                    <input type="button" onClick={this.showDetail} value={this.props.courseInfo.course_id} className={style.course}/>
+                </div>  
                 
+                {this.state.popDetail ? <CourseDetailPop showDetail={()=> this.showDetail.bind(this)} courseInfo={this.props.courseInfo}></CourseDetailPop> : <div></div>}
+
+            </div>
+
+            
             );
-        }
-        else{
-            return (
-                <div className={style.course}>
-                    {this.props.courseInfo.course_id}
-                </div>
-                );
-        }
+        
        
         
       

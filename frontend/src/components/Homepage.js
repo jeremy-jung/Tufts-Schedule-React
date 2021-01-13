@@ -248,12 +248,17 @@ class Homepage extends React.Component {
             // render real UI..
                 return (
                     <div className={style.container}>
-                        <CoursesSelectedList handleGenerate = {this.handleGenerate.bind(this)} selectedCourses={this.state.selectedCourses} listCourseIDs = {this.state.listCourseIDs}>
+                        <header className={style.logoContainer}>
+                            <h1>Schedule Planner</h1>
+                            <br/>
+                            <br/>
+                        </header>
+                        <CoursesSelectedList handleGenerate = {this.handleGenerate.bind(this)} selectedCourses={this.state.selectedCourses} listCourseIDs = {this.state.listCourseIDs} popUp={this.state.popUp}>
                             <input type = "submit"></input>
                         </CoursesSelectedList>
                         <div className={style.containerInput}>
 
-                            <h1>Choose a course</h1>
+                            <h2>Choose a course</h2>
                             <div>
                                 <form onSubmit={this.handleAdd}>
                                     <div>
