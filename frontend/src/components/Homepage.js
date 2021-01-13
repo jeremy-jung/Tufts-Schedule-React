@@ -24,11 +24,14 @@ class Homepage extends React.Component {
             checkSameID: true,
             popUp: false,
             popMap: [],
+            alertMessage: "***",
         }
 
 
         this.handleAdd = this.handleAdd.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.setMessage = this.setMessage.bind(this);
+        this.updateSelectedPop = this.updateSelectedPop.bind(this);
     }
 
     /*
@@ -70,11 +73,15 @@ class Homepage extends React.Component {
 
     // handles the add function. prevents user from adding non-existing courseID
     async handleAdd(event) {
+
+        await this.setMessage("***");
+
         console.log("the beginning state: " + this.state.checkSameID);
         //prevent default event handler
         event.preventDefault();
         let nameField = document.getElementById("input");
         let mappedResults = this.state.listCourseIDs[this.state.currentInput];
+
         // checks if user input is valid
         if (mappedResults !== undefined)
         {
@@ -84,6 +91,8 @@ class Homepage extends React.Component {
             })
             // needs checkSameID to be up to date. always.
             await this.handleCheckID(mappedResults);
+
+            // This if is to check if Popup is needed
             if(this.state.checkSameID && mappedResults.length > 1)
             {
                 this.setState({
@@ -91,12 +100,12 @@ class Homepage extends React.Component {
                     popMap: mappedResults,
                 })
             }
-            // console.log("selectedCourses: " + this.state.selectedCourses);
-            // console.log("include? " + ( (this.state.selectedCourses.includes(mappedResults[0].course_id))));
+            // checks if a course has been added
             else if (this.state.checkSameID && (this.state.selectedCourses.includes(mappedResults[0])))
             {
-                window.alert("This course has already been added!");
+                await this.setMessage("** This course has already been added! **");
             }
+            // adds that one course to list
             else if (this.state.checkSameID || mappedResults.length === 1)
             {
                 // let name = this.state.currentInput.toUpperCase(); // get user input
@@ -109,23 +118,29 @@ class Homepage extends React.Component {
             }
             else{
                 console.log("here 2");
-                window.alert("Please enter a VALID COURSE ID!");
                 console.log("alerts here");
                 // resets the state
                 this.setState({
-                    checkSameID: true
+                    checkSameID: true,
                 })
+                await this.setMessage("** Please enter a VALID COURSE ID! **");
             }
         }
+        // if user input is invalid
         else{
-            console.log("here 1's map: " + mappedResults);
-            console.log("here 1");
-            window.alert("Please enter a VALID COURSE ID!");
+            await this.setMessage("** Please enter a VALID COURSE ID! **");
+
         }
         
         
     }
 
+    /*  
+     *  closePop()
+     *  a callback function by Popup.js's closing div (x)
+     *  manages the state of whether a Popup should be shown
+     *  resets the state of popUp
+     */ 
     closePop()
     {
         this.setState({
@@ -133,10 +148,15 @@ class Homepage extends React.Component {
         })
     }
    
-    // updates selected list
-    updateSelectedPop(popSelected)
+    /*  
+     *  updateSelectedPop()
+     *  manages actions if a course is selected from Popup
+     *  adds course to courselist 
+     */ 
+    async updateSelectedPop(popSelected)
     {
         console.log("close: " + popSelected);
+        // checks if popUp should be shown, and if selected course was previously added
         if (this.state.popUp && !this.state.selectedCourses.includes(popSelected))
         {
             
@@ -149,13 +169,26 @@ class Homepage extends React.Component {
             document.getElementById("input").value = "";
         }
         else if (this.state.popUp){
-            window.alert("This course has already been added!");
+            console.log("this alert");
+            await this.setMessage("** This Course Has Already Been Added! **");
         }
         else{
             document.getElementById("input").value = "";
+            this.setMessage("***");
         }
         
         
+        
+    }
+    /*  
+     *  setMessage()
+     *  changes the message in div when called using {message}
+     *  sets the state of alertMessage 
+     */ 
+    setMessage(message){
+        this.setState({
+            alertMessage: message,
+        })
         
     }
 
@@ -219,6 +252,7 @@ class Homepage extends React.Component {
                             <input type = "submit"></input>
                         </CoursesSelectedList>
                         <div className={style.containerInput}>
+
                             <h1>Choose a course</h1>
                             <div>
                                 <form onSubmit={this.handleAdd}>
@@ -226,17 +260,20 @@ class Homepage extends React.Component {
                                         <input onChange={this.handleChange} list='recommendedCourseIDs' id="input" className={style.courseInput} type="text" autoComplete="off" placeholder="COMP-0015" />
                                         <CourseNameRecommendation listCourseIDs = {this.state.listCourseIDs} currentInput = {this.state.currentInput}></CourseNameRecommendation>
                                     </div>
-                                    
                                     <div id = "addPop">
-                                        {this.state.popUp ? <Popup popMap={this.state.popMap} updateSelectedPop={this.updateSelectedPop.bind(this)} closePop={this.closePop.bind(this)}  /> : <input className={style.courseSubmit} type="submit" value="Add" />}
+                                        {this.state.popUp ? <Popup popMap={this.state.popMap} updateSelectedPop={this.updateSelectedPop.bind(this)} closePop={this.closePop.bind(this)} setMessage={this.setMessage.bind(this)}  /> : <input className={style.courseSubmit} type="submit" value="Add" />}
                                         
                                     </div>
                                 </form>
                             </div>
 
+
+                            <br/>
+                            {(this.state.alertMessage.localeCompare("***"))? <div className={style.alert} id="alert">{this.state.alertMessage}</div> : <div className={style.noAlert} id="alert">{this.state.alertMessage}</div>}
                         </div>
+                        
                     </div>
-                </div>
+                
             );
         }
     }

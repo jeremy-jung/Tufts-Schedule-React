@@ -16,11 +16,11 @@ class Popup extends React.Component {
        
     }
 
-    // handleSubmit(event) {
-    //     //prevent default event handler
-    //     event.preventDefault();
-    // }
-  
+    /*  
+     *  closePop()
+     *  calls the closePop function in Homepage
+     *  calls updateSelectedPop function in Homepage to reset alertMessage
+     */ 
     async closePop()
     {
         console.log("test here:");
@@ -28,7 +28,6 @@ class Popup extends React.Component {
         {
             await this.props.closePop();
             this.props.updateSelectedPop("hey");
-            
         }
 
     }
@@ -46,12 +45,12 @@ class Popup extends React.Component {
                 <div >
                     {this.props.popMap.map(function (courseInfo) {
                     
-                        return <input className={style.popOptions} type="submit" item={courseInfo} onClick={() => this.props.updateSelectedPop(courseInfo)} value={courseInfo.course_id + ":    " + courseInfo.course_name}/>
+                        return <input className={style.popOptions} type="button" item={courseInfo} onClick={() => this.props.updateSelectedPop(courseInfo)} value={courseInfo.course_id + ":    " + courseInfo.course_name}/>
 
                         }, this)
                     }
                  
-                    
+                    <div className={style.alert} id="alert">{this.props.alertMessage}</div>
                 </div>
                 
 

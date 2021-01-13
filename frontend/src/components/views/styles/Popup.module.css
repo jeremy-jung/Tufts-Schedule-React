@@ -1,6 +1,12 @@
 .popupContainer{
 
     position: relative;
+    transform: translateY(-8vh);
+
+    justify-content: center;
+    text-align: center;
+    flex-grow: 10;
+
     display: inline-flex;
     flex-direction: column;
     border-radius: 8px;
