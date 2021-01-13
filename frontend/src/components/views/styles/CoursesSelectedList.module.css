@@ -10,6 +10,7 @@ h1 {
     justify-content: start;
     z-index: 8;
 }
+
 .popContainer{
     max-height: 80vh;
     display: flex;
@@ -19,7 +20,7 @@ h1 {
 }
 
 .button {
-    z-index: -2;
+    z-index: 8;
     text-decoration: none;
     font-family: Georgia, 'Times New Roman', Times, serif;
 

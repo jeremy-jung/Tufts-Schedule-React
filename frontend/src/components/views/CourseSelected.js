@@ -22,10 +22,22 @@ class CourseSelected extends React.Component {
         event.preventDefault();
     }
 
-    showDetail()
+    async showDetail()
     {
-        this.setState({
-            popDetail: !this.popDetail,
+        console.log("it called this");
+        await this.setState({
+            popDetail: true,
+        })
+        console.log("did it call, " , this.state.popDetail);
+        await this.props.handlePop();
+        console.log("did it call here");
+
+    }
+
+    async closePop()
+    {
+        await this.setState({
+            popDetail: false,
         })
     }
     
@@ -39,10 +51,10 @@ class CourseSelected extends React.Component {
             <div className={style.all}>
 
                 <div >
-                    <input type="button" onClick={this.showDetail} value={this.props.courseInfo.course_id} className={style.course}/>
+                    <input type="button" onClick={this.showDetail} value={this.props.courseInfo.course_id} className={this.state.popDetail ? style.popCourse : style.course}/>
                 </div>  
                 
-                {this.state.popDetail ? <CourseDetailPop showDetail={()=> this.showDetail.bind(this)} courseInfo={this.props.courseInfo}></CourseDetailPop> : <div></div>}
+                {this.state.popDetail ? <CourseDetailPop showDetail={()=> this.showDetail.bind(this)} courseInfo={this.props.courseInfo} closePop={this.closePop.bind(this)}></CourseDetailPop> : <div></div>}
 
             </div>
 

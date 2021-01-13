@@ -24,10 +24,11 @@ class CourseDetailPop extends React.Component {
     async closePop()
     {
         console.log("test here:");
-        if (this.state.showPop)
-        {
-            await this.props.showDetail();
-        }
+      
+        await this.props.closePop();
+        console.log("it's closed?");
+        
+        
 
     }
    

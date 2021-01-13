@@ -75,7 +75,7 @@
 .couresPopContainer{
 
     position: relative;
-    z-index: 10;
+    z-index: 12;
     justify-content: center;
     text-align: center;
     display: inline-flex;

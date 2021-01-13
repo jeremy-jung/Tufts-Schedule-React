@@ -8,7 +8,22 @@
     font-size: 20px;
     padding: 5px;
     margin: 5px;
-    z-index: 8;
+    align-items: center;
+    cursor: pointer;
+    
+    text-align: center;
+}
+
+.popCourse {
+    position: relative;
+    height: 50px;
+    width: 150px;
+    background-color: #ABC4AB    ;
+    color: #ffffff;
+    border-radius: 8px;
+    font-size: 20px;
+    padding: 5px;
+    margin: 5px;
     align-items: center;
     cursor: pointer;
     

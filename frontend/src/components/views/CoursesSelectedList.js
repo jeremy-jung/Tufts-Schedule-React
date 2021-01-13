@@ -15,29 +15,41 @@ class CoursesSelectedList extends React.Component {
         this.state = {
             listCourseIDs: this.props.listCourseIDs,
             coursePopDetail: false,
-            popUp: this.props.popUp,
         }
-        this.handlePop = this.handlePop.bind(this);
     }
 
     async handlePop()
     {
-        
+        console.log("coursePopDetail before: " , this.state.coursePopDetail);
+
         await this.setState({
-            popup: !this.state.popUp,
+            coursePopDetail: !this.state.coursePopDetail,
         })
+        console.log("coursePopDetail after: " , this.state.coursePopDetail);
     }
     
 
     render() {
-       
+        let containerClass;
+        // checks which css class the container should follow
+        if (this.state.coursePopDetail)
+        {
+            containerClass = false;
+        }
+        else
+        {
+            containerClass = this.props.popUp;
+        }
+        
+        console.log("test this: " , this.state.coursePopDetail);
+        console.log("containerClass: ", containerClass);
         return (
-            <div className = {this.props.popUp ? style.popContainer : style.container}id = "coursesSelectedList">
+            <div className = {containerClass ? style.popContainer : style.container}id = "coursesSelectedList">
                 <h2>Your selected courses</h2>
                 <div>
                     {this.props.selectedCourses.map(function (courseInfo) {
-                        return <CourseSelected courseInfo = {courseInfo} pop={false} handlePop = {()=>this.handlePop.bind(this)}></CourseSelected>
-                    })}
+                        return <CourseSelected courseInfo = {courseInfo} pop={false} handlePop = {this.handlePop.bind(this)}></CourseSelected>
+                    }, this)}
                 </div>
                 <Link className = {style.button} onClick = {this.props.handleGenerate} to = "/schedule">
                     Schedule
