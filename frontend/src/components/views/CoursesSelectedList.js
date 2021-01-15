@@ -16,6 +16,7 @@ class CoursesSelectedList extends React.Component {
             listCourseIDs: this.props.listCourseIDs,
             coursePopDetail: false,
         }
+
     }
 
     async handlePop()
@@ -23,13 +24,25 @@ class CoursesSelectedList extends React.Component {
         console.log("coursePopDetail before: " , this.state.coursePopDetail);
 
         await this.setState({
-            coursePopDetail: !this.state.coursePopDetail,
+            coursePopDetail: true,
         })
         console.log("coursePopDetail after: " , this.state.coursePopDetail);
     }
     
+    async closePop()
+    {
+        await this.setState({
+            coursePopDetail: false,
+        })
+    }
+
+    // async removeCourse(item)
+    // {
+    //     await this.props.removeCourse(item);
+    // }
 
     render() {
+        console.log("my seleceted courses: " , this.props.selectedCourses);
         let containerClass;
         // checks which css class the container should follow
         if (this.state.coursePopDetail)
@@ -46,12 +59,13 @@ class CoursesSelectedList extends React.Component {
         return (
             <div className = {containerClass ? style.popContainer : style.container}id = "coursesSelectedList">
                 <h2>Your selected courses</h2>
-                <div>
+                <div className={this.state.coursePopDetail ? style.popCourseList : style.courseList}>
                     {this.props.selectedCourses.map(function (courseInfo) {
-                        return <CourseSelected courseInfo = {courseInfo} pop={false} handlePop = {this.handlePop.bind(this)}></CourseSelected>
+                        return <CourseSelected courseInfo = {courseInfo} pop={false} handlePop = {this.handlePop.bind(this)} closePop= {this.closePop.bind(this)} coursePopDetail = {this.state.coursePopDetail} removeCourse={this.props.removeCourse}></CourseSelected>
                     }, this)}
                 </div>
-                <Link className = {style.button} onClick = {this.props.handleGenerate} to = "/schedule">
+                <br/>
+                <Link className = {this.state.coursePopDetail ? style.popButton : style.button} onClick = {this.props.handleGenerate} to = "/schedule">
                     Schedule
                 </Link>
             </div>

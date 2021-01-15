@@ -72,17 +72,38 @@
     
 }
 
+
+
+
 .couresPopContainer{
 
     position: relative;
-    z-index: 12;
+    z-index: 13;
     justify-content: center;
     text-align: center;
     display: inline-flex;
     flex-direction: column;
-    border-radius: 5px;
-    border: solid;
-    border-color:#3E8EDE;
-    box-shadow: #ffffff;
+    border-radius: 8px;
+    border: solid 2px;
+    border-color:#28464B;
+    box-shadow: #ffffff00;
     background-color:#ffffff;
+    align-items: stretch;
+}
+
+.courseInfo {
+    flex-basis: auto;
+    padding: 1vw;
+}
+
+.removeCourse {
+    text-decoration: none;
+    color: #9A322B;
+    border-radius: 8px;
+    border: none;
+    background-color: #F0F7EE;
+    cursor: pointer;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+
+
 }

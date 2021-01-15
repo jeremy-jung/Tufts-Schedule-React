@@ -1,4 +1,5 @@
 .course {
+    z-index: 12;
     position: relative;
     height: 50px;
     width: 150px;
@@ -15,10 +16,11 @@
 }
 
 .popCourse {
+    z-index: -2;
     position: relative;
     height: 50px;
     width: 150px;
-    background-color: #ABC4AB    ;
+    background-color: #ABC4AB;
     color: #ffffff;
     border-radius: 8px;
     font-size: 20px;

@@ -39,22 +39,23 @@ class CourseSelected extends React.Component {
         await this.setState({
             popDetail: false,
         })
+        await this.props.closePop();
     }
     
    
 
     render() {
-
+        console.log("popDetail: " , this.state.popDetail);
       
 
         return (
             <div className={style.all}>
 
                 <div >
-                    <input type="button" onClick={this.showDetail} value={this.props.courseInfo.course_id} className={this.state.popDetail ? style.popCourse : style.course}/>
+                    <input type="button" onClick={this.showDetail} value={this.props.courseInfo.course_id} className={this.props.coursePopDetail ? style.popCourse : style.course}/>
                 </div>  
                 
-                {this.state.popDetail ? <CourseDetailPop showDetail={()=> this.showDetail.bind(this)} courseInfo={this.props.courseInfo} closePop={this.closePop.bind(this)}></CourseDetailPop> : <div></div>}
+                {this.state.popDetail ? <CourseDetailPop showDetail={()=> this.showDetail.bind(this)} courseInfo={this.props.courseInfo} closePop={this.closePop.bind(this)} removeCourse={this.props.removeCourse}></CourseDetailPop> : <div></div>}
 
             </div>
 
