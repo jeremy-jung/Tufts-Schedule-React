@@ -1,9 +1,32 @@
 
+header { 
+    position: relative;
+    color: #E2E6EC;
+    border: solid #3E8EDE;
+    border-bottom: 10px double #3E8EDE;
+}
+
+h1 {
+    padding-left: 1vw;
+    color: #3E8EDE;
+    font-weight: heavy;
+}
+
+h2 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.logoContainer {
+    display: flex;
+    width: 100vw;
+}
+
 .container{
     display: flex;
     flex-flow: row wrap;
     /*flex-direction: row;*/
     justify-content: center;
+    z-index: 7;
 }
 
 .containerInput {
@@ -15,6 +38,7 @@
     text-align: center;
     flex-grow: 7;
     height: 80vh;
+    
     /* 
     for page centering CourseNameInput 
     (will go off "center" with more columns or vertical wrapping due to smaller screen size)
@@ -30,13 +54,25 @@
 }
 
 .courseSubmit {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: #12242B;
+    background: #E2E6EC;
     position: relative;
-    margin-top: 10px;
-    height: 50px;
+    margin-top: 1vh;
+    height: 5vh;
     font-size: 20px;
     cursor: pointer;
+    border-radius: 8px;
 }
 
 .alert {
-    color: #bc3c3c;
+    color: #9A322B;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+
+}
+
+.notAlert {
+    color: #12242B;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+
 }

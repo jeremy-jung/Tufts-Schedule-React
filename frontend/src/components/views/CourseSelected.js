@@ -4,51 +4,64 @@
 */
 import React from 'react';
 import style from './styles/CourseSelected.module.css';
-import popStyle from './styles/Popup.module.css';
-
+import CourseDetailPop from './CourseDetailPop'
 
 class CourseSelected extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            highlight: false
+        this.state = { 
+            popDetail: false,
         }
-        this.changeHighlight = this.changeHighlight.bind(this);
+
+        this.showDetail = this.showDetail.bind(this);
+
     }
 
     handleSubmit(event) {
         //prevent default event handler
         event.preventDefault();
     }
-    // updateSelectedPop(courseInfo)
-    // {
-    //     this.props.updateSelectedPop(courseInfo);
-    // }
 
-    changeHighlight() {
-        this.setState({
-            highlight: !this.state.highlight,
+    async showDetail()
+    {
+        console.log("it called this");
+        await this.setState({
+            popDetail: true,
         })
+        console.log("did it call, " , this.state.popDetail);
+        await this.props.handlePop();
+        console.log("did it call here");
+
     }
+
+    async closePop()
+    {
+        await this.setState({
+            popDetail: false,
+        })
+        await this.props.closePop();
+    }
+    
    
 
     render() {
+        console.log("popDetail: " , this.state.popDetail);
+      
 
-        if (this.props.pop)
-        {
-            return (
-                // <input type="radio" value={this.props.courseInfo.course_name} id={this.props.courseInfo.course_name}/>
-                <input type="submit" item={this.props.courseInfo} className={this.state.highlight? popStyle.highlightButt: popStyle.butt} onClick={this.changeHighlight} value={this.props.courseInfo.course_id + "    " + this.props.courseInfo.course_name}/>
+        return (
+            <div className={style.all}>
+
+                <div >
+                    <input type="button" onClick={this.showDetail} value={this.props.courseInfo.course_id} className={this.props.coursePopDetail ? style.popCourse : style.course}/>
+                </div>  
                 
+                {this.state.popDetail ? <CourseDetailPop showDetail={()=> this.showDetail.bind(this)} courseInfo={this.props.courseInfo} closePop={this.closePop.bind(this)} removeCourse={this.props.removeCourse}></CourseDetailPop> : <div></div>}
+
+            </div>
+
+            
             );
-        }
-        else{
-            return (
-                <div className={style.course}>
-                    {this.props.courseInfo.course_id}
-                </div>
-                );
-        }
+        
        
         
       

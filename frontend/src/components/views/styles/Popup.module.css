@@ -1,77 +1,109 @@
+.overlay {
+    display: block;
+    position: fixed;
+    width: 300vw;
+    height: 300vh;
+    transform: translate(-50%, -50%);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #00000071;
+    z-index: -1;
+
+}
+
+
 .popupContainer{
 
     position: relative;
-    transform: translateY(-8vh);
+    transform: translateY(-50%);
 
     justify-content: center;
     text-align: center;
-    flex-grow: 10;
-
     display: inline-flex;
     flex-direction: column;
-    border-radius: 8px;
+    border-radius: 5px;
     border: solid;
-    border-color: #000000;
-    box-shadow: #FFFFFF;
-    background-color:#FFFFFF;
-
+    border-color:#3E8EDE;
+    box-shadow: #ffffff;
+    background-color:#ffffff;
 }
 .popOptions{
+    z-index:10;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     max-height: 80vh;
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: start;
-    background-color: #3CBC8D;
-    color: white;
+    background-color: #3E8EDE;
+    color: #ffffff;
     flex-direction: column;
     text-decoration: none;
-    border-radius: 8px;
-    border: solid;
+    border-radius: 4px;
+    border: 1px solid;
     border-color: #ffffff;
     align-items: stretch;
 }
 
 
 .tit {
-    color: #3CBC8D;
+    z-index:10;
+    color: #28464B;
     font-size: 20px;
 }
 
 .closeContainer {
+    z-index:10;
     float:right;
     
 }
 .close {
+    z-index:10;
     border-radius: 8px;
     border: solid;
-    border-color: #bc3c3c;
+    border-color: #9A322B;
     display: inline-flex;
-    color: #bc3c3c;
+    color: #9A322B;
     align-items: flex-end;
     justify-content: flex-end;
     float: right;
     
 }
 
-#popOptions {
-    text-decoration: none;
 
-    display: inline-flex;
-    align-items: center;
+
+
+.couresPopContainer{
+
+    position: relative;
+    z-index: 13;
     justify-content: center;
-
-    background-color: #f3f3f3;
-    color: rgb(0, 0, 0);
-
-    padding: 0.25em 0.75em;
-    min-width: 10ch;
-    min-height: 33px;
-
+    text-align: center;
+    display: inline-flex;
+    flex-direction: column;
     border-radius: 8px;
-    border: solid;
-    box-shadow: 0 3px 5px rgba(0,0,0,0.18);
+    border: solid 2px;
+    border-color:#28464B;
+    box-shadow: #ffffff00;
+    background-color:#ffffff;
+    align-items: stretch;
+}
 
-    font-size: 20px;
-    
+.courseInfo {
+    flex-basis: auto;
+    padding: 1vw;
+}
+
+.removeCourse {
+    text-decoration: none;
+    color: #9A322B;
+    border-radius: 8px;
+    border: none;
+    background-color: #F0F7EE;
+    cursor: pointer;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+
+
 }

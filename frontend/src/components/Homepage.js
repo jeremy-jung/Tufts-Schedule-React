@@ -233,6 +233,29 @@ class Homepage extends React.Component {
         
     }
 
+    /*  
+     *  removeCourse(item)
+     *  deletes the course specified (passed in as "item") 
+     *  looks through selectedCourses, finds, then delete
+     */ 
+    async removeCourse(item) {
+        
+        var res = this.state.selectedCourses;
+        // look for the index and remove
+        for (var i = 0 ; i < this.state.selectedCourses.length; i++)
+        {
+            if (this.state.selectedCourses[i] === item)
+            {
+                delete res[i]
+                await this.setState({
+                    selectedCourses: res,
+                })
+                break;
+            }
+        }
+
+    }
+
     render() {
 
         /* asynchronously render home page after getting courseIDs*/
@@ -248,12 +271,17 @@ class Homepage extends React.Component {
             // render real UI..
                 return (
                     <div className={style.container}>
-                        <CoursesSelectedList handleGenerate = {this.handleGenerate.bind(this)} selectedCourses={this.state.selectedCourses} listCourseIDs = {this.state.listCourseIDs}>
+                        <header className={style.logoContainer}>
+                            <h1>Schedule Planner</h1>
+                            <br/>
+                            <br/>
+                        </header>
+                        <CoursesSelectedList handleGenerate = {this.handleGenerate.bind(this)} selectedCourses={this.state.selectedCourses} listCourseIDs = {this.state.listCourseIDs} popUp={this.state.popUp} removeCourse={this.removeCourse.bind(this)}>
                             <input type = "submit"></input>
                         </CoursesSelectedList>
                         <div className={style.containerInput}>
 
-                            <h1>Choose a course</h1>
+                            <h2>Choose a course</h2>
                             <div>
                                 <form onSubmit={this.handleAdd}>
                                     <div>

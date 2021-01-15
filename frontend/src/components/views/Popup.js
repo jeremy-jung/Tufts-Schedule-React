@@ -36,25 +36,34 @@ class Popup extends React.Component {
     render() {
         
         return (
-            <div className={style.popupContainer} >
+            <div>
+                <div className={style.popupContainer} >
                 
-                <div className={style.closeContainer}>
-                    <button className={style.close} onClick={this.closePop}>X</button>
-                </div>
-                <p className={style.tit} >Please select a class from the list!</p>
-                <div >
-                    {this.props.popMap.map(function (courseInfo) {
-                    
-                        return <input className={style.popOptions} type="button" item={courseInfo} onClick={() => this.props.updateSelectedPop(courseInfo)} value={courseInfo.course_id + ":    " + courseInfo.course_name}/>
+                
+                    <div className={style.closeContainer} >
+                        <button className={style.close} onClick={this.closePop}>X</button>
 
-                        }, this)
-                    }
-                 
-                    <div className={style.alert} id="alert">{this.props.alertMessage}</div>
-                </div>
+                    </div>
+                    <p className={style.tit} >Please select a class from the list!</p>
+                    <div >
+                        {this.props.popMap.map(function (courseInfo) {
+                        
+                            return <input className={style.popOptions} type="button" item={courseInfo} onClick={() => this.props.updateSelectedPop(courseInfo)} value={courseInfo.course_id + ":    " + courseInfo.course_name}/>
+
+                            }, this)
+                        }
+                    
+                        <div className={style.alert} id="alert">{this.props.alertMessage}</div>
+                    </div>
+
                 
+
+                </div>
+                <div className={style.overlay}></div>
 
             </div>
+           
+            
         );
       
     }
