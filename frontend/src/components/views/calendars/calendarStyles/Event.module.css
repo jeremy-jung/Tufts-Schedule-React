@@ -1,0 +1,10 @@
+.eventButton {
+    background-color: #F0F7EE;
+    position: absolute;
+    height: 21px;
+    border: 1px solid #ABC4AB;
+    width: 10vw;
+    border-radius: 8px;
+    z-index: 2;
+    cursor: pointer;
+}

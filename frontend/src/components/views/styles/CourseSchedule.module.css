@@ -1,0 +1,123 @@
+/* wraps the logo and h1 */
+header { 
+    position: sticky;
+    color: #E2E6EC;
+    background-color: #F0F7EE ;
+    border-bottom: 4px double #3E8EDE;
+    margin-left: auto;
+    margin-right: auto;   
+    top: 0;
+    left: 0;
+    right: 0;
+   
+    width: 300%;
+    z-index: 20;
+
+}
+
+input {
+    outline: none;
+}
+
+h1 {
+    padding-left: 1vw;
+    color: #3E8EDE;
+}
+
+h2 {
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+
+/* the "Loading..." */
+.loadContainer { 
+    display: flex;
+    flex-flow: row wrap;
+    /*flex-direction: row;*/
+    justify-content: center;
+    z-index: 7;
+    font-family: Helvetica, Arial, sans-serif;
+    color: #12242B;
+    margin-top: auto;
+    margin-bottom: auto;
+
+
+}
+
+
+/* contains course list and (user input + calendar) */
+.columnContainer {
+    display: flex;
+    flex-direction: row;
+    align-content: space-between;
+    flex-wrap: wrap;
+
+}
+
+/* contains user input + calendar  */
+.verticalContainer {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 2;
+    flex-shrink:1;
+    overflow: scroll;
+
+}
+
+
+/* the user inputs */
+.searchContainer {
+    align-items:stretch;
+    align-content: stretch;
+    text-align: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 80vw;
+    padding-bottom: 5vh;
+}
+
+/* user input to search courses */
+.courseInput {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+    /*align-items: center;*/
+    /* text-align: start; */
+    flex-grow: auto;
+    min-height: 5vh;
+    width: 10vw;
+    min-width: 10vw;
+    border-radius: 100px;
+    padding-left: 1vw;
+}
+
+/* add button for course*/
+.courseSubmit {
+    font-family: Helvetica, Arial, sans-serif;
+    color: #12242B;
+    background: #ffffff;
+    position: relative;
+    margin-top: 1vh;
+    min-height: 5vh;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 8px;
+    border-width: 2px;
+
+}
+
+
+/* when there's alert message */
+.alert {
+    color: #9A322B;
+    font-family: Helvetica, Arial, sans-serif;
+
+}
+/* when there's NO alert message */
+.notAlert {
+    color: #12242B;
+    font-family: Helvetica, Arial, sans-serif;
+
+}

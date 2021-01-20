@@ -1,6 +1,6 @@
 /*
     Pages: Home page
-    Created by Jeremy Jung
+    Created by Jeremy Jung, Duncan Chang
 */
 
 import React from 'react';
@@ -8,7 +8,9 @@ import React from 'react';
 import CoursesSelectedList from './views/CoursesSelectedList.js';
 import CourseNameRecommendation from './views/CourseNameRecommendation.js';
 import style from './views/styles/Homepage.module.css';
+import csStyle from './views/styles/CourseSchedule.module.css';
 import Popup from './views/Popup.js';
+import Week from './views/calendars/Week.js'
 
 /* scripts */
 
@@ -20,11 +22,14 @@ class Homepage extends React.Component {
             listCourseIDs: null, // all course IDs in semester catalog (mapped first letter)
             currentInput: null,
             recommendedCourseIDs: null,
-            selectedCourses: [],
-            checkSameID: true,
-            popUp: false,
+            selectedCourses: [], // courses added to list
+            checkSameID: true, // if courses returned from API has same couresID
+            popUp: false, // the state of popUp
             popMap: [],
-            alertMessage: "***",
+            alertMessage: "***", 
+            renderSchedule: false,
+            modifySearch: false, // true after render scheduled, false when user is able to add course on spot
+            eventInfo: [], // parsed JSON of event info from post request
         }
 
 
@@ -32,6 +37,8 @@ class Homepage extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.setMessage = this.setMessage.bind(this);
         this.updateSelectedPop = this.updateSelectedPop.bind(this);
+        this.closeModifySearch = this.closeModifySearch.bind(this);
+
     }
 
     /*
@@ -202,6 +209,11 @@ class Homepage extends React.Component {
     componentDidMount() {
         // initialize {listCourseIDs} in this component's state
         this.getListCourseIDs();
+        if (this.getObjectIDs().length != 0)
+        {
+            this.getRecSchedule();
+        }
+        // this.getRecSchedule();
 
     }
     
@@ -221,6 +233,98 @@ class Homepage extends React.Component {
                 console.log("error", error);
         });
     }
+
+    // maps through selected courses and push all object ids to array
+    getObjectIDs() {
+        let res = [];
+        this.state.selectedCourses.map(function(info) {
+            res.push(info._id);
+        })
+        return res;
+    }
+
+
+    // post requests recommended schedule made by API
+    async getRecSchedule() {
+        console.log("selected Courses: " , this.state.selectedCourses);
+        console.log("object ids: ", this.getObjectIDs());
+        var API_URL = process.env.REACT_APP_API_URL + "/courses/schedule";
+        var requestDetail = {
+            "objectIds": this.getObjectIDs(),
+            "filter": {
+              "time": {
+                "Monday": [
+                  {
+                    "time_earliest": "00:00",
+                    "time_latest": "23:59"
+                  }
+                ],
+                "Tuesday": [
+                  {
+                    "time_earliest": "00:00",
+                    "time_latest": "23:59"
+                  }
+                ],
+                "Wednesday": [
+                  {
+                    "time_earliest": "00:00",
+                    "time_latest": "23:59"
+                  }
+                ],
+                "Thursday": [
+                  {
+                    "time_earliest": "00:00",
+                    "time_latest": "23:59"
+                  }
+                ],
+                "Friday": [
+                  {
+                    "time_earliest": "00:00",
+                    "time_latest": "23:59"
+                  }
+                ],
+                "Saturday": [
+                  {
+                    "time_earliest": "00:00",
+                    "time_latest": "23:59"
+                  }
+                ],
+                "Sunday": [
+                  {
+                    "time_earliest": "00:00",
+                    "time_latest": "23:59"
+                  }
+                ]
+              }
+            }
+          };
+
+
+        fetch(API_URL, {
+            method: 'POST',
+            mode: 'cors', // no-cors, *cors, same-origin
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            redirect: 'follow', // manual, *follow, error
+            referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            body: JSON.stringify(requestDetail) // body data type must match "Content-Type" header
+        })
+        .then(response => response.json())
+        .then(result => {
+            //if the request is valid
+            this.setState({
+                eventInfo: result.data
+            });
+        },
+            (error) => {
+                console.log("error", error);
+        });
+        
+        console.log("post request event: ", this.state.eventInfo);
+
+    }
+
 
     /* CourseID input scripts */
 
@@ -255,6 +359,23 @@ class Homepage extends React.Component {
         }
 
     }
+    async handleSchedule(check) {
+        await this.setState({
+            renderSchedule: check,
+            modifySearch: check,
+        })
+        console.log("schedule called");
+        console.log(this.state.renderSchedule);
+        // runs post request 
+        // await this.getRecSchedule();
+    }
+
+
+    async closeModifySearch(){
+        await this.setState({
+            modifySearch: false,
+        })
+    }
 
     render() {
 
@@ -262,46 +383,109 @@ class Homepage extends React.Component {
         if (this.state.listCourseIDs == null) {
             // render loading state...
             return (
-                <div className={style.container}>
+                <div className={style.loadContainer}>
                     Loading...
                 </div>
             );
         }
         else {
             // render real UI..
-                return (
-                    <div className={style.container}>
-                        <header className={style.logoContainer}>
-                            <h1>Schedule Planner</h1>
-                            <br/>
-                            <br/>
-                        </header>
-                        <CoursesSelectedList handleGenerate = {this.handleGenerate.bind(this)} selectedCourses={this.state.selectedCourses} listCourseIDs = {this.state.listCourseIDs} popUp={this.state.popUp} removeCourse={this.removeCourse.bind(this)}>
-                            <input type = "submit"></input>
-                        </CoursesSelectedList>
-                        <div className={style.containerInput}>
+            return (
 
-                            <h2>Choose a course</h2>
-                            <div>
-                                <form onSubmit={this.handleAdd}>
-                                    <div>
-                                        <input onChange={this.handleChange} list='recommendedCourseIDs' id="input" className={style.courseInput} type="text" autoComplete="off" placeholder="COMP-0015" />
-                                        <CourseNameRecommendation listCourseIDs = {this.state.listCourseIDs} currentInput = {this.state.currentInput}></CourseNameRecommendation>
-                                    </div>
-                                    <div id = "addPop">
-                                        {this.state.popUp ? <Popup popMap={this.state.popMap} updateSelectedPop={this.updateSelectedPop.bind(this)} closePop={this.closePop.bind(this)} setMessage={this.setMessage.bind(this)}  /> : <input className={style.courseSubmit} type="submit" value="Add" />}
+                <div className={csStyle.csContainer}>
+                    {/* part 1 header logo and stuff  */}
+                    <header >
+                        <h1>Schedule Planner</h1>
+                        <br/>
+                        <br/>
+                    </header>
+    
+                    {/* part 2 the rest goes in flex column */}
+                    <div className={csStyle.columnContainer}>
+                        
+                        {/* part 2-1 the selected courses block */}
+                        <CoursesSelectedList 
+                            handleGenerate = {this.handleGenerate.bind(this)} 
+                            selectedCourses={this.state.selectedCourses} 
+                            listCourseIDs = {this.state.listCourseIDs} 
+                            popUp={this.state.popUp} 
+                            removeCourse={this.removeCourse.bind(this)} 
+                            setMessage={this.setMessage.bind(this)} 
+                            handleSchedule={this.handleSchedule.bind(this)}>
+                        </CoursesSelectedList>
+    
+                        {/* part 2-2 flex row the search input and calendar */}
+                        <div className={csStyle.verticalContainer}>
+                            <div className={csStyle.searchContainer}>
+                                {this.state.modifySearch ? 
+    
+                                    // the modify search button
+                                    <input className={csStyle.courseSubmit} type="button" value="Modify List" onClick={this.closeModifySearch} /> :
+    
+                                    // or the input field that allows user to add courses
+                                    <div className={csStyle.inputContainer}>
+    
+                                        <h2>Choose a course</h2>
+    
+                                        {/* handles the add course form */}
+                                        <form onSubmit={this.handleAdd}>
+                                            
+                                            {/* input text field and search rec droplist */}
+                                            <div>
+                                                <input className={csStyle.courseInput} onChange={this.handleChange} list='recommendedCourseIDs' id="input" type="text" autoComplete="off" placeholder="COMP-0015" />
+                                                <CourseNameRecommendation 
+                                                    listCourseIDs = {this.state.listCourseIDs} 
+                                                    currentInput = {this.state.currentInput}>
+                                                </CourseNameRecommendation>
+                                            </div>
+                                            
+                                            {/* add button */}
+                                            {this.state.popUp ? 
+                                                // popup for courses of same id but diff names
+                                                <Popup 
+                                                    popMap={this.state.popMap} 
+                                                    updateSelectedPop={this.updateSelectedPop.bind(this)} 
+                                                    closePop={this.closePop.bind(this)} 
+                                                    setMessage={this.setMessage.bind(this)}  >
+                                                </Popup> : 
+    
+                                                // or just the add button
+                                                <input className={csStyle.courseSubmit} type="submit" value="Add" />
+                                            }
+    
+                                        </form>
+    
+                                        <br/>
+    
+                                        {/* the alert message */}
+                                        {(this.state.alertMessage.localeCompare("***"))? <div className={style.alert} id="alert">{this.state.alertMessage}</div> : <div className={style.noAlert} id="alert">{this.state.alertMessage}</div>}
                                         
                                     </div>
-                                </form>
+                                
+                                }
+    
+    
+    
+    
                             </div>
-
-
                             <br/>
-                            {(this.state.alertMessage.localeCompare("***"))? <div className={style.alert} id="alert">{this.state.alertMessage}</div> : <div className={style.noAlert} id="alert">{this.state.alertMessage}</div>}
+
+                            {this.state.renderSchedule ? <Week courseSchedule={true} eventInfo={this.state.eventInfo}></Week> : <div></div>}
+    
+    
+    
                         </div>
-                        
+    
+    
+    
                     </div>
-                
+                    
+    
+    
+    
+    
+                </div>
+            
             );
         }
     }

@@ -1,0 +1,70 @@
+h3 {
+    font-size: 15px;
+    font-family: Helvetica, Arial, sans-serif;
+    border-bottom: solid 5px #15519A;
+    text-align: center;
+    color: #15519A;
+    height: 20px;
+
+}
+
+
+
+.dayContainer {
+    display: flex;
+    flex-direction: column;
+    border: solid 1px #15519A;
+    flex-grow: 3;
+    position: relative;
+    text-align: center;
+    align-items: stretch;
+    height: 632px;
+
+
+
+}
+.timeBarContainer {
+    display: flex;
+    flex-direction: column;
+    border: solid 1px #15519A;
+    flex-grow: 1;
+    position: relative;
+    text-align: center;    
+    align-items: stretch;
+    height: 632px;
+
+
+}
+
+.timeSlots {
+    position: relative;
+    z-index: 1;
+    height: 630px;
+
+}
+
+.timeSlot {
+    font-size: 15px;
+    font-family: Helvetica, Arial, sans-serif;
+    border-top: solid 1px #F0F7EE;
+    height: 20px;
+    width: 10vw;
+    /* height: 3vh; */
+
+}
+
+.timeSlotTop {
+    font-size: 15px;
+    font-family: Helvetica, Arial, sans-serif;
+  
+    border-top: solid 1px #15519A;
+    width: 10vw;
+
+    height: 20px;
+    /* height: 3vh; */
+
+}
+.slot {
+    color: #ffffff;
+
+}
