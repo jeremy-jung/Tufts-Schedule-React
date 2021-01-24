@@ -38,87 +38,89 @@ class Week extends React.Component {
         var requestDetail = {
             "objectIds": this.getObjectIDs(),
             "filter": {
-            "time": {
-                "Monday": [
-                {
-                    "time_earliest": "00:00",
-                    "time_latest": "23:59"
+                "time": {
+                    "Monday": [
+                    {
+                        "time_earliest": "00:00",
+                        "time_latest": "23:59"
+                    }
+                    ],
+                    "Tuesday": [
+                    {
+                        "time_earliest": "00:00",
+                        "time_latest": "23:59"
+                    }
+                    ],
+                    "Wednesday": [
+                    {
+                        "time_earliest": "00:00",
+                        "time_latest": "23:59"
+                    }
+                    ],
+                    "Thursday": [
+                    {
+                        "time_earliest": "00:00",
+                        "time_latest": "23:59"
+                    }
+                    ],
+                    "Friday": [
+                    {
+                        "time_earliest": "00:00",
+                        "time_latest": "23:59"
+                    }
+                    ],
+                    "Saturday": [
+                    {
+                        "time_earliest": "00:00",
+                        "time_latest": "23:59"
+                    }
+                    ],
+                    "Sunday": [
+                    {
+                        "time_earliest": "00:00",
+                        "time_latest": "23:59"
+                    }
+                    ]
                 }
-                ],
-                "Tuesday": [
-                {
-                    "time_earliest": "00:00",
-                    "time_latest": "23:59"
-                }
-                ],
-                "Wednesday": [
-                {
-                    "time_earliest": "00:00",
-                    "time_latest": "23:59"
-                }
-                ],
-                "Thursday": [
-                {
-                    "time_earliest": "00:00",
-                    "time_latest": "23:59"
-                }
-                ],
-                "Friday": [
-                {
-                    "time_earliest": "00:00",
-                    "time_latest": "23:59"
-                }
-                ],
-                "Saturday": [
-                {
-                    "time_earliest": "00:00",
-                    "time_latest": "23:59"
-                }
-                ],
-                "Sunday": [
-                {
-                    "time_earliest": "00:00",
-                    "time_latest": "23:59"
-                }
-                ]
-            }
             }
         };
 
 
         fetch(API_URL, {
+            /* NOTE for duncan: when using the API, you can only set  */
             method: 'POST',
-            mode: 'cors', // no-cors, *cors, same-origin
+
+            /* Note to Duncan: don't set mode: to 'no-cors' because the API does have CORS. You can laeve the 'mode:' out and it will work */
+            // mode: 'no-cors', // no-cors, *cors, same-origin
+
             headers: {
             'Content-Type': 'application/json'
             },
-            redirect: 'follow', // manual, *follow, error
-            referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            /* Note to duncan: i dont think you need these. It still works without them i guess? */
+            // redirect: 'follow', // manual, *follow, error
+            // referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
             body: JSON.stringify(requestDetail) // body data type must match "Content-Type" header
         })
-        .then(response => 
-            console.log("response post: " , response))
-            // response.json())
+        .then((response) => 
+            response.json())
         .then(result => {
             //if the request is valid
             console.log("result post: " , result);
             this.setState({
                 eventInfo: result.data
             });
+            /* Note to Duncan: because this console.log is inside a .then() statement, it will execute after response is received */
+            console.log("post request event: ", this.state.eventInfo);
         },
             (error) => {
                 console.log("error", error);
         });
-        
+
+        /* Note to Duncan: this will show undefined because it will be executed before a response is received */
         console.log("post request event: ", this.state.eventInfo);
 
+
     }
-
-
-
-
-
-    
 
 
     render () {
