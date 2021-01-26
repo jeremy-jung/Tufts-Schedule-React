@@ -125,17 +125,31 @@ class Week extends React.Component {
 
     render () {
         console.log("props eventinfo: ", this.props.eventInfo);
-        return(
-            <div className={weekStyle.weekContainer}> 
-                <Day dow="" timeBar={true} courseSchedule={this.props.courseSchedule}></Day>
-                {this.state.dows.map(function (dow) {
-                    return <Day className={weekStyle.day} dow={dow} courseSchedule={this.props.courseSchedule}></Day>;
-                }, this)}
-
-            </div>
-            
-
-        )
+        if (this.state.eventInfo == undefined)
+        {
+            return (
+                <div>
+                    Loading Course Schedule... 
+                </div>
+            )
+        }
+        else
+        {
+            return(
+                <div className={weekStyle.weekContainer}> 
+                    <Day dow="" timeBar={true} courseSchedule={this.props.courseSchedule}></Day>
+                    {this.state.dows.map(function (dow) {
+                        console.log("eventinfo: " , this.state.eventInfo);
+                        console.log("dow" , dow);
+                        return <Day className={weekStyle.day} dow={dow} courseSchedule={this.props.courseSchedule} events={this.state.eventInfo[dow]}></Day>;
+                    }, this)}
+    
+                </div>
+                
+    
+            )
+        }
+        
 
     }
 }

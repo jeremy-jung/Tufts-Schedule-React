@@ -46,7 +46,7 @@ class CourseDetailPop extends React.Component {
                 
                     {/* This is the close div */}
                     <div className={style.closeContainer} >
-                        <button className={style.close} onClick={this.closePop}>X</button>
+                        <button className={style.close} onClick={this.closePop}>✕</button>
                     </div>
                     <p className={style.tit} >{this.props.courseInfo.course_id}</p>
 

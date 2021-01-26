@@ -10,6 +10,7 @@ import style from './views/styles/Homepage.module.css';
 import csStyle from './views/styles/CourseSchedule.module.css';
 import Popup from './views/Popup.js';
 import Week from './views/calendars/Week.js'
+import { ThemeProvider } from 'react-bootstrap';
 
 /* scripts */
 
@@ -221,7 +222,7 @@ class Homepage extends React.Component {
             .then(result => {
                 //if the request is valid
                 this.setState({
-                    listCourseIDs: result.data
+                    listCourseIDs: result.data,
                 });
             },
             (error) => {
@@ -271,6 +272,14 @@ class Homepage extends React.Component {
         })
         console.log("schedule called");
         console.log(this.state.renderSchedule);
+        await this.getListCourseIDs();
+        console.log("called rerender");
+        await this.setState({
+            renderSchedule:false,
+        })
+        await this.setState({
+            renderSchedule:true,
+        })
         // runs post request 
         // await this.getRecSchedule();
     }
