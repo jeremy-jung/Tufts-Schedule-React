@@ -22,9 +22,8 @@ class Event extends React.Component {
         this.getEventHeight = this.getEventHeight.bind(this);
         this.getTranslate = this.getTranslate.bind(this);
         this.setEventDetail = this.setEventDetail.bind(this);
-
+        this.dblClick = this.dblClick.bind(this);
         this.setEventDetail();
-        
 
     }
 
@@ -46,6 +45,7 @@ class Event extends React.Component {
                     + " ▶" +this.state.eventInfo.time_start + "~" 
                     + this.state.eventInfo.time_end + "◀ "
                     +  " Location: " + this.state.eventInfo.location;
+        console.log("doubleclicked");
         return res;
     }
 
@@ -84,6 +84,13 @@ class Event extends React.Component {
         return res;
     }
 
+    async dblClick() {
+        await this.setState({
+            hov: !this.state.hov
+        })
+        console.log("dblckickckc");
+    }
+
 
 
 
@@ -96,10 +103,10 @@ class Event extends React.Component {
 
         return (
             <input type="button" 
+                    id="eventButton"
                     style={eventStyle} 
                     className={this.state.hov ? eStyle.eventButtonHover : eStyle.eventButton} 
-                    onMouseEnter={() => this.setState({hov: true})}
-                    onMouseLeave={() => this.setState({hov: false})}
+                    onDoubleClick={() => this.dblClick()}
                     value={this.state.hov ? this.setEventHover() : this.setEventDetail()}/>
             
 

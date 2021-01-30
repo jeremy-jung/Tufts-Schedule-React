@@ -11,6 +11,7 @@ import csStyle from './views/styles/CourseSchedule.module.css';
 import Popup from './views/Popup.js';
 import Week from './views/calendars/Week.js'
 import { ThemeProvider } from 'react-bootstrap';
+import { json } from 'body-parser';
 
 /* scripts */
 
@@ -30,6 +31,7 @@ class Homepage extends React.Component {
             renderSchedule: false,
             modifySearch: false, // true after render scheduled, false when user is able to add course on spot
             eventInfo: [], // parsed JSON of event info from post request
+            drag: false, // if drag view is selected
         }
 
 
@@ -38,6 +40,7 @@ class Homepage extends React.Component {
         this.setMessage = this.setMessage.bind(this);
         this.updateSelectedPop = this.updateSelectedPop.bind(this);
         this.closeModifySearch = this.closeModifySearch.bind(this);
+        this.handleCheckInclude = this.handleCheckInclude.bind(this);
 
     }
 
@@ -78,6 +81,19 @@ class Homepage extends React.Component {
 
     }
 
+    handleCheckInclude(mappedResult) {
+        this.state.selectedCourses.map(function(course) {
+            if (JSON.stringify(mappedResult) === JSON.stringify(course))
+            {
+                console.log("mappedResult: " , mappedResult);
+                console.log("course: " , course);
+                console.log("equal? " , JSON.stringify(mappedResult) === JSON.stringify(course));
+                return true;
+            }
+        })
+        return false;
+    }
+
     // handles the add function. prevents user from adding non-existing courseID
     async handleAdd(event) {
 
@@ -113,13 +129,18 @@ class Homepage extends React.Component {
                 await this.setMessage("** This course has already been added! **");
             }
             // adds that one course to list
-            else if (this.state.checkSameID || mappedResults.length === 1)
+            else if (this.state.checkSameID && mappedResults.length === 1)
             {
+                console.log("check multt add before" , mappedResults);
+                console.log("check selectedcourses add before" , this.state.selectedCourses);
+                console.log("check include again " , (this.state.selectedCourses.includes(mappedResults[0])))
+
                 // let name = this.state.currentInput.toUpperCase(); // get user input
                 let courseToAdd = mappedResults[0];
                 // UPDATE STATE selectedCourses 
                 var arrayJoined = this.state.selectedCourses.concat(courseToAdd);
-                this.setState({ selectedCourses: arrayJoined });
+                await this.setState({ selectedCourses: arrayJoined });
+                console.log("check selectedcourses add after" , this.state.selectedCourses);
 
                 nameField.value = "";
             }
@@ -316,21 +337,7 @@ class Homepage extends React.Component {
     
                     {/* part 2 the rest goes in flex column */}
                     <div className={csStyle.columnContainer}>
-                        
-                        {/* part 2-1 the selected courses block */}
-                        <CoursesSelectedList 
-                            handleGenerate = {this.handleGenerate.bind(this)} 
-                            selectedCourses={this.state.selectedCourses} 
-                            listCourseIDs = {this.state.listCourseIDs} 
-                            popUp={this.state.popUp} 
-                            removeCourse={this.removeCourse.bind(this)} 
-                            setMessage={this.setMessage.bind(this)} 
-                            handleSchedule={this.handleSchedule.bind(this)}>
-                        </CoursesSelectedList>
-    
-                        {/* part 2-2 flex row the search input and calendar */}
-                        <div className={csStyle.verticalContainer}>
-                            <div className={csStyle.searchContainer}>
+                        <div className={csStyle.searchContainer}>
                                 {this.state.modifySearch ? 
     
                                     // the modify search button
@@ -339,7 +346,6 @@ class Homepage extends React.Component {
                                     // or the input field that allows user to add courses
                                     <div className={csStyle.inputContainer}>
     
-                                        <h2>Choose a course</h2>
     
                                         {/* handles the add course form */}
                                         <form onSubmit={this.handleAdd}>
@@ -352,7 +358,7 @@ class Homepage extends React.Component {
                                                     currentInput = {this.state.currentInput}>
                                                 </CourseNameRecommendation>
                                             </div>
-                                            
+                                            &nbsp;
                                             {/* add button */}
                                             {this.state.popUp ? 
                                                 // popup for courses of same id but diff names
@@ -377,12 +383,30 @@ class Homepage extends React.Component {
                                     </div>
                                 
                                 }
+
+
+
+                            {/* part 2-1 the selected courses block */}
+                            <CoursesSelectedList 
+                                handleGenerate = {this.handleGenerate.bind(this)} 
+                                selectedCourses={this.state.selectedCourses} 
+                                listCourseIDs = {this.state.listCourseIDs} 
+                                popUp={this.state.popUp} 
+                                removeCourse={this.removeCourse.bind(this)} 
+                                setMessage={this.setMessage.bind(this)} 
+                                handleSchedule={this.handleSchedule.bind(this)}>
+                            </CoursesSelectedList>
     
     
     
+                        </div>
+                        
     
-                            </div>
+                        {/* part 2-2 flex row the search input and calendar */}
+                        <div className={csStyle.verticalContainer}>
+                            
                             <br/>
+                            {this.state.renderSchedule ? <input type="button" value={this.state.drag ? "View Schedule" : "Edit Time Preference"} onClick={()=> this.setState({drag: !this.state.drag})}/> : <div></div>}
 
                             {this.state.renderSchedule ? <Week courseSchedule={true} selectedCourses={this.state.selectedCourses} eventInfo={this.state.eventInfo}></Week> : <div></div>}
     

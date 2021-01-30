@@ -125,9 +125,11 @@ class Week extends React.Component {
 
     render () {
         console.log("props eventinfo: ", this.props.eventInfo);
-        if (this.state.eventInfo == undefined)
+        if (this.state.eventInfo === undefined)
         {
+            console.log("check if list updates before: " , this.state.eventInfo);
             return (
+                
                 <div>
                     Loading Course Schedule... 
                 </div>
@@ -135,6 +137,8 @@ class Week extends React.Component {
         }
         else
         {
+            console.log("check if list updates after: " , this.state.eventInfo);
+
             return(
                 <div className={weekStyle.weekContainer}> 
                     <Day dow="" timeBar={true} courseSchedule={this.props.courseSchedule}></Day>

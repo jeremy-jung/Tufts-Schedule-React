@@ -1,5 +1,4 @@
 
-
 import React from 'react';
 import { ThemeProvider } from 'react-bootstrap';
 import dayStyle from './calendarStyles/Day.module.css'
@@ -142,7 +141,6 @@ class Day extends React.Component {
                 {/* <Event eventStyle={{transform:"translateY(43px)", height:"35px"}}></Event> */}
 
                 {/* <div style={{transform:"translateY(-50vh)", backgroundColor:"#9A322B", position:"relative", height:"2vh", zIndex:"2"}} >&nbsp;</div>
-
                 <div style={{transform:"translateY(-60vh)", backgroundColor:"#9A322B", position:"relative", height:"2vh" , zIndex:"2"}} >&nbsp;</div>
  */}
 

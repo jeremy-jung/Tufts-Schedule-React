@@ -2,7 +2,7 @@
     white-space: normal;
     word-wrap: break-word;
 
-    color: #15519A;
+    color: #3E8EDE;
     background-color: #F0F7EE;
     position: absolute;
     border: none;
@@ -13,9 +13,12 @@
 
     width: 10vw;
     border-radius: 5px;
+    
     z-index: 2;
     cursor: pointer;
     -webkit-appearance: none;
+    overflow: scroll;
+
 
 }
 
