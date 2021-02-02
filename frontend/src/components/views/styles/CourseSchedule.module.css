@@ -1,14 +1,18 @@
 /* wraps the logo and h1 */
 header { 
     position: sticky;
-    color: #E2E6EC;
-    background-color: #F0F7EE ;
-    border-bottom: 4px double #3E8EDE;
+
+    background-color: #70C1B3;
+    /* border: double 5px #FFE066; */
+    border-bottom: 5px double #247BA0;
+    /* border-top: 5px double #FFE066; */
+
     margin-left: auto;
-    margin-right: auto;   
-    top: 0;
+    margin-right: auto;
+
+    /* top: 0;
     left: 0;
-    right: 0;
+    right: 0; */
    
     width: 300%;
     z-index: 20;
@@ -23,7 +27,7 @@ h1 {
     font-family: Helvetica, Arial, sans-serif;
 
     padding-left: 1vw;
-    color: #3E8EDE;
+    color: #ffffff;
 }
 
 h2 {
@@ -109,7 +113,7 @@ form {
 /* add button for course*/
 .courseSubmit {
     font-family: Helvetica, Arial, sans-serif;
-    color: #12242B;
+    color: #247BA0;
     background: #ffffff;
     position: relative;
     margin-top: 1vh;
@@ -117,8 +121,9 @@ form {
     font-size: 20px;
     cursor: pointer;
     max-width: 15vw;
-    border-radius: 8px;
+    border-radius: 5px;
     border-width: 2px;
+    border: solid #247BA0;
 
 }
 
@@ -134,4 +139,21 @@ form {
     color: #12242B;
     font-family: Helvetica, Arial, sans-serif;
 
+}
+
+
+.timePref {
+    font-family: Helvetica, Arial, sans-serif;
+    color: #247BA0;
+    border: solid;
+    background: #ffffff;
+    margin-left: auto;
+    margin-right: auto;
+
+    min-height: 5vh;
+    font-size: 20px;
+    cursor: pointer;
+    max-width: 15vw;
+    border-radius: 5px;
+    border-width: 2px;
 }

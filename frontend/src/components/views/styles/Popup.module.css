@@ -17,7 +17,7 @@
 .popupContainer{
 
     position: relative;
-    transform: translateY(-50%);
+    transform: translateX(-12.8vw);
 
     justify-content: center;
     text-align: center;

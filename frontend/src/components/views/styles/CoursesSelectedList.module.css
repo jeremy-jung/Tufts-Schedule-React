@@ -33,7 +33,7 @@ h1 {
     justify-content: center;
 
     background-color: #ffffff;
-    color: #28464B;
+    color: #247BA0;
 
     padding-left: auto;
     padding-right: auto;
@@ -41,7 +41,7 @@ h1 {
     min-width: 15vw;
     min-height: 33px;
 
-    border-radius: 8px;
+    border-radius: 5px;
     border: solid;
     border-width: 2px;
     cursor: pointer;

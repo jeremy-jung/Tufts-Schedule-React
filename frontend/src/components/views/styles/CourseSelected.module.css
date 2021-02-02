@@ -3,7 +3,8 @@
     position: relative;
     height: 50px;
     width: 150px;
-    background-color: #ABC4AB    ;
+    background-color: #70C1B3;
+    border: 2px #FFE066;
     color: #ffffff;
     border-radius: 8px;
     font-size: 20px;
@@ -20,7 +21,7 @@
     position: relative;
     height: 50px;
     width: 150px;
-    background-color: #ABC4AB;
+    background-color: #70C1B3;
     color: #ffffff;
     border-radius: 8px;
     font-size: 20px;

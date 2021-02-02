@@ -378,7 +378,7 @@ class Homepage extends React.Component {
                                         <br/>
     
                                         {/* the alert message */}
-                                        {(this.state.alertMessage.localeCompare("***"))? <div className={style.alert} id="alert">{this.state.alertMessage}</div> : <div className={style.noAlert} id="alert">{this.state.alertMessage}</div>}
+                                        {(this.state.alertMessage.localeCompare("***"))? <div className={csStyle.alert} id="alert">{this.state.alertMessage}</div> : <div className={style.noAlert} id="alert">{this.state.alertMessage}</div>}
                                         
                                     </div>
                                 
@@ -406,8 +406,8 @@ class Homepage extends React.Component {
                         <div className={csStyle.verticalContainer}>
                             
                             <br/>
-                            {this.state.renderSchedule ? <input type="button" value={this.state.drag ? "View Schedule" : "Edit Time Preference"} onClick={()=> this.setState({drag: !this.state.drag})}/> : <div></div>}
-
+                            {this.state.renderSchedule ? <input type="button" className={csStyle.timePref} value={this.state.drag ? "View Schedule" : "Edit Time Preference"} onClick={()=> this.setState({drag: !this.state.drag})}/> : <div></div>}
+                            <br/>
                             {this.state.renderSchedule ? <Week courseSchedule={true} selectedCourses={this.state.selectedCourses} eventInfo={this.state.eventInfo}></Week> : <div></div>}
     
     
