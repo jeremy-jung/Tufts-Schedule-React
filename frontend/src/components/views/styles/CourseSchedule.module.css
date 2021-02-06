@@ -64,6 +64,7 @@ h2 {
 
 /* right col contains user input + calendar  */
 .verticalContainer {
+    position: relative;
     display: flex;
     flex-direction: column;
     flex-grow: 2;

@@ -1,5 +1,5 @@
 .weekContainer {
-
+    position: relative;
     max-width: 80vw;
     /* max-height: 80vh; */
     height: 632px;
@@ -15,3 +15,28 @@
     transform: translateX(2%);
 }
 
+.dragBox {
+    background-color: #ffffff;
+
+    position: absolute;
+    display: block;
+    transform: translateY(74px);
+
+}
+
+.dragWeekContainer {
+    position: relative;
+    max-width: 80vw;
+    /* max-height: 80vh; */
+    height: 632px;
+    flex-shrink: 1;
+    /* padding-top: 5vh; */
+    flex-grow: 2;
+    display: flex;
+    flex-direction: row;
+    /* border: solid 0.1vh #15519A; */
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: center;
+    transform: translateX(2%);
+}

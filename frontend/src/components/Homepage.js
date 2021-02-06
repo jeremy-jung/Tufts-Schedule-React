@@ -406,10 +406,10 @@ class Homepage extends React.Component {
                         <div className={csStyle.verticalContainer}>
                             
                             <br/>
-                            {this.state.renderSchedule ? <input type="button" className={csStyle.timePref} value={this.state.drag ? "View Schedule" : "Edit Time Preference"} onClick={()=> this.setState({drag: !this.state.drag})}/> : <div></div>}
+                            {this.state.renderSchedule ? <input type="button" className={csStyle.timePref} value={this.state.drag ? "View Schedule" : "Edit Time Preference"} onClick={()=> this.setState({drag: !this.state.drag})}/> : <br></br>}
                             <br/>
-                            {this.state.renderSchedule ? <Week courseSchedule={true} selectedCourses={this.state.selectedCourses} eventInfo={this.state.eventInfo}></Week> : <div></div>}
-    
+                            {this.state.renderSchedule ? <Week courseSchedule={true} selectedCourses={this.state.selectedCourses} eventInfo={this.state.eventInfo} drag={false}></Week> : <p></p>}
+                            {this.state.drag ? <Week courseSchedule={true} selectedCourses={this.state.selectedCourses} eventInfo={{}} drag={true}></Week> : <div></div>}
     
     
                         </div>

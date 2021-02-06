@@ -88,7 +88,7 @@ class Day extends React.Component {
 
 
     render() {
-
+        // for the time column
         if (this.props.timeBar)
         {
             return (
@@ -111,6 +111,34 @@ class Day extends React.Component {
                 </div>
             )
         }
+        // for the drag display
+        else if (this.state.events == null)
+        {
+            return (
+                <div className={dayStyle.dayContainer}>
+                    <div className={dayStyle.timeSlots}>
+                        <div className={dayStyle.timeSlotTop}>
+                            <h3>{this.state.dow.substring(0, 3)}</h3>
+                        </div>
+                        
+                        {this.state.timeSlots.map(function (timeInfo) {
+                            if (timeInfo.start.substring(3) == "00")
+                                return  <div className={dayStyle.timeSlotTop} value={timeInfo.start}>&nbsp;</div>;                    
+                            else if (timeInfo.start.substring(4) == "0")
+                                return  <div className={dayStyle.timeSlot} value={timeInfo.start}>&nbsp;</div>;
+                            
+                            else
+                                return <div className={dayStyle.slot} value={timeInfo.start}></div>;
+                        })}
+    
+                    </div>
+                    
+    
+    
+                </div>
+                )
+        }
+        // for display of schedule with events 
         else 
         {
             return (
@@ -133,16 +161,10 @@ class Day extends React.Component {
                 </div>
                 
 
-                {/* <input type="button" style={{transform:"translateY(53px)", backgroundColor:"#9A322B", position:"absolute", height:"20px", zIndex:"2" }} /> */}
-                {/* <Event eventStyle={{transform:"translateY(53px)", height:"40px"}}></Event> */}
                 {this.state.events.map(function (eventInfo) {
                     return <Event eventInfo={eventInfo}> </Event>
                 }, this)}
-                {/* <Event eventStyle={{transform:"translateY(43px)", height:"35px"}}></Event> */}
-
-                {/* <div style={{transform:"translateY(-50vh)", backgroundColor:"#9A322B", position:"relative", height:"2vh", zIndex:"2"}} >&nbsp;</div>
-                <div style={{transform:"translateY(-60vh)", backgroundColor:"#9A322B", position:"relative", height:"2vh" , zIndex:"2"}} >&nbsp;</div>
- */}
+             
 
 
             </div>

@@ -17,7 +17,10 @@ class Week extends React.Component {
     }
 
     componentDidMount() {
-        this.getRecSchedule();
+        if (!this.props.drag)
+        {
+            this.getRecSchedule();
+        }
     }
 
     // maps through selected courses and push all object ids to array
@@ -125,7 +128,7 @@ class Week extends React.Component {
 
     render () {
         console.log("props eventinfo: ", this.props.eventInfo);
-        if (this.state.eventInfo === undefined)
+        if (this.state.eventInfo === undefined && !this.props.drag)
         {
             console.log("check if list updates before: " , this.state.eventInfo);
             return (
@@ -133,6 +136,27 @@ class Week extends React.Component {
                 <div>
                     Loading Course Schedule... 
                 </div>
+            )
+        }
+        else if (this.props.drag)
+        {
+            console.log("check if list updates after: " , this.state.eventInfo);
+
+            return(
+                <div className={weekStyle.dragBox}> 
+                    <div className={weekStyle.dragWeekContainer }> 
+                        <Day dow="" timeBar={true} courseSchedule={this.props.courseSchedule}></Day>
+                        {this.state.dows.map(function (dow) {
+                            console.log("eventinfo: " , this.state.eventInfo);
+                            console.log("dow" , dow);
+                            return <Day className={weekStyle.day} dow={dow} courseSchedule={{}} events={null}></Day>;
+                        }, this)}
+        
+                    </div>
+                </div>
+                
+                
+    
             )
         }
         else
