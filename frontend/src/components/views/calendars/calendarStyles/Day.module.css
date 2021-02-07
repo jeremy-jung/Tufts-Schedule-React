@@ -20,9 +20,22 @@ h3 {
     align-items: stretch;
     height: 716px;
 
+}
 
+
+.dragDayContainer {
+    display: flex;
+    flex-direction: column;
+    border: solid 1px #DEE5E5;
+    /* background-color: #DEE5E5; */
+    flex-grow: 3;
+    position: relative;
+    text-align: center;
+    align-items: stretch;
+    height: 716px;
 
 }
+
 .timeBarContainer {
     display: flex;
     flex-direction: column;
@@ -55,6 +68,7 @@ h3 {
 }
 
 .timeSlotTop {
+    /* background-color: #ffffff; */
     font-size: 15px;
     color: #28464B;
     font-family: Helvetica, Arial, sans-serif;

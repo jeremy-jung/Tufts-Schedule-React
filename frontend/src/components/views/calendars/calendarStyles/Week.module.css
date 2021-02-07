@@ -16,15 +16,17 @@
 }
 
 .dragBox {
-    background-color: #ffffff;
 
     position: absolute;
     display: block;
-    transform: translateY(74px);
+    transform: translateY(69px);
+
 
 }
 
 .dragWeekContainer {
+    background-color: #ffffff;
+
     position: relative;
     max-width: 80vw;
     /* max-height: 80vh; */

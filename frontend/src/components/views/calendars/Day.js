@@ -13,11 +13,14 @@ class Day extends React.Component {
             dow: this.props.dow,
             timeSlots: [],
             courseSchedule: this.props.courseSchedule,
-            events: this.props.events
+            events: this.props.events,
+            startTime: "",
+            endTime: "",
         };
 
         this.generateTime = this.generateTime.bind(this);
         this.createTimeSlots = this.createTimeSlots.bind(this);
+        this.onDrag = this.onDrag.bind(this);
         this.createTimeSlots();
         console.log("events of " , this.state.dow , " : " , this.state.events);
     }
@@ -80,9 +83,20 @@ class Day extends React.Component {
         console.log("what is today: " + this.state.dow);
     }
 
+    onDrag(st){
+        this.setState({
+            startTime: st,
+        })
+    }
 
 
-
+    onDragEnter(e, et) 
+    {
+        this.setState({
+            endTime: et,
+        })
+        console.log("check style of event: " , e.target.style);
+    }
 
 
 
@@ -115,7 +129,7 @@ class Day extends React.Component {
         else if (this.state.events == null)
         {
             return (
-                <div className={dayStyle.dayContainer}>
+                <div className={dayStyle.dragDayContainer}>
                     <div className={dayStyle.timeSlots}>
                         <div className={dayStyle.timeSlotTop}>
                             <h3>{this.state.dow.substring(0, 3)}</h3>
@@ -123,9 +137,9 @@ class Day extends React.Component {
                         
                         {this.state.timeSlots.map(function (timeInfo) {
                             if (timeInfo.start.substring(3) == "00")
-                                return  <div className={dayStyle.timeSlotTop} value={timeInfo.start}>&nbsp;</div>;                    
+                                return  <div className={dayStyle.timeSlotTop} value={timeInfo.start} draggable ondrag={()=>this.onDrag(timeInfo.start)} ondragOver={(e)=>this.onDragOver(e, timeInfo.start)}>&nbsp;</div>;                    
                             else if (timeInfo.start.substring(4) == "0")
-                                return  <div className={dayStyle.timeSlot} value={timeInfo.start}>&nbsp;</div>;
+                                return  <div className={dayStyle.timeSlot} value={timeInfo.start} draggable ondrag={()=>this.onDrag(timeInfo.start)} ondragOver={(e)=>this.onDragOver(e, timeInfo.start)}>&nbsp;</div>;
                             
                             else
                                 return <div className={dayStyle.slot} value={timeInfo.start}></div>;
