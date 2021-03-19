@@ -1,21 +1,26 @@
 /*
     List containing selected selected courses represented by {CourseSelected}
-    Created by Jeremy Jung
+    Created by Jeremy Jung, Duncan Chang
 */
 
 import React from 'react';
 import style from './styles/CoursesSelectedList.module.css';
 import CourseSelected from './CourseSelected.js';
+
 import {
     Link
 } from "react-router-dom";
+
 class CoursesSelectedList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             listCourseIDs: this.props.listCourseIDs,
             coursePopDetail: false,
+            schedulePage: false,
         }
+
+        this.handleGenerate = this.handleGenerate.bind(this);
 
     }
 
@@ -36,12 +41,38 @@ class CoursesSelectedList extends React.Component {
         })
     }
 
+    async scheduleCondition(){
+        if (this.props.selectedCourses.length > 0)
+        {
+            await this.setState({
+                schedulePage: true,
+            })
+        }
+    }
+
     // async removeCourse(item)
     // {
     //     await this.props.removeCourse(item);
     // }
 
+    async handleGenerate() {
+        await this.scheduleCondition();
+
+        if (this.state.schedulePage)
+        {
+            this.props.handleGenerate();
+            // calls this from props and post request rec schedule
+            this.props.handleSchedule(true);
+        }
+        else 
+        {
+            this.props.setMessage("*** Please Add Course to List ***");
+        }
+    }
+
     render() {
+      
+        
         console.log("my seleceted courses: " , this.props.selectedCourses);
         let containerClass;
         // checks which css class the container should follow
@@ -65,9 +96,11 @@ class CoursesSelectedList extends React.Component {
                     }, this)}
                 </div>
                 <br/>
-                <Link className = {this.state.coursePopDetail ? style.popButton : style.button} onClick = {this.props.handleGenerate} to = "/schedule">
+
+                <input type="button" value="Render Schedule" className = {this.state.coursePopDetail ? style.popButton : style.button} onClick={this.handleGenerate}/>
+                {/* <Link className = {this.state.coursePopDetail ? style.popButton : style.button} onClick = {this.props.handleGenerate} to = "/schedule">
                     Schedule
-                </Link>
+                </Link> */}
             </div>
         );
     }

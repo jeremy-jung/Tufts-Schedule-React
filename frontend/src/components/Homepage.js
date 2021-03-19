@@ -1,14 +1,17 @@
 /*
     Pages: Home page
-    Created by Jeremy Jung
+    Created by Jeremy Jung, Duncan Chang
 */
 
 import React from 'react';
-// import Popup from 'reactjs-popup';
 import CoursesSelectedList from './views/CoursesSelectedList.js';
 import CourseNameRecommendation from './views/CourseNameRecommendation.js';
 import style from './views/styles/Homepage.module.css';
+import csStyle from './views/styles/CourseSchedule.module.css';
 import Popup from './views/Popup.js';
+import Week from './views/calendars/Week.js'
+import { ThemeProvider } from 'react-bootstrap';
+import { json } from 'body-parser';
 
 /* scripts */
 
@@ -20,11 +23,15 @@ class Homepage extends React.Component {
             listCourseIDs: null, // all course IDs in semester catalog (mapped first letter)
             currentInput: null,
             recommendedCourseIDs: null,
-            selectedCourses: [],
-            checkSameID: true,
-            popUp: false,
+            selectedCourses: [], // courses added to list
+            checkSameID: true, // if courses returned from API has same couresID
+            popUp: false, // the state of popUp
             popMap: [],
-            alertMessage: "***",
+            alertMessage: "***", 
+            renderSchedule: false,
+            modifySearch: false, // true after render scheduled, false when user is able to add course on spot
+            eventInfo: [], // parsed JSON of event info from post request
+            drag: false, // if drag view is selected
         }
 
 
@@ -32,6 +39,9 @@ class Homepage extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.setMessage = this.setMessage.bind(this);
         this.updateSelectedPop = this.updateSelectedPop.bind(this);
+        this.closeModifySearch = this.closeModifySearch.bind(this);
+        this.handleCheckInclude = this.handleCheckInclude.bind(this);
+
     }
 
     /*
@@ -71,6 +81,19 @@ class Homepage extends React.Component {
 
     }
 
+    handleCheckInclude(mappedResult) {
+        this.state.selectedCourses.map(function(course) {
+            if (JSON.stringify(mappedResult) === JSON.stringify(course))
+            {
+                console.log("mappedResult: " , mappedResult);
+                console.log("course: " , course);
+                console.log("equal? " , JSON.stringify(mappedResult) === JSON.stringify(course));
+                return true;
+            }
+        })
+        return false;
+    }
+
     // handles the add function. prevents user from adding non-existing courseID
     async handleAdd(event) {
 
@@ -106,13 +129,18 @@ class Homepage extends React.Component {
                 await this.setMessage("** This course has already been added! **");
             }
             // adds that one course to list
-            else if (this.state.checkSameID || mappedResults.length === 1)
+            else if (this.state.checkSameID && mappedResults.length === 1)
             {
+                console.log("check multt add before" , mappedResults);
+                console.log("check selectedcourses add before" , this.state.selectedCourses);
+                console.log("check include again " , (this.state.selectedCourses.includes(mappedResults[0])))
+
                 // let name = this.state.currentInput.toUpperCase(); // get user input
                 let courseToAdd = mappedResults[0];
                 // UPDATE STATE selectedCourses 
                 var arrayJoined = this.state.selectedCourses.concat(courseToAdd);
-                this.setState({ selectedCourses: arrayJoined });
+                await this.setState({ selectedCourses: arrayJoined });
+                console.log("check selectedcourses add after" , this.state.selectedCourses);
 
                 nameField.value = "";
             }
@@ -202,6 +230,7 @@ class Homepage extends React.Component {
     componentDidMount() {
         // initialize {listCourseIDs} in this component's state
         this.getListCourseIDs();
+  
 
     }
     
@@ -214,13 +243,15 @@ class Homepage extends React.Component {
             .then(result => {
                 //if the request is valid
                 this.setState({
-                    listCourseIDs: result.data
+                    listCourseIDs: result.data,
                 });
             },
             (error) => {
                 console.log("error", error);
         });
     }
+
+
 
     /* CourseID input scripts */
 
@@ -255,6 +286,31 @@ class Homepage extends React.Component {
         }
 
     }
+    async handleSchedule(check) {
+        await this.setState({
+            renderSchedule: check,
+            modifySearch: check,
+        })
+        console.log("schedule called");
+        console.log(this.state.renderSchedule);
+        await this.getListCourseIDs();
+        console.log("called rerender");
+        await this.setState({
+            renderSchedule:false,
+        })
+        await this.setState({
+            renderSchedule:true,
+        })
+        // runs post request 
+        // await this.getRecSchedule();
+    }
+
+
+    async closeModifySearch(){
+        await this.setState({
+            modifySearch: false,
+        })
+    }
 
     render() {
 
@@ -262,46 +318,112 @@ class Homepage extends React.Component {
         if (this.state.listCourseIDs == null) {
             // render loading state...
             return (
-                <div className={style.container}>
+                <div className={style.loadContainer}>
                     Loading...
                 </div>
             );
         }
         else {
             // render real UI..
-                return (
-                    <div className={style.container}>
-                        <header className={style.logoContainer}>
-                            <h1>Schedule Planner</h1>
-                            <br/>
-                            <br/>
-                        </header>
-                        <CoursesSelectedList handleGenerate = {this.handleGenerate.bind(this)} selectedCourses={this.state.selectedCourses} listCourseIDs = {this.state.listCourseIDs} popUp={this.state.popUp} removeCourse={this.removeCourse.bind(this)}>
-                            <input type = "submit"></input>
-                        </CoursesSelectedList>
-                        <div className={style.containerInput}>
+            return (
 
-                            <h2>Choose a course</h2>
-                            <div>
-                                <form onSubmit={this.handleAdd}>
-                                    <div>
-                                        <input onChange={this.handleChange} list='recommendedCourseIDs' id="input" className={style.courseInput} type="text" autoComplete="off" placeholder="COMP-0015" />
-                                        <CourseNameRecommendation listCourseIDs = {this.state.listCourseIDs} currentInput = {this.state.currentInput}></CourseNameRecommendation>
-                                    </div>
-                                    <div id = "addPop">
-                                        {this.state.popUp ? <Popup popMap={this.state.popMap} updateSelectedPop={this.updateSelectedPop.bind(this)} closePop={this.closePop.bind(this)} setMessage={this.setMessage.bind(this)}  /> : <input className={style.courseSubmit} type="submit" value="Add" />}
+                <div className={csStyle.csContainer}>
+                    {/* part 1 header logo and stuff  */}
+                    <header >
+                        <h1>Schedule Planner</h1>
+                        <br/>
+                        <br/>
+                    </header>
+    
+                    {/* part 2 the rest goes in flex column */}
+                    <div className={csStyle.columnContainer}>
+                        <div className={csStyle.searchContainer}>
+                                {this.state.modifySearch ? 
+    
+                                    // the modify search button
+                                    <input className={csStyle.courseSubmit} type="button" value="Modify List" onClick={this.closeModifySearch} /> :
+    
+                                    // or the input field that allows user to add courses
+                                    <div className={csStyle.inputContainer}>
+    
+    
+                                        {/* handles the add course form */}
+                                        <form onSubmit={this.handleAdd}>
+                                            
+                                            {/* input text field and search rec droplist */}
+                                            <div>
+                                                <input className={csStyle.courseInput} onChange={this.handleChange} list='recommendedCourseIDs' id="input" type="text" autoComplete="off" placeholder="COMP-0015" />
+                                                <CourseNameRecommendation 
+                                                    listCourseIDs = {this.state.listCourseIDs} 
+                                                    currentInput = {this.state.currentInput}>
+                                                </CourseNameRecommendation>
+                                            </div>
+                                            &nbsp;
+                                            {/* add button */}
+                                            {this.state.popUp ? 
+                                                // popup for courses of same id but diff names
+                                                <Popup 
+                                                    popMap={this.state.popMap} 
+                                                    updateSelectedPop={this.updateSelectedPop.bind(this)} 
+                                                    closePop={this.closePop.bind(this)} 
+                                                    setMessage={this.setMessage.bind(this)}  >
+                                                </Popup> : 
+    
+                                                // or just the add button
+                                                <input className={csStyle.courseSubmit} type="submit" value="Add" />
+                                            }
+    
+                                        </form>
+    
+                                        <br/>
+    
+                                        {/* the alert message */}
+                                        {(this.state.alertMessage.localeCompare("***"))? <div className={csStyle.alert} id="alert">{this.state.alertMessage}</div> : <div className={style.noAlert} id="alert">{this.state.alertMessage}</div>}
                                         
                                     </div>
-                                </form>
-                            </div>
+                                
+                                }
 
 
-                            <br/>
-                            {(this.state.alertMessage.localeCompare("***"))? <div className={style.alert} id="alert">{this.state.alertMessage}</div> : <div className={style.noAlert} id="alert">{this.state.alertMessage}</div>}
+
+                            {/* part 2-1 the selected courses block */}
+                            <CoursesSelectedList 
+                                handleGenerate = {this.handleGenerate.bind(this)} 
+                                selectedCourses={this.state.selectedCourses} 
+                                listCourseIDs = {this.state.listCourseIDs} 
+                                popUp={this.state.popUp} 
+                                removeCourse={this.removeCourse.bind(this)} 
+                                setMessage={this.setMessage.bind(this)} 
+                                handleSchedule={this.handleSchedule.bind(this)}>
+                            </CoursesSelectedList>
+    
+    
+    
                         </div>
                         
+    
+                        {/* part 2-2 flex row the search input and calendar */}
+                        <div className={csStyle.verticalContainer}>
+                            
+                            <br/>
+                            {this.state.renderSchedule ? <input type="button" className={csStyle.timePref} value={this.state.drag ? "View Schedule" : "Edit Time Preference"} onClick={()=> this.setState({drag: !this.state.drag})}/> : <br></br>}
+                            <br/>
+                            {this.state.renderSchedule ? <Week courseSchedule={true} selectedCourses={this.state.selectedCourses} eventInfo={this.state.eventInfo} drag={false}></Week> : <p></p>}
+                            {this.state.drag ? <Week courseSchedule={true} selectedCourses={this.state.selectedCourses} eventInfo={{}} drag={true}></Week> : <div></div>}
+    
+    
+                        </div>
+    
+    
+    
                     </div>
-                
+                    
+    
+    
+    
+    
+                </div>
+            
             );
         }
     }

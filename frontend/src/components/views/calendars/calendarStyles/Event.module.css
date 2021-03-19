@@ -1,0 +1,44 @@
+.eventButton {
+    white-space: normal;
+    word-wrap: break-word;
+
+    color: #3E8EDE;
+    background-color: #F0F7EE;
+    position: absolute;
+    border: none;
+    border-left: 1px solid #3E8EDE;
+    border-right: 10px solid #3E8EDE;
+    border-top: 1px solid #3E8EDE;
+    border-bottom: 1px solid #3E8EDE;
+
+    width: 10vw;
+    border-radius: 5px;
+    
+    z-index: 2;
+    cursor: pointer;
+    -webkit-appearance: none;
+    overflow: scroll;
+
+
+}
+
+.eventButtonHover {
+    white-space: normal;
+    word-wrap: break-word;
+
+    color: #F0F7EE;
+    background-color: #3E8EDE;
+    position: absolute;
+    border-left: 1px solid #F0F7EE;
+    border-right: 10px solid #F0F7EE;
+    border-top: 1px solid #F0F7EE;
+    border-bottom: 1px solid #F0F7EE;
+    width: 10vw;
+    border-radius: 5px;
+    z-index: 2;
+    cursor: pointer;
+    -webkit-appearance: none;
+    overflow: scroll;
+
+
+}

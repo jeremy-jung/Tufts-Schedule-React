@@ -1,25 +1,26 @@
 
 header { 
+    display: flex;
+    max-width: 100vw;
     position: relative;
+    margin: auto;
+    padding-left: auto;
+    padding-right: auto;
     color: #E2E6EC;
-    border: solid #3E8EDE;
-    border-bottom: 10px double #3E8EDE;
+    border:none; 
+    /* border-bottom: 2px double #3E8EDE; */
+
 }
 
 h1 {
-    padding-left: 1vw;
     color: #3E8EDE;
-    font-weight: heavy;
 }
 
 h2 {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Helvetica, Arial, sans-serif;
 }
 
-.logoContainer {
-    display: flex;
-    width: 100vw;
-}
+
 
 .container{
     display: flex;
@@ -28,6 +29,21 @@ h2 {
     justify-content: center;
     z-index: 7;
 }
+
+.loadContainer { 
+    display: flex;
+    flex-flow: row wrap;
+    /*flex-direction: row;*/
+    justify-content: center;
+    z-index: 7;
+    font-family: Helvetica, Arial, sans-serif;
+    color: #12242B;
+    margin-top: auto;
+    margin-bottom: auto;
+
+
+}
+
 
 .containerInput {
     position: relative;
@@ -54,25 +70,27 @@ h2 {
 }
 
 .courseSubmit {
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: Helvetica, Arial, sans-serif;
     color: #12242B;
-    background: #E2E6EC;
+    background: #ffffff;
     position: relative;
     margin-top: 1vh;
     height: 5vh;
     font-size: 20px;
     cursor: pointer;
     border-radius: 8px;
+    border-width: 2px;
+
 }
 
 .alert {
     color: #9A322B;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: Helvetica, Arial, sans-serif;
 
 }
 
 .notAlert {
     color: #12242B;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: Helvetica, Arial, sans-serif;
 
 }
