@@ -2,14 +2,14 @@
     white-space: normal;
     word-wrap: break-word;
 
-    color: #3E8EDE;
-    background-color: #F0F7EE;
+    color: #247BA0;
+    background-color: #ffffff;
     position: absolute;
     border: none;
-    border-left: 1px solid #3E8EDE;
-    border-right: 10px solid #3E8EDE;
-    border-top: 1px solid #3E8EDE;
-    border-bottom: 1px solid #3E8EDE;
+    border-left: 1px solid #247BA0;
+    border-right: 10px solid #247BA0;
+    border-top: 1px solid #247BA0;
+    border-bottom: 1px solid #247BA0;
 
     width: 10vw;
     border-radius: 5px;
@@ -26,13 +26,13 @@
     white-space: normal;
     word-wrap: break-word;
 
-    color: #F0F7EE;
-    background-color: #3E8EDE;
+    color: #ffffff;
+    background-color: #247BA0;
     position: absolute;
-    border-left: 1px solid #F0F7EE;
-    border-right: 10px solid #F0F7EE;
-    border-top: 1px solid #F0F7EE;
-    border-bottom: 1px solid #F0F7EE;
+    border-left: 1px solid #DEE5E5;
+    border-right: 10px solid #DEE5E5;
+    border-top: 1px solid #DEE5E5;
+    border-bottom: 1px solid #DEE5E5;
     width: 10vw;
     border-radius: 5px;
     z-index: 2;

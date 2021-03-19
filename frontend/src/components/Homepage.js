@@ -32,6 +32,11 @@ class Homepage extends React.Component {
             modifySearch: false, // true after render scheduled, false when user is able to add course on spot
             eventInfo: [], // parsed JSON of event info from post request
             drag: false, // if drag view is selected
+            dragAbove: false,
+            dayTimePref: {"Monday":[], "Tuesday":[],"Wednesday":[], "Thursday":[],"Friday":[], "Saturday":[],"Sunday":[] }, // stores the pref time in int
+            postReqTime: {"Monday":[], "Tuesday":[],"Wednesday":[], "Thursday":[],"Friday":[], "Saturday":[],"Sunday":[] }, // stores the pref time in proper json format
+            noTimeCourse: [],
+            showNoTimeCourse: false,
         }
 
 
@@ -41,8 +46,10 @@ class Homepage extends React.Component {
         this.updateSelectedPop = this.updateSelectedPop.bind(this);
         this.closeModifySearch = this.closeModifySearch.bind(this);
         this.handleCheckInclude = this.handleCheckInclude.bind(this);
-
-    }
+        this.sortTimePref = this.sortTimePref.bind(this);
+        this.handleReload = this.handleReload.bind(this);
+        this.showUnscheduled = this.showUnscheduled.bind(this);
+    }   
 
     /*
      * handleCheckID
@@ -295,6 +302,7 @@ class Homepage extends React.Component {
         console.log(this.state.renderSchedule);
         await this.getListCourseIDs();
         console.log("called rerender");
+        this.convertSchedulePref();
         await this.setState({
             renderSchedule:false,
         })
@@ -312,7 +320,141 @@ class Homepage extends React.Component {
         })
     }
 
+    async storeTimePref(timePref)
+    {
+        await this.setState({            
+            dayTimePref: timePref,
+        })
+
+    }
+
+    async sortTimePref()
+    {
+        console.log("called here from HOME");
+        for (var key in this.state.dayTimePref) {
+            console.log("try print sort: " , this.state.dayTimePref[key].sort());
+            this.state.dayTimePref[key] = this.state.dayTimePref[key].sort();
+            
+            console.log("HOME - sorted: " , this.state.dayTimePref[key]);
+        }
+    }
+
+    convertTimeIntToString(time)
+    {
+        var hours = Math.trunc(time / 100);
+        var minutes = time % 100 + hours * 60;
+        console.log("minutes with hour: " , minutes);
+        hours = Math.trunc(minutes / 60);
+        minutes = minutes % 60;
+        console.log("intToString - time: " , time , " hour: ", hours, " minute: " , minutes);
+        var hourString = "" + hours;
+        var minuteString = "" + minutes;
+        if (hours < 10)
+        {
+            hourString = "0" + hours;
+        }
+        if (minutes < 10)
+        {
+            minuteString = "0" + minutes;
+        }
+
+        return hourString + ":" + minuteString;
+
+    }
+
+    // converts all int time pref to string and push in json
+    convertSchedulePref() {
+        for (var key in this.state.dayTimePref) {
+            /* reset all to empty */
+            this.state.postReqTime[key] = [];
+            // check if it's empty, empty -> 00:00 to 23:59
+            if (this.state.dayTimePref[key].length == 0)
+            {
+                this.state.postReqTime[key].push({
+                    "time_earliest": "00:00",
+                    "time_latest": "23:59"
+                });
+            }
+            else if (this.state.dayTimePref[key].length == 1)
+            {
+                var begin = this.state.dayTimePref[key][0];
+                var end = this.state.dayTimePref[key][0] + 30;
+                
+                this.state.postReqTime[key].push({
+                    "time_earliest": this.convertTimeIntToString(begin),
+                    "time_latest": this.convertTimeIntToString(end)
+                });
+            }
+            else {
+                var begin = this.state.dayTimePref[key][0];
+                for (var i = 1; i < this.state.dayTimePref[key].length; i++)
+                {
+                    // if the time is not consecutive from previous
+                    console.log("prev: ", this.state.dayTimePref[key][i-1], " current: ", this.state.dayTimePref[key][i]);
+                    if ((this.state.dayTimePref[key][i - 1] + 30) != (this.state.dayTimePref[key][i]))
+                    {
+                        this.state.postReqTime[key].push({
+                            "time_earliest": this.convertTimeIntToString(begin),
+                            "time_latest": this.convertTimeIntToString(this.state.dayTimePref[key][i - 1] + 30)
+                        });
+                        begin = this.state.dayTimePref[key][i];
+                        // if time is the end, and not consecutive from previous
+                        if (i == (this.state.dayTimePref[key].length - 1))
+                        {
+                            this.state.postReqTime[key].push({
+                                "time_earliest": this.convertTimeIntToString(begin),
+                                "time_latest": this.convertTimeIntToString(begin + 30)
+                            });
+                        }
+                    }
+                    // if time is consecutive, but last
+                    else if (i == (this.state.dayTimePref[key].length - 1))
+                    {
+                        this.state.postReqTime[key].push({
+                            "time_earliest": this.convertTimeIntToString(begin),
+                            "time_latest": this.convertTimeIntToString(this.state.dayTimePref[key][i] + 30)
+                        });
+                    }
+                    
+                }
+            }
+            
+
+            
+            
+        }
+    }
+
+    async handleReload() 
+    {
+        this.setState({
+            drag: !this.state.drag,
+        })
+        if (this.state.drag) {
+            await this.sortTimePref();
+            await this.convertSchedulePref();
+            this.handleSchedule(true);
+
+        }
+    }
+
+    showUnscheduled(show, courses) {
+        console.log("showUnscheduled is called ", show, courses);
+        if (show) {
+            this.state.noTimeCourse = courses;
+            console.log("unscheduled courses? " , this.state.noTimeCourse);
+            this.state.showNoTimeCourse = true;
+
+        }
+        else {
+            this.state.noTimeCourse =[];
+            console.log("unscheduled courses? ", this.state.noTimeCourse);
+            this.state.showNoTimeCourse = false;
+        }
+    }
+
     render() {
+        console.log("HOMEPAGE: daytimepref: ", this.state.dayTimePref);
 
         /* asynchronously render home page after getting courseIDs*/
         if (this.state.listCourseIDs == null) {
@@ -353,6 +495,7 @@ class Homepage extends React.Component {
                                             {/* input text field and search rec droplist */}
                                             <div>
                                                 <input className={csStyle.courseInput} onChange={this.handleChange} list='recommendedCourseIDs' id="input" type="text" autoComplete="off" placeholder="COMP-0015" />
+                                                
                                                 <CourseNameRecommendation 
                                                     listCourseIDs = {this.state.listCourseIDs} 
                                                     currentInput = {this.state.currentInput}>
@@ -370,7 +513,7 @@ class Homepage extends React.Component {
                                                 </Popup> : 
     
                                                 // or just the add button
-                                                <input className={csStyle.courseSubmit} type="submit" value="Add" />
+                                                <input className={csStyle.courseAdd} type="submit" value="Add" />
                                             }
     
                                         </form>
@@ -383,6 +526,14 @@ class Homepage extends React.Component {
                                     </div>
                                 
                                 }
+                            {this.state.showNoTimeCourse ? 
+                                this.state.noTimeCourse.map(function (course){
+                                    console.log("course from unscheduled: " , course);
+                                    return <div className={csStyle.unscheduled}>{course.details + <br/> + course.name}</div>
+                                }, this)
+                                :
+                                <p></p>
+                            }
 
 
 
@@ -406,10 +557,10 @@ class Homepage extends React.Component {
                         <div className={csStyle.verticalContainer}>
                             
                             <br/>
-                            {this.state.renderSchedule ? <input type="button" className={csStyle.timePref} value={this.state.drag ? "View Schedule" : "Edit Time Preference"} onClick={()=> this.setState({drag: !this.state.drag})}/> : <br></br>}
+                            {this.state.renderSchedule ? <input type="button" className={csStyle.timePref} value={this.state.drag ? "View Schedule" : "Edit Time Preference"} onClick={()=> this.handleReload()}/> : <br></br>}
                             <br/>
-                            {this.state.renderSchedule ? <Week courseSchedule={true} selectedCourses={this.state.selectedCourses} eventInfo={this.state.eventInfo} drag={false}></Week> : <p></p>}
-                            {this.state.drag ? <Week courseSchedule={true} selectedCourses={this.state.selectedCourses} eventInfo={{}} drag={true}></Week> : <div></div>}
+                            {this.state.renderSchedule ? <Week courseSchedule={true} selectedCourses={this.state.selectedCourses} eventInfo={this.state.eventInfo} drag={false} dayTimePref={this.state.dayTimePref} postReqTime={this.state.postReqTime} showUnscheduled={()=>this.showUnscheduled()}></Week> : <p></p>}
+                            {this.state.drag ? <Week courseSchedule={true} selectedCourses={this.state.selectedCourses} eventInfo={{}} drag={true} storeTimePref={() => this.storeTimePref.bind(this)} dayTimePref={this.state.dayTimePref}></Week> : <div></div>}
     
     
                         </div>

@@ -17,8 +17,8 @@ class Event extends React.Component {
             hov: false,
 
         };
-        console.log("info: ", this.state.eventInfo);
-        console.log("eventheight: " , this.getEventHeight);
+        // console.log("info: ", this.state.eventInfo);
+        // console.log("eventheight: " , this.getEventHeight);
         this.getEventHeight = this.getEventHeight.bind(this);
         this.getTranslate = this.getTranslate.bind(this);
         this.setEventDetail = this.setEventDetail.bind(this);
@@ -32,7 +32,7 @@ class Event extends React.Component {
         var courseID = detail[1];
         var courseName = detail[0];
         var res = "";
-        console.log("detail: " + courseID + " - " + courseName);
+        // console.log("detail: " + courseID + " - " + courseName);
         return courseID + " : " + courseName;
 
     }
@@ -53,21 +53,16 @@ class Event extends React.Component {
         let res = 0;
         // end time hour - start time hour
         let hr = (parseInt(this.state.eventInfo.time_end.substring(0, 2)) - parseInt(this.state.eventInfo.time_start.substring(0, 2))) * 60
-        console.log("eventheight hr: ", hr);
+        // console.log("eventheight hr: ", hr);
         // 60 - start time min + end time min
         let min = (hr + parseInt(this.state.eventInfo.time_end.substring(3, 5))) - parseInt(this.state.eventInfo.time_start.substring(3, 5))
-        console.log("eventheight min: ", min);
+        // console.log("eventheight min: ", min);
 
-        // // if start time's min == "00" then don't count start time's min
-        // if (parseInt(this.state.eventInfo.time_start.substring(3, 5)) == 0)
-        // {
-        //     min = parseInt(this.state.eventInfo.time_end.substring(3, 5));
-        // }
+        
 
         res = min / 30 * 21;
         // // gets the height of event in px
-        // res = (hr + min) * 21;
-        console.log("eventheihgt: " + res + "px");
+        // console.log("eventheihgt: " + res + "px");
         return res;
     }
 
