@@ -89,7 +89,8 @@ class CoursesSelectedList extends React.Component {
         console.log("containerClass: ", containerClass);
         return (
             <div className = {containerClass ? style.popContainer : style.container}id = "coursesSelectedList">
-                <h2>Your selected courses</h2>
+                {/* <h2>Your selected courses</h2> */}
+                <br/>
                 <div className={this.state.coursePopDetail ? style.popCourseList : style.courseList}>
                     {this.props.selectedCourses.map(function (courseInfo) {
                         return <CourseSelected courseInfo = {courseInfo} pop={false} handlePop = {this.handlePop.bind(this)} closePop= {this.closePop.bind(this)} coursePopDetail = {this.state.coursePopDetail} removeCourse={this.props.removeCourse}></CourseSelected>

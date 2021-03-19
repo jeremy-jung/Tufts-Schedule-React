@@ -15,14 +15,16 @@
     transform: translateX(2%);
 }
 
+
+
 .dragBox {
 
     position: absolute;
     display: block;
     transform: translateY(69px);
 
-
 }
+
 
 .dragWeekContainer {
     background-color: #ffffff;

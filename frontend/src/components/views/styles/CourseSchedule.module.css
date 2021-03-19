@@ -124,7 +124,24 @@ form {
     font-size: 20px;
     cursor: pointer;
     border-radius: 5px;
-    border-width: 2px;
+    border-width: 1px;
+    border: solid #247BA0;
+
+}
+
+.courseAdd {
+    font-family: Helvetica, Arial, sans-serif;
+    color: #247BA0;
+    background: #ffffff;
+    position: relative;
+    margin-top: 1vh;
+
+    min-width: 5vw;
+    min-height: 33px;    
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    border-width: 0px;
     border: solid #247BA0;
 
 }
