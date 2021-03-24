@@ -1,7 +1,6 @@
 
 
 import React, {useState} from 'react';
-import NavbarCollapse from 'react-bootstrap/esm/NavbarCollapse';
 import eStyle from './calendarStyles/Event.module.css'
 
 

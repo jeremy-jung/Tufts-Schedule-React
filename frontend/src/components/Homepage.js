@@ -10,8 +10,6 @@ import style from './views/styles/Homepage.module.css';
 import csStyle from './views/styles/CourseSchedule.module.css';
 import Popup from './views/Popup.js';
 import Week from './views/calendars/Week.js'
-import { ThemeProvider } from 'react-bootstrap';
-import { json } from 'body-parser';
 
 /* scripts */
 

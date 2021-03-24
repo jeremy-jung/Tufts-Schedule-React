@@ -14,6 +14,7 @@ class Week extends React.Component {
             postReqTime: {"Monday":[], "Tuesday":[],"Wednesday":[], "Thursday":[],"Friday":[], "Saturday":[],"Sunday":[] },
             dayTimePref: this.props.dayTimePref,
             retrievedTime: this.props.dayTimePref,
+            requestError: false
         }
     
         this.retrieveTimePref = this.retrieveTimePref.bind(this);
@@ -212,8 +213,12 @@ class Week extends React.Component {
             }
         };
 
+        this.setState({
+            requestError: true
+        });
 
         await fetch(API_URL, {
+            
             /* NOTE for duncan: when using the API, you can only set  */
             method: 'POST',
 
@@ -241,6 +246,9 @@ class Week extends React.Component {
         },
             (error) => {
                 console.log("error", error);
+                this.setState({
+                    requestError: true
+                });
         });
 
         /* Note to Duncan: this will show undefined because it will be executed before a response is received */
@@ -257,13 +265,22 @@ class Week extends React.Component {
 
 
     render () {
-        if (this.state.eventInfo === undefined && !this.props.drag)
+        if (this.state.eventInfo === undefined && !this.props.drag && !this.state.requestError)
         {
             console.log("check if list updates before: " , this.state.eventInfo);
             return (
                 
                 <div>
                     Loading Course Schedule... 
+                </div>
+            )
+        }
+        else if (this.state.eventInfo === undefined && !this.props.drag && this.state.requestError) {
+            /* the request for schedule came back with an error */
+            return (
+
+                <div>
+                    No possible schedule matches given constraints. Reselect your time preferences.
                 </div>
             )
         }
