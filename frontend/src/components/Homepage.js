@@ -492,7 +492,7 @@ class Homepage extends React.Component {
                                             
                                             {/* input text field and search rec droplist */}
                                             <div>
-                                                <input className={csStyle.courseInput} onChange={this.handleChange} list='recommendedCourseIDs' id="input" type="text" autoComplete="off" placeholder="COMP-0015" />
+                                                <input className={csStyle.courseInput} onChange={this.handleChange} list='recommendedCourseIDs' id="input" type="text" autoComplete="off" placeholder="CS-0015" />
                                                 
                                                 <CourseNameRecommendation 
                                                     listCourseIDs = {this.state.listCourseIDs} 
