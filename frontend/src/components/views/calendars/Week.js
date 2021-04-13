@@ -45,6 +45,8 @@ class Week extends React.Component {
         }
     }
     async scheduleReload() {
+
+
         console.log("componentDidMount() - drag? " , this.props.drag);
         if (!this.props.drag)
         {
@@ -181,10 +183,6 @@ class Week extends React.Component {
                     
                 }
             }
-            
-
-            
-            
         }
     }
 
@@ -201,6 +199,10 @@ class Week extends React.Component {
 
     // post requests recommended schedule made by API
     async getRecSchedule() {
+        this.setState({
+            requestError: false
+        });
+
         console.log("selected Courses: " , this.state.selectedCourses);
         console.log("object ids: ", this.getObjectIDs());
         var API_URL = process.env.REACT_APP_API_URL + "/courses/schedule";
@@ -212,11 +214,6 @@ class Week extends React.Component {
                 
             }
         };
-
-        this.setState({
-            requestError: true
-        });
-
         await fetch(API_URL, {
             
             /* NOTE for duncan: when using the API, you can only set  */
@@ -312,13 +309,30 @@ class Week extends React.Component {
             //     this.scheduleReload();
             // }
             return(
-                <div className={weekStyle.weekContainer}> 
-                    <Day dow="" timeBar={true} courseSchedule={this.props.courseSchedule}></Day>
-                    {this.state.dows.map(function (dow) {
-                        
-                        return <Day className={weekStyle.day} dow={dow} courseSchedule={this.props.courseSchedule} events={this.state.eventInfo[dow]} ></Day>;
-                    }, this)}
-    
+                <div>
+                    <div className={weekStyle.weekContainer}>
+                        <Day dow="" timeBar={true} courseSchedule={this.props.courseSchedule}></Day>
+                        {this.state.dows.map(function (dow) {
+
+                            return <Day className={weekStyle.day} dow={dow} courseSchedule={this.props.courseSchedule} events={this.state.eventInfo[dow]} ></Day>;
+                        }, this)}
+                    </div>
+                    <div>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br />
+                        <br />
+                        <div>
+                            Click "Render Schedule" to retrieve randomized selections of the courses you want to take.
+                        </div>
+                        <div>
+                            Click "Edit Time Preference" and select times of the day in which you ONLY want to take classes. 
+                        </div>
+                        <div>
+                            Note: Days without selected time is assumed to be entirely free
+                        </div>
+                    </div>
                 </div>
                 
     
