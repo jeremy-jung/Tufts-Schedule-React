@@ -48,7 +48,7 @@ class Homepage extends React.Component {
         this.handleCheckInclude = this.handleCheckInclude.bind(this);
         this.sortTimePref = this.sortTimePref.bind(this);
         this.handleReload = this.handleReload.bind(this);
-        this.showUnscheduled = this.showUnscheduled.bind(this);
+        /* this.showUnscheduled = this.showUnscheduled.bind(this); */
     }   
 
     /*
@@ -438,12 +438,16 @@ class Homepage extends React.Component {
         }
     }
 
-    showUnscheduled(show, courses) {
+    showUnscheduled = (show, courses) => {
         console.log("showUnscheduled is called ", show, courses);
         if (show) {
-            this.state.noTimeCourse = courses;
+            this.setState({
+                noTimeCourse: courses,
+                showNoTimeCourse: true,
+            })
+            /* this.state.noTimeCourse = courses; */
             console.log("unscheduled courses? " , this.state.noTimeCourse);
-            this.state.showNoTimeCourse = true;
+            /* this.state.showNoTimeCourse = true; */
 
         }
         else {
@@ -455,7 +459,7 @@ class Homepage extends React.Component {
 
     render() {
         console.log("HOMEPAGE: daytimepref: ", this.state.dayTimePref);
-
+        const {showNoTimeCourse, NoTimeCourse} = this.state;
         /* asynchronously render home page after getting courseIDs*/
         if (this.state.listCourseIDs == null) {
             // render loading state...
@@ -526,15 +530,19 @@ class Homepage extends React.Component {
                                     </div>
                                 
                                 }
+
                             {this.state.showNoTimeCourse ? 
-                                this.state.noTimeCourse.map(function (course){
-                                    console.log("course from unscheduled: " , course);
-                                    return <div className={csStyle.unscheduled}>{course.details + <br/> + course.name}</div>
-                                }, this)
+                                <div className={csStyle.unscheduledBox}> 
+                                    <div type="text" value="Course Time Unspecified" className={csStyle.unscheduledBoxTitle}>Course Time Unspecified</div>
+                                    {this.state.noTimeCourse.map(function (course){
+                                        console.log("course from unscheduled: " , course);
+                                        return <div className={csStyle.unscheduled}>{course.details + " " + course.name}</div>
+                                    }, this)}
+                                </div>
                                 :
                                 <p></p>
                             }
-
+                           
 
 
                             {/* part 2-1 the selected courses block */}
@@ -559,7 +567,7 @@ class Homepage extends React.Component {
                             <br/>
                             {this.state.renderSchedule ? <input type="button" className={csStyle.timePref} value={this.state.drag ? "View Schedule" : "Edit Time Preference"} onClick={()=> this.handleReload()}/> : <br></br>}
                             <br/>
-                            {this.state.renderSchedule ? <Week courseSchedule={true} selectedCourses={this.state.selectedCourses} eventInfo={this.state.eventInfo} drag={false} dayTimePref={this.state.dayTimePref} postReqTime={this.state.postReqTime} showUnscheduled={()=>this.showUnscheduled()}></Week> : <p></p>}
+                            {this.state.renderSchedule ? <Week courseSchedule={true} selectedCourses={this.state.selectedCourses} eventInfo={this.state.eventInfo} drag={false} dayTimePref={this.state.dayTimePref} postReqTime={this.state.postReqTime} showUnscheduled={this.showUnscheduled.bind(this)}></Week> : <p></p>}
                             {this.state.drag ? <Week courseSchedule={true} selectedCourses={this.state.selectedCourses} eventInfo={{}} drag={true} storeTimePref={() => this.storeTimePref.bind(this)} dayTimePref={this.state.dayTimePref}></Week> : <div></div>}
     
     

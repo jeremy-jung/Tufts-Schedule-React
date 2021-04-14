@@ -92,6 +92,7 @@ class CoursesSelectedList extends React.Component {
                 {/* <h2>Your selected courses</h2> */}
                 <br/>
                 <div className={this.state.coursePopDetail ? style.popCourseList : style.courseList}>
+                    <div className={style.courseListTitle}>Selected Courses</div>
                     {this.props.selectedCourses.map(function (courseInfo) {
                         return <CourseSelected courseInfo = {courseInfo} pop={false} handlePop = {this.handlePop.bind(this)} closePop= {this.closePop.bind(this)} coursePopDetail = {this.state.coursePopDetail} removeCourse={this.props.removeCourse}></CourseSelected>
                     }, this)}

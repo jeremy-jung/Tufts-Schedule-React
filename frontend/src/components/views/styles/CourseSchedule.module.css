@@ -59,6 +59,7 @@ h2 {
     flex-direction: row;
     align-content: space-between;
     flex-wrap: wrap;
+    min-width: 160px;
 
 }
 
@@ -83,7 +84,7 @@ h2 {
     text-align: left;
     justify-content: flex-start;
     margin-left: 1vw;
-    max-width: 20vw;
+    max-width: 15vw;
     padding-bottom: 5vh;
 }
 
@@ -119,7 +120,7 @@ form {
     position: relative;
     margin-top: 1vh;
 
-    min-width: 15vw;
+    min-width: 160px;
     min-height: 33px;    
     font-size: 20px;
     cursor: pointer;
@@ -176,4 +177,43 @@ form {
     cursor: pointer;
     border-radius: 5px;
     border-width: 2px;
+}
+
+.unscheduled {
+    font-family: Helvetica, Arial, sans-serif;
+    color: #247BA0;
+    font-size: 20px;
+    padding: 5px;
+    margin: 5px;
+    border:#FFE066;
+    background-color: #FFE066;
+    border-radius: 5px;
+
+}
+
+.unscheduledBox {
+    color: #247BA0;
+    background: #FFE066;
+    position: relative;
+    margin-top: 1vh;
+
+    min-width: 150px;
+    min-height: 33px;    
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    border-width: 1px;
+    /* border: solid #247BA0; */
+}
+
+.unscheduledBoxTitle {
+    border: none;
+    color: #ffffff;
+    font-size: 20px;
+    padding: 5px;
+    margin: 5px;
+    background-color: #247BA0;
+    border-radius: 5px;
+
+
 }
