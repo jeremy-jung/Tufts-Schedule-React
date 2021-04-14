@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { ThemeProvider } from 'react-bootstrap';
 import dayStyle from './calendarStyles/Day.module.css'
 import Event from './Event.js'
 

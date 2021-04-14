@@ -10,8 +10,6 @@ import style from './views/styles/Homepage.module.css';
 import csStyle from './views/styles/CourseSchedule.module.css';
 import Popup from './views/Popup.js';
 import Week from './views/calendars/Week.js'
-import { ThemeProvider } from 'react-bootstrap';
-import { json } from 'body-parser';
 
 /* scripts */
 
@@ -498,7 +496,7 @@ class Homepage extends React.Component {
                                             
                                             {/* input text field and search rec droplist */}
                                             <div>
-                                                <input className={csStyle.courseInput} onChange={this.handleChange} list='recommendedCourseIDs' id="input" type="text" autoComplete="off" placeholder="COMP-0015" />
+                                                <input className={csStyle.courseInput} onChange={this.handleChange} list='recommendedCourseIDs' id="input" type="text" autoComplete="off" placeholder="CS-0015" />
                                                 
                                                 <CourseNameRecommendation 
                                                     listCourseIDs = {this.state.listCourseIDs} 

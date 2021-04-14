@@ -14,6 +14,7 @@ class Week extends React.Component {
             postReqTime: {"Monday":[], "Tuesday":[],"Wednesday":[], "Thursday":[],"Friday":[], "Saturday":[],"Sunday":[] },
             dayTimePref: this.props.dayTimePref,
             retrievedTime: this.props.dayTimePref,
+            requestError: false
         }
     
         this.retrieveTimePref = this.retrieveTimePref.bind(this);
@@ -44,6 +45,8 @@ class Week extends React.Component {
         }
     }
     async scheduleReload() {
+
+
         console.log("componentDidMount() - drag? " , this.props.drag);
         if (!this.props.drag)
         {
@@ -180,10 +183,6 @@ class Week extends React.Component {
                     
                 }
             }
-            
-
-            
-            
         }
     }
 
@@ -200,6 +199,10 @@ class Week extends React.Component {
 
     // post requests recommended schedule made by API
     async getRecSchedule() {
+        this.setState({
+            requestError: false
+        });
+
         console.log("selected Courses: " , this.state.selectedCourses);
         console.log("object ids: ", this.getObjectIDs());
         var API_URL = process.env.REACT_APP_API_URL + "/courses/schedule";
@@ -211,9 +214,8 @@ class Week extends React.Component {
                 
             }
         };
-
-
         await fetch(API_URL, {
+            
             /* NOTE for duncan: when using the API, you can only set  */
             method: 'POST',
 
@@ -241,6 +243,9 @@ class Week extends React.Component {
         },
             (error) => {
                 console.log("error", error);
+                this.setState({
+                    requestError: true
+                });
         });
 
         /* Note to Duncan: this will show undefined because it will be executed before a response is received */
@@ -257,13 +262,22 @@ class Week extends React.Component {
 
 
     render () {
-        if (this.state.eventInfo === undefined && !this.props.drag)
+        if (this.state.eventInfo === undefined && !this.props.drag && !this.state.requestError)
         {
             console.log("check if list updates before: " , this.state.eventInfo);
             return (
                 
                 <div>
                     Loading Course Schedule... 
+                </div>
+            )
+        }
+        else if (this.state.eventInfo === undefined && !this.props.drag && this.state.requestError) {
+            /* the request for schedule came back with an error */
+            return (
+
+                <div>
+                    No possible schedule matches given constraints. Reselect your time preferences.
                 </div>
             )
         }
@@ -295,13 +309,30 @@ class Week extends React.Component {
             //     this.scheduleReload();
             // }
             return(
-                <div className={weekStyle.weekContainer}> 
-                    <Day dow="" timeBar={true} courseSchedule={this.props.courseSchedule}></Day>
-                    {this.state.dows.map(function (dow) {
-                        
-                        return <Day className={weekStyle.day} dow={dow} courseSchedule={this.props.courseSchedule} events={this.state.eventInfo[dow]} ></Day>;
-                    }, this)}
-    
+                <div>
+                    <div className={weekStyle.weekContainer}>
+                        <Day dow="" timeBar={true} courseSchedule={this.props.courseSchedule}></Day>
+                        {this.state.dows.map(function (dow) {
+
+                            return <Day className={weekStyle.day} dow={dow} courseSchedule={this.props.courseSchedule} events={this.state.eventInfo[dow]} ></Day>;
+                        }, this)}
+                    </div>
+                    <div>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br />
+                        <br />
+                        <div>
+                            Click "Render Schedule" to retrieve randomized selections of the courses you want to take.
+                        </div>
+                        <div>
+                            Click "Edit Time Preference" and select times of the day in which you ONLY want to take classes. 
+                        </div>
+                        <div>
+                            Note: Days without selected time is assumed to be entirely free
+                        </div>
+                    </div>
                 </div>
                 
     
