@@ -1,9 +1,9 @@
 .course {
     z-index: 12;
-    position: relative;
+    /* position: relative; */
     height: 50px;
-    width: 150px;
-    background-color: #70C1B3;
+    min-width: 150px;
+    background-color: #F25F5C;
     border: 2px #FFE066;
     color: #ffffff;
     border-radius: 8px;
