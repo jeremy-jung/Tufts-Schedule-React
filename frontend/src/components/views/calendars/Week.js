@@ -14,7 +14,8 @@ class Week extends React.Component {
             postReqTime: {"Monday":[], "Tuesday":[],"Wednesday":[], "Thursday":[],"Friday":[], "Saturday":[],"Sunday":[] },
             dayTimePref: this.props.dayTimePref,
             retrievedTime: this.props.dayTimePref,
-            requestError: false
+            requestError: false,
+            requestErrorReason: undefined
         }
     
         this.retrieveTimePref = this.retrieveTimePref.bind(this);
@@ -230,8 +231,16 @@ class Week extends React.Component {
             // referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
             body: JSON.stringify(requestDetail) // body data type must match "Content-Type" header
         })
-        .then((response) => 
-            response.json())
+        .then(async (response) => {
+            if (!response.ok) {
+                // console.log("response is not ok")
+                throw await response.json()
+            }
+            else {
+                // console.log("response is ok")
+                return response.json();
+            }
+        })
         .then(result => {
             //if the request is valid
             // console.log("result post: " , result);
@@ -240,13 +249,14 @@ class Week extends React.Component {
             });
             /* Note to Duncan: because this console.log is inside a .then() statement, it will execute after response is received */
             console.log("within post request event: ", this.state.eventInfo);
-        },
+        }).catch(
             (error) => {
-                console.log("error", error);
+                // console.log("error encountered")
                 this.setState({
-                    requestError: true
+                    requestError: true,
+                    requestErrorReason: error.error
                 });
-        });
+            })
 
         /* Note to Duncan: this will show undefined because it will be executed before a response is received */
         console.log("test thiis post request event: ", this.state.eventInfo);
@@ -255,9 +265,6 @@ class Week extends React.Component {
             console.log("timeunspec", this.state.eventInfo["TimeUnspecified"]);
             await this.props.showUnscheduled(true, this.state.eventInfo["TimeUnspecified"]);
         }
-        
-
-
     }
 
 
@@ -277,7 +284,7 @@ class Week extends React.Component {
             return (
 
                 <div>
-                    No possible schedule matches given constraints. Reselect your time preferences.
+                    {this.state.requestErrorReason}
                 </div>
             )
         }
