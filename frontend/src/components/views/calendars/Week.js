@@ -30,17 +30,17 @@ class Week extends React.Component {
 
     
     async componentDidMount() {
-        console.log("componentDidMount() - drag? " , this.props.drag);
+        //console.log("componentDidMount() - drag? " , this.props.drag);
         if (!this.props.drag)
         {
-            console.log("daypref")
-            console.log("sort before: " , this.props.dayTimePref);
-            console.log("scheduleReload() - call retrieveTimePref");
-            console.log("sort after: " , this.props.dayTimePref);
+            //console.log("daypref")
+            //console.log("sort before: " , this.props.dayTimePref);
+            //console.log("scheduleReload() - call retrieveTimePref");
+            //console.log("sort after: " , this.props.dayTimePref);
 
-            console.log("scheduleReload() - call convertSchedulePref");
+            //console.log("scheduleReload() - call convertSchedulePref");
             await this.convertSchedulePref();
-            console.log("scheduleReload() - call getRecSchedule");
+            //console.log("scheduleReload() - call getRecSchedule");
             await this.getRecSchedule();
            
         }
@@ -48,18 +48,18 @@ class Week extends React.Component {
     async scheduleReload() {
 
 
-        console.log("componentDidMount() - drag? " , this.props.drag);
+        //console.log("componentDidMount() - drag? " , this.props.drag);
         if (!this.props.drag)
         {
-            console.log("daypref")
-            console.log("sort before: " , this.props.dayTimePref);
-            console.log("scheduleReload() - call retrieveTimePref");
+            //console.log("daypref")
+            //console.log("sort before: " , this.props.dayTimePref);
+            //console.log("scheduleReload() - call retrieveTimePref");
             await this.props.sortTimePref();
-            console.log("sort after: " , this.props.dayTimePref);
+            //console.log("sort after: " , this.props.dayTimePref);
 
-            console.log("scheduleReload() - call convertSchedulePref");
+            //console.log("scheduleReload() - call convertSchedulePref");
             await this.convertSchedulePref();
-            console.log("scheduleReload() - call getRecSchedule");
+            //console.log("scheduleReload() - call getRecSchedule");
             await this.getRecSchedule();
            
         }
@@ -73,7 +73,7 @@ class Week extends React.Component {
     // time is the time in int
     // type is either true (add) or false (remove)
     async dayUpdateTimePref(day, time, type) {
-        console.log("dayUpdateTimePref() - props: ", this.props.dayTimePref);
+        //console.log("dayUpdateTimePref() - props: ", this.props.dayTimePref);
         if(type)
         {
             // add time of day
@@ -89,12 +89,12 @@ class Week extends React.Component {
 
         }
         // await this.props.storeTimePref(this.state.dayTimePref);
-        console.log("time pref updated? ", this.props.dayTimePref[day]);
+        //console.log("time pref updated? ", this.props.dayTimePref[day]);
 
     }
 
     async retrieveTimePref() {
-        console.log("time before sort: ", this.props.dayTimePref);
+        //console.log("time before sort: ", this.props.dayTimePref);
 
         // this.props.dayTimePref.setState({
         //     dayTimePref: this.props.dayTimePref
@@ -107,7 +107,7 @@ class Week extends React.Component {
             // await this.props.dayTimePref[key].sort();
             
         }
-        console.log("time after sort: ", this.state.dayTimePref);
+        //console.log("time after sort: ", this.state.dayTimePref);
     }
 
 
@@ -204,8 +204,8 @@ class Week extends React.Component {
             requestError: false
         });
 
-        console.log("selected Courses: " , this.state.selectedCourses);
-        console.log("object ids: ", this.getObjectIDs());
+        //console.log("selected Courses: " , this.state.selectedCourses);
+        //console.log("object ids: ", this.getObjectIDs());
         var API_URL = process.env.REACT_APP_API_URL + "/courses/schedule";
         var requestDetail = {
             "objectIds": this.getObjectIDs(),
@@ -233,25 +233,25 @@ class Week extends React.Component {
         })
         .then(async (response) => {
             if (!response.ok) {
-                // console.log("response is not ok")
+                // //console.log("response is not ok")
                 throw await response.json()
             }
             else {
-                // console.log("response is ok")
+                // //console.log("response is ok")
                 return response.json();
             }
         })
         .then(result => {
             //if the request is valid
-            // console.log("result post: " , result);
+            // //console.log("result post: " , result);
             this.setState({
                 eventInfo: result.data
             });
-            /* Note to Duncan: because this console.log is inside a .then() statement, it will execute after response is received */
-            console.log("within post request event: ", this.state.eventInfo);
+            /* Note to Duncan: because this //console.log is inside a .then() statement, it will execute after response is received */
+            //console.log("within post request event: ", this.state.eventInfo);
         }).catch(
             (error) => {
-                console.log("error encountered")
+                //console.log("error encountered")
                 this.setState({
                     requestError: true,
                     requestErrorReason: error.error
@@ -259,10 +259,10 @@ class Week extends React.Component {
             })
 
         /* Note to Duncan: this will show undefined because it will be executed before a response is received */
-        console.log("test thiis post request event: ", this.state.eventInfo);
-        console.log("defined? ", this.state.eventInfo != undefined);
+        //console.log("test thiis post request event: ", this.state.eventInfo);
+        //console.log("defined? ", this.state.eventInfo != undefined);
         if (this.state.eventInfo != undefined) {
-            console.log("timeunspec", this.state.eventInfo["TimeUnspecified"]);
+            //console.log("timeunspec", this.state.eventInfo["TimeUnspecified"]);
             await this.props.showUnscheduled(true, this.state.eventInfo["TimeUnspecified"]);
         }
     }
@@ -271,7 +271,7 @@ class Week extends React.Component {
     render () {
         if (this.state.eventInfo === undefined && !this.props.drag && !this.state.requestError)
         {
-            console.log("check if list updates before: " , this.state.eventInfo);
+            //console.log("check if list updates before: " , this.state.eventInfo);
             return (
                 
                 <div>
@@ -290,7 +290,7 @@ class Week extends React.Component {
         }
         else if (this.props.drag)
         {
-            console.log("check if list updates after: " , this.state.eventInfo);
+            //console.log("check if list updates after: " , this.state.eventInfo);
 
             return(
                 <div className={weekStyle.dragBox}> 
@@ -310,7 +310,7 @@ class Week extends React.Component {
         }
         else
         {
-            // console.log("scheduleReload");
+            // //console.log("scheduleReload");
             // if (this.state.dayTimePref)
             // {
             //     this.scheduleReload();
