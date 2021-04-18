@@ -251,7 +251,7 @@ class Week extends React.Component {
             console.log("within post request event: ", this.state.eventInfo);
         }).catch(
             (error) => {
-                // console.log("error encountered")
+                console.log("error encountered")
                 this.setState({
                     requestError: true,
                     requestErrorReason: error.error
