@@ -233,24 +233,23 @@ class Week extends React.Component {
         })
         .then(async (response) => {
             if (!response.ok) {
-                // //console.log("response is not ok")
+                console.log("response is not ok")
                 throw await response.json()
             }
             else {
-                // //console.log("response is ok")
+                console.log("response is ok")
                 return response.json();
             }
         })
         .then(result => {
             //if the request is valid
-            // //console.log("result post: " , result);
+            console.log("result post: " , result);
             this.setState({
                 eventInfo: result.data
             });
             /* Note to Duncan: because this //console.log is inside a .then() statement, it will execute after response is received */
             //console.log("within post request event: ", this.state.eventInfo);
-        }).catch(
-            (error) => {
+        }).catch(async (error) => {
                 console.log("error encountered")
                 this.setState({
                     requestError: true,
