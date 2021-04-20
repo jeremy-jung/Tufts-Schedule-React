@@ -211,8 +211,6 @@ class Week extends React.Component {
             "objectIds": this.getObjectIDs(),
             "filter": {
                 "time": this.props.postReqTime,
-                    
-                
             }
         };
         await fetch(API_URL, {
@@ -232,6 +230,7 @@ class Week extends React.Component {
             body: JSON.stringify(requestDetail) // body data type must match "Content-Type" header
         })
         .then(async (response) => {
+            console.log("waiting response")
             if (!response.ok) {
                 console.log("response is not ok")
                 throw await response.json()
@@ -243,7 +242,7 @@ class Week extends React.Component {
         })
         .then(result => {
             //if the request is valid
-            console.log("result post: " , result);
+            console.log("result post: " , result)
             this.setState({
                 eventInfo: result.data
             });
