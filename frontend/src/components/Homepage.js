@@ -425,13 +425,19 @@ class Homepage extends React.Component {
 
     async handleReload() 
     {
+        console.log("handleReload() clicked\n");
         this.setState({
             drag: !this.state.drag,
         })
         if (this.state.drag) {
+            this.setState({
+                modifySearch: true,
+            });
+            console.log("Homepage handleReload() - Modify Search Bar should be turned off");
             await this.sortTimePref();
             await this.convertSchedulePref();
             this.handleSchedule(true);
+
 
         }
     }
@@ -482,64 +488,9 @@ class Homepage extends React.Component {
                     {/* part 2 the rest goes in flex column */}
                     <div className={csStyle.columnContainer}>
                         <div className={csStyle.searchContainer}>
-                                {this.state.modifySearch ? 
-    
-                                    // the modify search button
-                                    <input className={csStyle.courseSubmit} type="button" value="Modify List" onClick={this.closeModifySearch} /> :
-    
-                                    // or the input field that allows user to add courses
-                                    <div className={csStyle.inputContainer}>
-    
-    
-                                        {/* handles the add course form */}
-                                        <form onSubmit={this.handleAdd}>
-                                            
-                                            {/* input text field and search rec droplist */}
-                                            <div>
-                                                <input className={csStyle.courseInput} onChange={this.handleChange} list='recommendedCourseIDs' id="input" type="text" autoComplete="off" placeholder="CS-0015" />
-                                                
-                                                <CourseNameRecommendation 
-                                                    listCourseIDs = {this.state.listCourseIDs} 
-                                                    currentInput = {this.state.currentInput}>
-                                                </CourseNameRecommendation>
-                                            </div>
-                                            &nbsp;
-                                            {/* add button */}
-                                            {this.state.popUp ? 
-                                                // popup for courses of same id but diff names
-                                                <Popup 
-                                                    popMap={this.state.popMap} 
-                                                    updateSelectedPop={this.updateSelectedPop.bind(this)} 
-                                                    closePop={this.closePop.bind(this)} 
-                                                    setMessage={this.setMessage.bind(this)}  >
-                                                </Popup> : 
-    
-                                                // or just the add button
-                                                <input className={csStyle.courseAdd} type="submit" value="Add" />
-                                            }
-    
-                                        </form>
-    
-                                        <br/>
-    
-                                        {/* the alert message */}
-                                        {(this.state.alertMessage.localeCompare("***"))? <div className={csStyle.alert} id="alert">{this.state.alertMessage}</div> : <div className={style.noAlert} id="alert">{this.state.alertMessage}</div>}
-                                        
-                                    </div>
                                 
-                                }
 
-                            {this.state.showNoTimeCourse ? 
-                                <div className={csStyle.unscheduledBox}> 
-                                    <div type="text" value="Course Time Unspecified" className={csStyle.unscheduledBoxTitle}>Course Time Unspecified</div>
-                                    {this.state.noTimeCourse.map(function (course){
-                                        console.log("course from unscheduled: " , course);
-                                        return <div className={csStyle.unscheduled}>{course.details + " " + course.name}</div>
-                                    }, this)}
-                                </div>
-                                :
-                                <p></p>
-                            }
+                            
                            
 
 
@@ -553,20 +504,95 @@ class Homepage extends React.Component {
                                 setMessage={this.setMessage.bind(this)} 
                                 handleSchedule={this.handleSchedule.bind(this)}>
                             </CoursesSelectedList>
-    
+
+                            {/* Course Time Unspecified List */}
+                            {this.state.showNoTimeCourse ? 
+                                <div className={csStyle.unscheduledBox}> 
+                                    <div type="text" value="Course Time Unspecified" className={csStyle.unscheduledBoxTitle}>Course Time Unspecified</div>
+                                    {this.state.noTimeCourse.map(function (course){
+                                        console.log("course from unscheduled: " , course);
+                                        return <div className={csStyle.unscheduled}>{course.details + " " + course.name}</div>
+                                    }, this)}
+                                </div>
+                                :
+                                <p></p>
+                            }
     
     
                         </div>
                         
-    
+                        
+                        
                         {/* part 2-2 flex row the search input and calendar */}
-                        <div className={csStyle.verticalContainer}>
+                        <div className={(this.state.renderSchedule || this.state.drag)? csStyle.verticalContainer : csStyle.verticalContainerEmpty}>
                             
-                            <br/>
+
+
+
+
+
+
+                        {this.state.modifySearch ? 
+    
+                            // the modify search button
+                            <input className={csStyle.courseSubmit} type="button" value="Modify List" onClick={this.closeModifySearch} /> :
+
+                            // or the input field that allows user to add courses
+                            <div className={csStyle.inputContainer}>
+
+
+                                {/* handles the add course form */}
+                                <form onSubmit={this.handleAdd}>
+                                    
+                                    {/* input text field and search rec droplist */}
+                                    <div>
+                                        <input className={csStyle.courseInput} onChange={this.handleChange} list='recommendedCourseIDs' id="input" type="text" autoComplete="off" placeholder="CS-0015" />
+                                        
+                                        <CourseNameRecommendation 
+                                            listCourseIDs = {this.state.listCourseIDs} 
+                                            currentInput = {this.state.currentInput}>
+                                        </CourseNameRecommendation>
+                                    </div>
+                                    &nbsp;
+                                    {/* add button */}
+                                    {this.state.popUp ? 
+                                        // popup for courses of same id but diff names
+                                        <Popup 
+                                            popMap={this.state.popMap} 
+                                            updateSelectedPop={this.updateSelectedPop.bind(this)} 
+                                            closePop={this.closePop.bind(this)} 
+                                            setMessage={this.setMessage.bind(this)}  >
+                                        </Popup> : 
+
+                                        // or just the add button
+                                        <input className={csStyle.courseAdd} type="submit" value="Add" />
+                                    }
+
+                                </form>
+
+                                <br/>
+
+                                {/* the alert message */}
+                                {(this.state.alertMessage.localeCompare("***"))? <div className={csStyle.alert} id="alert">{this.state.alertMessage}</div> : <div className={style.noAlert} id="alert">{this.state.alertMessage}</div>}
+                                
+                            </div>
+
+                        }
+
+
+
+
+
+
+
+
+
+
+
                             {this.state.renderSchedule ? <input type="button" className={csStyle.timePref} value={this.state.drag ? "View Schedule" : "Edit Time Preference"} onClick={()=> this.handleReload()}/> : <br></br>}
                             <br/>
                             {this.state.renderSchedule ? <Week courseSchedule={true} selectedCourses={this.state.selectedCourses} eventInfo={this.state.eventInfo} drag={false} dayTimePref={this.state.dayTimePref} postReqTime={this.state.postReqTime} showUnscheduled={this.showUnscheduled.bind(this)}></Week> : <p></p>}
-                            {this.state.drag ? <Week courseSchedule={true} selectedCourses={this.state.selectedCourses} eventInfo={{}} drag={true} storeTimePref={() => this.storeTimePref.bind(this)} dayTimePref={this.state.dayTimePref}></Week> : <div></div>}
+                            {this.state.drag ? <Week courseSchedule={true} selectedCourses={this.state.selectedCourses} eventInfo={{}} drag={true} storeTimePref={() => this.storeTimePref.bind(this)} dayTimePref={this.state.dayTimePref}></Week> : <p></p>}
     
     
                         </div>
