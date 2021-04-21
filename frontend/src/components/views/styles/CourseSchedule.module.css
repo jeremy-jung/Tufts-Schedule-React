@@ -2,7 +2,7 @@
 header { 
     position: sticky;
 
-    background-color: #70C1B3;
+    background-color: #FFE066;
     /* border: double 5px #FFE066; */
     border-bottom: 5px double #247BA0;
     /* border-top: 5px double #FFE066; */
@@ -71,9 +71,21 @@ h2 {
     flex-grow: 2;
     flex-shrink:1;
     overflow: scroll;
+    align-items: center;
+
 
 }
+.verticalContainerEmpty {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 2;
+    flex-shrink:1;
+    overflow: scroll;
+    align-items: center;
+    padding-top: 20vh;
 
+}
 
 /* the user inputs */
 .searchContainer {
@@ -91,59 +103,81 @@ h2 {
 /* form that contains the courseinput and add button */
 form {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     margin-top: 1vh;
     align-items: center;
 }
 
 /* user input to search courses */
 .courseInput {
-    position: relative;
+    /* position: relative;
     display: flex;
     flex-direction: column;
     font-size: 20px;
     /*align-items: center;*/
     /* text-align: start; */
-    flex-grow: auto;
-    min-height: 5vh;
-    width: 10vw;
-    min-width: 10vw;
+    /* min-height: 5vh;
+    width: 10vw; */
+    /* min-width: 10vw; */
     border-radius: 100px;
     padding-left: 1vw;
+
+    margin-top: 1vh;
+    font-family: Helvetica, Arial, sans-serif;
+    /* color: #247BA0;
+    border: solid; */
+    background: #ffffff;
+    margin-left: auto;
+    margin-right: auto;
+
+
+    min-width: 15vw;
+    min-height: 33px;    
+    font-size: 20px;
+    /* border-radius: 5px; */
+    border-width: 2px;
 }
 
 /* add button for course*/
 .courseSubmit {
+    position: relative;
+
+    margin-top: 10px;
     font-family: Helvetica, Arial, sans-serif;
     color: #247BA0;
+    border: solid;
     background: #ffffff;
-    position: relative;
-    margin-top: 1vh;
+    margin-left: auto;
+    margin-right: auto;
 
-    min-width: 160px;
+
+    min-width: 15vw;
     min-height: 33px;    
     font-size: 20px;
     cursor: pointer;
     border-radius: 5px;
-    border-width: 1px;
-    border: solid #247BA0;
+    border-width: 2px;
 
 }
 
 .courseAdd {
+    position: relative;
+
+    margin-top: 1vh;
     font-family: Helvetica, Arial, sans-serif;
     color: #247BA0;
+    border: solid;
     background: #ffffff;
-    position: relative;
-    margin-top: 1vh;
+    margin-left: auto;
+    margin-right: auto;
+
 
     min-width: 5vw;
     min-height: 33px;    
     font-size: 20px;
     cursor: pointer;
     border-radius: 5px;
-    border-width: 0px;
-    border: solid #247BA0;
+    border-width: 2px;
 
 }
 
@@ -152,17 +186,28 @@ form {
 .alert {
     color: #9A322B;
     font-family: Helvetica, Arial, sans-serif;
+    
 
 }
 /* when there's NO alert message */
 .notAlert {
     color: #12242B;
     font-family: Helvetica, Arial, sans-serif;
+    /* margin-top: 1vh;
+    font-family: Helvetica, Arial, sans-serif;
+    color: #247BA0;
+    background: #ffffff;
+    margin-left: auto;
+    margin-right: auto;
 
+    font-size: 20px; */
+ 
 }
 
-
 .timePref {
+    margin-top: 10px;
+    position: relative;
+
     font-family: Helvetica, Arial, sans-serif;
     color: #247BA0;
     border: solid;

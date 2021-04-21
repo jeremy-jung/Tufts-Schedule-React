@@ -25,29 +25,29 @@ h1 {
 
 .button {
     z-index: 8;
+    
+    color: #247BA0;
     text-decoration: none;
     font-family: Helvetica, Arial, sans-serif;
 
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
 
     background-color: #ffffff;
     color: #247BA0;
 
-    padding: 5px;
-    margin: 5px;
-
-    min-width: 150px;
+    padding-left: auto;
+    padding-right: auto;    
+    
+    min-width: 160px;
     min-height: 33px;
 
-    border-radius: 5px;
+    border-radius: 8px;
     border: solid;
     border-width: 2px;
     cursor: pointer;
-    /* box-shadow: 0 3px 5px #12242B; */
     font-size: 20px;
-    
 }
 .popButton {
     z-index: -4;
@@ -71,7 +71,6 @@ h1 {
     border: solid;
     border-width: 2px;
     cursor: pointer;
-    /* box-shadow: 0 3px 5px #12242B; */
     font-size: 20px;
     
 }
