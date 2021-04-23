@@ -5,6 +5,7 @@
 import React from 'react';
 import style from './styles/CourseSelected.module.css';
 import CourseDetailPop from './CourseDetailPop'
+import NavbarCollapse from 'react-bootstrap/esm/NavbarCollapse';
 
 class CourseSelected extends React.Component {
     constructor(props) {
@@ -51,11 +52,9 @@ class CourseSelected extends React.Component {
         return (
             <div className={style.all}>
 
-                <div >
-                    <input type="button" onClick={this.showDetail} value={this.props.courseInfo.course_id} className={this.props.coursePopDetail ? style.popCourse : style.course}/>
-                </div>  
+                <input type="button" onClick={this.showDetail} value={this.props.courseInfo.course_id} className={this.props.coursePopDetail ? style.popCourse : style.course}/>
                 
-                {this.state.popDetail ? <CourseDetailPop showDetail={()=> this.showDetail.bind(this)} courseInfo={this.props.courseInfo} closePop={this.closePop.bind(this)} removeCourse={this.props.removeCourse}></CourseDetailPop> : <div></div>}
+                {this.state.popDetail ? <CourseDetailPop showDetail={()=> this.showDetail.bind(this)} courseInfo={this.props.courseInfo} closePop={this.closePop.bind(this)} removeCourse={this.props.removeCourse}></CourseDetailPop> : <span></span>}
 
             </div>
 

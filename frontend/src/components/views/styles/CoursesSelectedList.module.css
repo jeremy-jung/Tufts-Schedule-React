@@ -10,7 +10,7 @@ h1 {
     max-height: 80vh;
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: center;
     z-index: 8;
 }
 
@@ -77,16 +77,17 @@ h1 {
 
 .courseList {
     background: #FFE066;
-    min-width: 160px;
+    width: 15vw;
     border-radius: 5px;
     border-width: 1px;
     z-index: 12;
+    align-content: stretch;
 }
 
 .popCourseList {
     z-index: -3;
     background: #FFE066;
-    min-width: 160px;
+    width: 15vw;
     border-radius: 5px;
     border-width: 1px;
 }
@@ -95,9 +96,56 @@ h1 {
     z-index: -3;
 
     border: none;
-    color: #F25F5C;
+    color: #50514F;
+    font-weight: bold;
     font-size: 20px;
     padding: 5px;
     margin: 5px;
     border-radius: 5px;
 }
+
+
+@media screen and (max-width: 600px) {
+
+    .container{
+        position: sticky;
+        width: 90vw;
+        max-height: 80vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        z-index: 8;
+    }
+    
+    .popContainer{
+        width: 90vw;
+
+        max-height: 80vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        z-index: -3;
+    }
+    
+    .courseList {
+        background: #FFE066;
+        width: 90vw;
+        border-radius: 5px;
+        border-width: 1px;
+        z-index: 12;
+        position: relative;
+
+        
+
+
+    }
+    
+    .popCourseList {
+        z-index: -3;
+        background: #FFE066;
+        width: 100%;
+        border-radius: 5px;
+        border-width: 1px;
+    }
+
+  }

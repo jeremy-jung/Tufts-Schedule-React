@@ -45,7 +45,7 @@ class Popup extends React.Component {
 
                     </div>
                     <p className={style.tit} >Please select a class from the list!</p>
-                    <div >
+                    <div className={style.optionsContainer}>
                         {this.props.popMap.map(function (courseInfo) {
                         
                             return <input className={style.popOptions} type="button" item={courseInfo} onClick={() => this.props.updateSelectedPop(courseInfo)} value={courseInfo.course_id + ":    " + courseInfo.course_name}/>
