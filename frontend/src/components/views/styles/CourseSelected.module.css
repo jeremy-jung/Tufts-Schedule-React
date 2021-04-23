@@ -1,34 +1,77 @@
+.all {
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+}
 .course {
     z-index: 12;
-    /* position: relative; */
     height: 50px;
-    min-width: 150px;
-    background-color: #F25F5C;
-    border: 2px #FFE066;
+    cursor: pointer;
+    text-align: center;
+    width: 15vw;
+    border: none;
     color: #ffffff;
-    border-radius: 8px;
     font-size: 20px;
     padding: 5px;
     margin: 5px;
-    align-items: center;
-    cursor: pointer;
-    
-    text-align: center;
+    background-color: #50514F;
+    border-radius: 8px;
 }
 
 .popCourse {
     z-index: -2;
-    position: relative;
     height: 50px;
-    width: 150px;
-    background-color: #70C1B3;
+    cursor: pointer;
+    text-align: center;
+    width: 15vw;
+    border: none;
     color: #ffffff;
-    border-radius: 8px;
     font-size: 20px;
     padding: 5px;
     margin: 5px;
-    align-items: center;
-    cursor: pointer;
+    background-color: #50514F;
+    border-radius: 8px;
+}
+
+
+@media screen and (max-width: 600px) {
+
+    .course {
+        z-index: 12;
+        /* position: relative; */
+        height: 50px;
+        width: 90vw;
+        background-color: #50514F;
+        border: 2px #FFE066;
+        color: #ffffff;
+        border-radius: 8px;
+        font-size: 20px;
+        padding: 5px;
+        margin: 5px;
+        
+        cursor: pointer;
+        
+        text-align: center;
+    }
     
-    text-align: center;
+    .popCourse {
+        z-index: -2;
+        position: relative;
+        height: 50px;
+        width: 90vw;
+        background-color: #50514F;
+        color: #ffffff;
+        border-radius: 8px;
+        font-size: 20px;
+        padding: 5px;
+        margin: 5px;
+        justify-content: center;
+
+        align-items: center;
+        cursor: pointer;
+        
+        text-align: center;
+    }
+
+
 }
