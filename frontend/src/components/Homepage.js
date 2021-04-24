@@ -25,7 +25,7 @@ class Homepage extends React.Component {
             checkSameID: true, // if courses returned from API has same couresID
             popUp: false, // the state of popUp
             popMap: [],
-            alertMessage: "***", 
+            alertMessage: " ", 
             renderSchedule: false,
             modifySearch: false, // true after render scheduled, false when user is able to add course on spot
             eventInfo: [], // parsed JSON of event info from post request
@@ -119,7 +119,7 @@ class Homepage extends React.Component {
     // handles the add function. prevents user from adding non-existing courseID
     async handleAdd(event) {
 
-        await this.setMessage("***");
+        await this.setMessage(" ");
 
         console.log("the beginning state: " + this.state.checkSameID);
         //prevent default event handler
@@ -224,7 +224,7 @@ class Homepage extends React.Component {
         }
         else{
             document.getElementById("input").value = "";
-            this.setMessage("***");
+            this.setMessage(" ");
         }
         
         
@@ -501,6 +501,7 @@ class Homepage extends React.Component {
             );
         }
         else {
+            /* desktop view screen size > 600 */
             if (!this.state.mobile) {
                 return (
 
@@ -590,7 +591,7 @@ class Homepage extends React.Component {
                                         <br/>
     
                                         {/* the alert message */}
-                                        {(this.state.alertMessage.localeCompare("***"))? <div className={csStyle.alert} id="alert">{this.state.alertMessage}</div> : <div className={style.noAlert} id="alert">{this.state.alertMessage}</div>}
+                                        {(this.state.alertMessage.localeCompare(" "))? <div className={csStyle.alert} id="alert">{this.state.alertMessage}</div> : <div className={style.noAlert} id="alert">{this.state.alertMessage}</div>}
                                         
                                 </div>
     
@@ -617,8 +618,27 @@ class Homepage extends React.Component {
         
         
                         </div>
-                        
-        
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <footer class={csStyle.footer}>
+                            <br/>
+                            <div>By Jeremy Jung, Duncan Chang</div>
+                            <br/>
+                        </footer>
         
         
         
@@ -684,7 +704,7 @@ class Homepage extends React.Component {
                                     <br/>
         
                                     {/* the alert message */}
-                                    {(this.state.alertMessage.localeCompare("***"))? <div className={csStyle.alert} id="alert">{this.state.alertMessage}</div> : <div className={style.noAlert} id="alert">{this.state.alertMessage}</div>}
+                                    {(this.state.alertMessage.localeCompare(" "))? <div className={csStyle.alert} id="alert">{this.state.alertMessage}</div> : <div className={style.noAlert} id="alert">{this.state.alertMessage}</div>}
 
 
 
@@ -731,7 +751,35 @@ class Homepage extends React.Component {
         
         
                         </div>
-        
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                      
+                        <br/>
+                        <footer class={csStyle.footer}>
+                            <br/>
+                            <div>By Jeremy Jung, Duncan Chang</div>
+                            <br/>
+                        </footer>
         
         
                     </div>
@@ -744,7 +792,6 @@ class Homepage extends React.Component {
                 );
     
             }
-            // render real UI..
             
         }
     }

@@ -97,7 +97,7 @@ class Day extends React.Component {
         res = parseInt(res[0] + res[1]);
         if (e.target.style.backgroundColor.localeCompare("") == 0)
         {
-            e.target.style.backgroundColor = "#FFE066";
+            e.target.style.backgroundColor = "#59f100";
             console.log("the props: " , this.props);
             await this.props.dayUpdateTimePref(this.state.dow, res, true);
 
@@ -156,7 +156,7 @@ class Day extends React.Component {
                             {
                                 if (this.props.dayTimePref[this.state.dow].includes(res))
                                 {
-                                    return <div className={dayStyle.timeSlotTop} style={{backgroundColor:"#FFE066"}} value={timeInfo.start} draggable={true} onDrag={()=>this.onDrag(timeInfo.start)} onDragEnter={(e)=>this.onDragEnter(e, timeInfo.start)} onClick={(e)=>this.onDragEnter(e, timeInfo.start)}>&nbsp;</div>;                    
+                                    return <div className={dayStyle.timeSlotTop} style={{backgroundColor:"#59f100"}} value={timeInfo.start} draggable={true} onDrag={()=>this.onDrag(timeInfo.start)} onDragEnter={(e)=>this.onDragEnter(e, timeInfo.start)} onClick={(e)=>this.onDragEnter(e, timeInfo.start)}>&nbsp;</div>;                    
                                 }
                                 return  <div className={dayStyle.timeSlotTop} value={timeInfo.start} draggable={true} onDrag={()=>this.onDrag(timeInfo.start)} onDragEnter={(e)=>this.onDragEnter(e, timeInfo.start)} onClick={(e)=>this.onDragEnter(e, timeInfo.start)}>&nbsp;</div>;                    
 
@@ -165,7 +165,7 @@ class Day extends React.Component {
                             {
                                 if (this.props.dayTimePref[this.state.dow].includes(res))
                                 {
-                                    return <div className={dayStyle.timeSlotTop} style={{backgroundColor:"#FFE066"}} value={timeInfo.start} draggable={true} onDrag={()=>this.onDrag(timeInfo.start)} onDragEnter={(e)=>this.onDragEnter(e, timeInfo.start)} onClick={(e)=>this.onDragEnter(e, timeInfo.start)}>&nbsp;</div>;                    
+                                    return <div className={dayStyle.timeSlotTop} style={{backgroundColor:"#59f100"}} value={timeInfo.start} draggable={true} onDrag={()=>this.onDrag(timeInfo.start)} onDragEnter={(e)=>this.onDragEnter(e, timeInfo.start)} onClick={(e)=>this.onDragEnter(e, timeInfo.start)}>&nbsp;</div>;                    
                                 }
                                 return  <div className={dayStyle.timeSlot} value={timeInfo.start} draggable={true} onDrag={()=>this.onDrag(timeInfo.start)} onDragEnter={(e)=>this.onDragEnter(e, timeInfo.start)} onClick={(e)=>this.onDragEnter(e, timeInfo.start)}>&nbsp;</div>;
 

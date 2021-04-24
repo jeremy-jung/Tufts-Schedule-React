@@ -43,7 +43,7 @@ h1 {
     min-width: 160px;
     min-height: 33px;
 
-    border-radius: 8px;
+    border-radius: 5px;
     border: solid;
     border-width: 2px;
     cursor: pointer;
@@ -67,7 +67,7 @@ h1 {
     min-width: 160px;
     min-height: 33px;
 
-    border-radius: 8px;
+    border-radius: 5px;
     border: solid;
     border-width: 2px;
     cursor: pointer;
@@ -76,7 +76,7 @@ h1 {
 }
 
 .courseList {
-    background: #FFE066;
+    background: #ffffff;
     width: 15vw;
     border-radius: 5px;
     border-width: 1px;
@@ -94,6 +94,7 @@ h1 {
 
 .courseListTitle {
     z-index: -3;
+    background: #FFE066;
 
     border: none;
     color: #50514F;
@@ -134,9 +135,6 @@ h1 {
         border-width: 1px;
         z-index: 12;
         position: relative;
-
-        
-
 
     }
     
