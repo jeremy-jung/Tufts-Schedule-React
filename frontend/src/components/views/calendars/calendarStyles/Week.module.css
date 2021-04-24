@@ -44,3 +44,10 @@
     align-content: center;
     transform: translateX(2%);
 }
+
+.hintTextBox {
+    font-family: Helvetica, Arial, sans-serif;
+    padding-left:1.5vw;
+    color:#50514F;
+
+}

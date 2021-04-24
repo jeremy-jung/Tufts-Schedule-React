@@ -322,7 +322,7 @@ class Week extends React.Component {
                             return <Day className={weekStyle.day} dow={dow} courseSchedule={this.props.courseSchedule} events={this.state.eventInfo[dow]} ></Day>;
                         }, this)}
                     </div>
-                    <div>
+                    <div className={weekStyle.hintTextBox}>
                         <br/>
                         <br/>
                         <br/>

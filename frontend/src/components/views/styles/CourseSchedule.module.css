@@ -1,21 +1,44 @@
 .csContainer {
     width: 100vw;
-}
+    /* border: 2px solid #FFE066; */
+        transform: translateX(-8px);
 
+    /* float: left; */
+}
 /* wraps the logo and h1 */
 header { 
     position: sticky;
     background-color: #50514F;
     /* border: double 5px #FFE066; */
-    border-bottom: 5px double #FFE066;
-    /* border-top: 5px double #FFE066; */
+    border-top: 5px double #FFE066;
+    border-bottom: 5px double #FFE066;    /* border-top: 5px double #FFE066; */
 
     margin-left: auto;
     margin-right: auto;   
     width: 300%;
     z-index: 20;
+    transform: translateY(-8px);
+
 
 }
+
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #50514F;
+    color: white;
+    text-align: center;
+    border-top: 5px solid #FFE066;
+    border-bottom: 5px solid #FFE066;
+    transform: translateY(8px);
+
+
+
+}
+
 
 input {
     outline: none;
@@ -30,7 +53,7 @@ h1 {
 
 h2 {
     font-family: Helvetica, Arial, sans-serif;
-    color: #28464B;
+    color: #ffffff;
 
 }
 
@@ -81,7 +104,10 @@ h2 {
     flex-shrink:1;
     overflow: scroll;
     align-items: center;
+
     padding-top: 35vh;
+    transform: translateX(-8vw);
+
 
 }
 
@@ -269,6 +295,7 @@ form {
         /* margin-top: 1vh; */
         align-items: center;
     }
+
     .verticalContainerEmpty {
         position: relative;
         display: flex;
@@ -277,7 +304,10 @@ form {
         flex-shrink:1;
         overflow: scroll;
         align-items: center;
+
         width: 100vw;
+        padding-top: 5vh;
+        transform: translateX(0vw);
     
     }
     .unscheduledBox {
