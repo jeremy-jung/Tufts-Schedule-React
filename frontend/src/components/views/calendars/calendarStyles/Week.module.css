@@ -76,6 +76,7 @@
     .weekContainer {
         display: flex; 
         flex-direction: column;
+        margin-top:5vh;
 
         position: relative;
         max-width: 90vw;
@@ -116,7 +117,7 @@
 
     }
     .dragBox {
-
+        margin-top:5vh;
         position: absolute;
 
         display: flex; 
