@@ -30,9 +30,12 @@ class Event extends React.Component {
         var detail = this.state.eventInfo.details.split(",");
         var courseID = detail[1];
         var courseName = detail[0];
+        var detail = this.state.eventInfo.name.split("-");
+        var type = detail[1];
+        var sec = detail[0];
         var res = "";
         // console.log("detail: " + courseID + " - " + courseName);
-        return courseID + " : " + courseName;
+        return type + "-" + sec + " " + courseID + " : " + courseName;
 
     }
 
@@ -40,8 +43,7 @@ class Event extends React.Component {
         var detail = this.state.eventInfo.name.split("-");
         var type = detail[1];
         var sec = detail[0];
-        var res =  type + "-" + sec 
-                    + " ▶" +this.state.eventInfo.time_start + "~" 
+        var res =  " ▶" + this.state.eventInfo.time_start + "~" 
                     + this.state.eventInfo.time_end + "◀ "
                     +  " Location: " + this.state.eventInfo.location;
         console.log("doubleclicked");

@@ -51,3 +51,112 @@
     color:#50514F;
 
 }
+
+.errorMessage {
+    position: relative;
+}
+
+@media screen and (max-width: 600px) {
+
+ /*    .weekContainer {
+        position: relative;
+        max-width: 80vw;
+        height: 632px;
+        flex-shrink: 1;
+        flex-grow: 2;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: stretch;
+        align-content: center;
+        transform: translateX(10vw);
+    }
+ */
+
+    .weekContainer {
+        display: flex; 
+        flex-direction: column;
+
+        position: relative;
+        max-width: 90vw;
+        /* max-height: 80vh; */
+        height: 632px;
+        flex-shrink: 1;
+        /* padding-top: 5vh; */
+        flex-grow: 2;
+       
+        /* border: solid 0.1vh #15519A; */
+        justify-content: center;
+        align-items: stretch;
+        align-content: stretch;
+        transform: translate(5%, 60px);
+
+
+
+    }
+
+    .timeContainer {
+        display: flex; 
+        flex-direction: row;
+        margin-bottom: auto;
+    }
+    .navDayContainer {
+        display: flex; 
+        flex-direction: row;
+        width: 90vw;
+        border: 2px solid #DEE5E5;
+    }
+    
+    .navDayContainer input {
+        border: none;
+        width: 45vw;
+        cursor: pointer;
+        background-color: #DEE5E5;
+        font-size: large;
+
+    }
+    .dragBox {
+
+        position: absolute;
+
+        display: flex; 
+        flex-direction: column;
+
+        max-width: 90vw;
+        /* max-height: 80vh; */
+        height: 632px;
+        flex-shrink: 0;
+        /* padding-top: 5vh; */
+        flex-grow: 2;
+       
+        /* border: solid 0.1vh #15519A; */
+        justify-content: center;
+        align-items: stretch;
+        align-content: stretch;
+        transform: translate(-0.6%, 344px);
+    
+    }
+    .dragWeekContainer {
+        background-color: #ffffff;
+    
+        position: relative;
+        max-width: 90vw;
+        /* max-height: 80vh; */
+        height: 632px;
+        flex-shrink: 1;
+        /* padding-top: 5vh; */
+        flex-grow: 2;
+        display: flex;
+        flex-direction: row;
+        /* border: solid 0.1vh #15519A; */
+        justify-content: flex-start;
+        align-items: stretch;
+        align-content: center;
+        transform: translateX(0%);
+    }
+    .errorMessage {
+        position: relative;
+        transform: translateX(10vw);
+        width: 50vw;
+    }
+}

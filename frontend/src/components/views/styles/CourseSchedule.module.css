@@ -34,6 +34,8 @@ footer {
     border-top: 5px solid #FFE066;
     border-bottom: 5px solid #FFE066;
     transform: translateY(8px);
+    /* margin-top:100vh; */
+    margin-bottom: 0vh;
 
 
 
@@ -93,6 +95,7 @@ h2 {
     flex-shrink:1;
     overflow: scroll;
     align-items: center;
+    margin-bottom: 600px;
 
 
 }

@@ -15,13 +15,17 @@ class Week extends React.Component {
             dayTimePref: this.props.dayTimePref,
             retrievedTime: this.props.dayTimePref,
             requestError: false,
-            requestErrorReason: undefined
+            requestErrorReason: undefined,
+            mobileCount: 0, /* keeps count of the day on mobile view */
+            timeSlots: {"Monday":[], "Tuesday":[],"Wednesday":[], "Thursday":[],"Friday":[], "Saturday":[],"Sunday":[] },
+            
         }
     
         this.retrieveTimePref = this.retrieveTimePref.bind(this);
         this.scheduleReload = this.scheduleReload.bind(this);
         this.convertTimeIntToString = this.convertTimeIntToString.bind(this);
-
+        this.minusDay = this.minusDay.bind(this);
+        this.addDay = this.addDay.bind(this);
 
 
     }
@@ -265,8 +269,47 @@ class Week extends React.Component {
         }
     }
 
+    async minusDay() 
+    {   
+        var mobileCount = this.state.mobileCount;
+        await console.log("week minusDay() - b4 mobileCount: ", mobileCount);
 
-    render () {
+        if (this.state.mobileCount  == 0) {
+            await this.setState({
+                mobileCount: 6,
+            })
+        }
+        else {
+            mobileCount = mobileCount - 1;
+            await this.setState({
+                mobileCount: mobileCount,
+            })
+        }
+        await console.log("week minusDay() - after mobileCount: ", this.state.mobileCount);
+    }
+
+    async addDay() 
+    {   
+        var mobileCount = this.state.mobileCount;
+        await console.log("week minusDay() - b4 mobileCount: ", mobileCount);
+
+        if (this.state.mobileCount  == 6) {
+            await this.setState({
+                mobileCount: 0,
+            })
+        }
+        else {
+            mobileCount = mobileCount + 1;
+            await this.setState({
+                mobileCount: mobileCount,
+            })
+        }
+        await console.log("week minusDay() - after mobileCount: ", this.state.mobileCount);
+    }
+
+
+    render () 
+    {
         if (this.state.eventInfo === undefined && !this.props.drag && !this.state.requestError)
         {
             //console.log("check if list updates before: " , this.state.eventInfo);
@@ -281,68 +324,141 @@ class Week extends React.Component {
             /* the request for schedule came back with an error */
             return (
 
-                <div>
+                <div className={weekStyle.errorMessage}>
                     {this.state.requestErrorReason}
                 </div>
             )
         }
-        else if (this.props.drag)
-        {
-            //console.log("check if list updates after: " , this.state.eventInfo);
-
-            return(
-                <div className={weekStyle.dragBox}> 
-                    <div className={weekStyle.dragWeekContainer }> 
-                        <Day dow="" timeBar={true} courseSchedule={this.props.courseSchedule}></Day>
-                        {this.state.dows.map(function (dow) {
-                            
-                            return <Day className={weekStyle.day} dow={dow} courseSchedule={{}} events={null} dayUpdateTimePref={this.dayUpdateTimePref.bind(this)} dayTimePref={this.props.dayTimePref}></Day>;
-                        }, this)}
+        else if (!this.props.mobile) {
+            /* renders desktop view screen size > 600 */
+            if (this.props.drag)
+            {
+                /* drag box render */
+                return(
+                    <div className={weekStyle.dragBox}> 
+                        <div className={weekStyle.dragWeekContainer }> 
+                            <Day dow="" timeBar={true} courseSchedule={this.props.courseSchedule}></Day>
+                            {this.state.dows.map(function (dow) {
+                                
+                                return <Day className={weekStyle.day} dow={dow} courseSchedule={{}} events={null} dayUpdateTimePref={this.dayUpdateTimePref.bind(this)} dayTimePref={this.props.dayTimePref} timeSlots={this.state.timeSlots[countMobile]}></Day>;
+                            }, this)}
+            
+                        </div>
+                    </div>
+                    
+                    
         
-                    </div>
-                </div>
-                
-                
-    
-            )
-        }
-        else
-        {
-            // //console.log("scheduleReload");
-            // if (this.state.dayTimePref)
-            // {
-            //     this.scheduleReload();
-            // }
-            return(
-                <div>
-                    <div className={weekStyle.weekContainer}>
-                        <Day dow="" timeBar={true} courseSchedule={this.props.courseSchedule}></Day>
-                        {this.state.dows.map(function (dow) {
+                )
+            }
+            else
+            {
+                /* schedule reneder */
+                return(
+                    <div>
+                        <div className={weekStyle.weekContainer}>
+                            <Day dow="" timeBar={true} courseSchedule={this.props.courseSchedule}></Day>
+                            {this.state.dows.map(function (dow) {
 
-                            return <Day className={weekStyle.day} dow={dow} courseSchedule={this.props.courseSchedule} events={this.state.eventInfo[dow]} ></Day>;
-                        }, this)}
+                                return <Day className={weekStyle.day} dow={dow} courseSchedule={this.props.courseSchedule} events={this.state.eventInfo[dow]} ></Day>;
+                            }, this)}
+                        </div>
+                        <div className={weekStyle.hintTextBox}>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br />
+                            <br />
+                            <div>
+                                Click "Render Schedule" to retrieve randomized selections of the courses you want to take.
+                            </div>
+                            <div>
+                                Click "Edit Time Preference" and select times of the day in which you ONLY want to take classes. 
+                            </div>
+                            <div>
+                                Note: Days without selected time is assumed to be entirely free
+                            </div>
+                        </div>
                     </div>
-                    <div className={weekStyle.hintTextBox}>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <br />
-                        <br />
-                        <div>
-                            Click "Render Schedule" to retrieve randomized selections of the courses you want to take.
-                        </div>
-                        <div>
-                            Click "Edit Time Preference" and select times of the day in which you ONLY want to take classes. 
-                        </div>
-                        <div>
-                            Note: Days without selected time is assumed to be entirely free
-                        </div>
-                    </div>
-                </div>
-                
-    
-            )
+                    
+        
+                )
+            }
         }
+        else {
+            /* renders mobile view screen size <= 600 of dragbox*/
+            if (this.props.drag)
+            {
+                var countMobile = this.state.mobileCount;
+                console.log("Week render() - countMobile: " , countMobile);
+
+                /* drag box render */
+                return(
+                    <div className={weekStyle.dragBox}> 
+                            <div className={weekStyle.navDayContainer}>
+                                <input type="button"  onClick={this.minusDay} value="ᐊ"/>
+                                <input type="button"  onClick={this.addDay} value="ᐅ"/>
+                            </div>
+                        <div className={weekStyle.dragWeekContainer }> 
+                            <Day dow="" timeBar={true} courseSchedule={this.props.courseSchedule}></Day>
+                            <Day className={weekStyle.day} dow={this.state.dows[countMobile]} courseSchedule={{}} events={null} dayUpdateTimePref={this.dayUpdateTimePref.bind(this)} dayTimePref={this.props.dayTimePref} mobile={this.props.mobile} timeSlots={this.props.dayTimePref[countMobile]}></Day>
+         
+                        </div>
+                    
+                    </div>
+                    
+                    
+        
+                )
+            }
+            else
+            {
+                /* mobile view screen size <= 600 of course calendar */
+                var countMobile = this.state.mobileCount;
+                console.log("Week render() - countMobile: " , countMobile);
+
+                return(
+                    <div>
+                        <div className={weekStyle.weekContainer}>
+                            <div className={weekStyle.navDayContainer}>
+                                <input type="button"  onClick={this.minusDay} value="ᐊ"/>
+                                <input type="button"  onClick={this.addDay} value="ᐅ"/>
+                            </div>
+                            <div className={weekStyle.timeContainer}> 
+                                <Day dow="" timeBar={true} courseSchedule={this.props.courseSchedule}></Day>
+                                <Day className={weekStyle.day} dow={this.state.dows[countMobile]} courseSchedule={this.props.courseSchedule} events={this.state.eventInfo[this.state.dows[countMobile]]} mobile={this.props.mobile}></Day>
+                            </div>
+                           
+                        </div>
+
+
+
+                        <div className={weekStyle.hintTextBox}>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <div>
+                                Click "Render Schedule" to retrieve randomized selections of the courses you want to take.
+                            </div>
+                            <div>
+                                Click "Edit Time Preference" and select times of the day in which you ONLY want to take classes. 
+                            </div>
+                            <div>
+                                Note: Days without selected time is assumed to be entirely free
+                            </div>
+                        </div>
+                    </div>
+                    
+        
+                )
+            }
+        }
+        
         
 
     }

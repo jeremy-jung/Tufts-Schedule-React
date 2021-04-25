@@ -99,13 +99,13 @@ class Day extends React.Component {
         {
             e.target.style.backgroundColor = "#59f100";
             console.log("the props: " , this.props);
-            await this.props.dayUpdateTimePref(this.state.dow, res, true);
+            await this.props.dayUpdateTimePref(this.props.dow, res, true);
 
         }
         else
         {
             e.target.style.backgroundColor = "";
-            await this.props.dayUpdateTimePref(this.state.dow, res, false);
+            await this.props.dayUpdateTimePref(this.props.dow, res, false);
 
         }
         console.log("check style of event: " , e.target.style);
@@ -142,79 +142,163 @@ class Day extends React.Component {
         // for the drag display
         else if (this.state.events == null)
         {
-            return (
-                <div className={dayStyle.dragDayContainer}>
-                    <div className={dayStyle.timeSlots}>
-                        <div className={dayStyle.timeSlotTop}>
-                            <h3>{this.state.dow.substring(0, 3)}</h3>
+            /* mobile view screen size <= 600 drag render */
+            if (this.props.mobile) {
+              
+
+                return (
+                    <div className={dayStyle.dragDayContainer}>
+                        <div className={dayStyle.timeSlots}>
+                            <div className={dayStyle.timeSlotTopMobile}>
+                                <h3>{this.props.dow.substring(0, 3)}</h3>
+                            </div>
+                            
+                            {this.state.timeSlots.map(function (timeInfo) {
+                                var res = timeInfo.start.split(":");
+                                res = parseInt(res[0] + res[1]); 
+                                if (timeInfo.start.substring(3) == "00")
+                                {
+                                    if (this.props.dayTimePref[this.props.dow].includes(res))
+                                    {
+                                        return <div className={dayStyle.timeSlotTopMobile} style={{backgroundColor:"#59f100"}} value={timeInfo.start} draggable={true} onDrag={()=>this.onDrag(timeInfo.start)} onDragEnter={(e)=>this.onDragEnter(e, timeInfo.start)} onClick={(e)=>this.onDragEnter(e, timeInfo.start)}>&nbsp;</div>;                    
+                                    }
+                                    return  <div className={dayStyle.timeSlotTopMobile} value={timeInfo.start} draggable={true} onDrag={()=>this.onDrag(timeInfo.start)} onDragEnter={(e)=>this.onDragEnter(e, timeInfo.start)} onClick={(e)=>this.onDragEnter(e, timeInfo.start)}>&nbsp;</div>;                    
+    
+                                }
+                                else if (timeInfo.start.substring(4) == "0")
+                                {
+                                    if (this.props.dayTimePref[this.props.dow].includes(res))
+                                    {
+                                        return <div className={dayStyle.timeSlotTopMobile} style={{backgroundColor:"#59f100"}} value={timeInfo.start} draggable={true} onDrag={()=>this.onDrag(timeInfo.start)} onDragEnter={(e)=>this.onDragEnter(e, timeInfo.start)} onClick={(e)=>this.onDragEnter(e, timeInfo.start)}>&nbsp;</div>;                    
+                                    }
+                                    return  <div className={dayStyle.timeSlotMobile} value={timeInfo.start} draggable={true} onDrag={()=>this.onDrag(timeInfo.start)} onDragEnter={(e)=>this.onDragEnter(e, timeInfo.start)} onClick={(e)=>this.onDragEnter(e, timeInfo.start)}>&nbsp;</div>;
+    
+                                }
+                                else
+                                    return <div className={dayStyle.slot} value={timeInfo.start}></div>;
+                            }, this )}
+        
                         </div>
                         
-                        {this.state.timeSlots.map(function (timeInfo) {
-                            var res = timeInfo.start.split(":");
-                            res = parseInt(res[0] + res[1]); 
-                            if (timeInfo.start.substring(3) == "00")
-                            {
-                                if (this.props.dayTimePref[this.state.dow].includes(res))
-                                {
-                                    return <div className={dayStyle.timeSlotTop} style={{backgroundColor:"#59f100"}} value={timeInfo.start} draggable={true} onDrag={()=>this.onDrag(timeInfo.start)} onDragEnter={(e)=>this.onDragEnter(e, timeInfo.start)} onClick={(e)=>this.onDragEnter(e, timeInfo.start)}>&nbsp;</div>;                    
-                                }
-                                return  <div className={dayStyle.timeSlotTop} value={timeInfo.start} draggable={true} onDrag={()=>this.onDrag(timeInfo.start)} onDragEnter={(e)=>this.onDragEnter(e, timeInfo.start)} onClick={(e)=>this.onDragEnter(e, timeInfo.start)}>&nbsp;</div>;                    
-
-                            }
-                            else if (timeInfo.start.substring(4) == "0")
-                            {
-                                if (this.props.dayTimePref[this.state.dow].includes(res))
-                                {
-                                    return <div className={dayStyle.timeSlotTop} style={{backgroundColor:"#59f100"}} value={timeInfo.start} draggable={true} onDrag={()=>this.onDrag(timeInfo.start)} onDragEnter={(e)=>this.onDragEnter(e, timeInfo.start)} onClick={(e)=>this.onDragEnter(e, timeInfo.start)}>&nbsp;</div>;                    
-                                }
-                                return  <div className={dayStyle.timeSlot} value={timeInfo.start} draggable={true} onDrag={()=>this.onDrag(timeInfo.start)} onDragEnter={(e)=>this.onDragEnter(e, timeInfo.start)} onClick={(e)=>this.onDragEnter(e, timeInfo.start)}>&nbsp;</div>;
-
-                            }
-                            else
-                                return <div className={dayStyle.slot} value={timeInfo.start}></div>;
-                        }, this )}
-    
+        
+        
                     </div>
-                    
-    
-    
-                </div>
                 )
+            }
+            else {
+                return (
+                    <div className={dayStyle.dragDayContainer}>
+                        <div className={dayStyle.timeSlots}>
+                            <div className={dayStyle.timeSlotTop}>
+                                <h3>{this.state.dow.substring(0, 3)}</h3>
+                            </div>
+                            
+                            {this.state.timeSlots.map(function (timeInfo) {
+                                var res = timeInfo.start.split(":");
+                                res = parseInt(res[0] + res[1]); 
+                                if (timeInfo.start.substring(3) == "00")
+                                {
+                                    if (this.props.dayTimePref[this.state.dow].includes(res))
+                                    {
+                                        return <div className={dayStyle.timeSlotTop} style={{backgroundColor:"#59f100"}} value={timeInfo.start} draggable={true} onDrag={()=>this.onDrag(timeInfo.start)} onDragEnter={(e)=>this.onDragEnter(e, timeInfo.start)} onClick={(e)=>this.onDragEnter(e, timeInfo.start)}>&nbsp;</div>;                    
+                                    }
+                                    return  <div className={dayStyle.timeSlotTop} value={timeInfo.start} draggable={true} onDrag={()=>this.onDrag(timeInfo.start)} onDragEnter={(e)=>this.onDragEnter(e, timeInfo.start)} onClick={(e)=>this.onDragEnter(e, timeInfo.start)}>&nbsp;</div>;                    
+    
+                                }
+                                else if (timeInfo.start.substring(4) == "0")
+                                {
+                                    if (this.props.dayTimePref[this.state.dow].includes(res))
+                                    {
+                                        return <div className={dayStyle.timeSlotTop} style={{backgroundColor:"#59f100"}} value={timeInfo.start} draggable={true} onDrag={()=>this.onDrag(timeInfo.start)} onDragEnter={(e)=>this.onDragEnter(e, timeInfo.start)} onClick={(e)=>this.onDragEnter(e, timeInfo.start)}>&nbsp;</div>;                    
+                                    }
+                                    return  <div className={dayStyle.timeSlot} value={timeInfo.start} draggable={true} onDrag={()=>this.onDrag(timeInfo.start)} onDragEnter={(e)=>this.onDragEnter(e, timeInfo.start)} onClick={(e)=>this.onDragEnter(e, timeInfo.start)}>&nbsp;</div>;
+    
+                                }
+                                else
+                                    return <div className={dayStyle.slot} value={timeInfo.start}></div>;
+                            }, this )}
+        
+                        </div>
+                        
+        
+        
+                    </div>
+                )
+            }
+            
         }
         // for display of schedule with events 
         else 
         {
-            return (
-            <div className={dayStyle.dayContainer}>
-                <div className={dayStyle.timeSlots}>
-                    <div className={dayStyle.timeSlotTop}>
-                        <h3>{this.state.dow.substring(0, 3)}</h3>
+            /* mobile view screen size <= 600 */
+            if (this.props.mobile) {
+                return (
+                    <div className={dayStyle.dayContainer}>
+                        <div className={dayStyle.timeSlots}>
+                            <div className={dayStyle.timeSlotTopMobile}>
+                                <h3>{this.props.dow.substring(0, 3)}</h3>
+                            </div>
+                            
+                            {this.state.timeSlots.map(function (timeInfo) {
+                                if (timeInfo.start.substring(3) == "00"){
+                                    return  <div className={dayStyle.timeSlotTopMobile} value={timeInfo.start}>&nbsp;</div>;                    
+                                }
+                                else if (timeInfo.start.substring(4) == "0")
+                                {
+                                    return  <div className={dayStyle.timeSlotMobile} value={timeInfo.start}>&nbsp;</div>;
+        
+                                }
+                                else
+                                    return <div className={dayStyle.slot} value={timeInfo.start}></div>;
+                            })}
+        
+                        </div>
+                        
+        
+                        {this.props.events.map(function (eventInfo) {
+                            return <Event eventInfo={eventInfo}> </Event>
+                        }, this)}
+                     
+        
+        
                     </div>
-                    
-                    {this.state.timeSlots.map(function (timeInfo) {
-                        if (timeInfo.start.substring(3) == "00"){
-                            return  <div className={dayStyle.timeSlotTop} value={timeInfo.start}>&nbsp;</div>;                    
-                        }
-                        else if (timeInfo.start.substring(4) == "0")
-                        {
-                            return  <div className={dayStyle.timeSlot} value={timeInfo.start}>&nbsp;</div>;
-
-                        }
-                        else
-                            return <div className={dayStyle.slot} value={timeInfo.start}></div>;
-                    })}
-
-                </div>
-                
-
-                {this.state.events.map(function (eventInfo) {
-                    return <Event eventInfo={eventInfo}> </Event>
-                }, this)}
-             
-
-
-            </div>
-            )
+                )
+            }
+            else {
+                /* desktop view screen size > 600 */
+                return (
+                    <div className={dayStyle.dayContainer}>
+                        <div className={dayStyle.timeSlots}>
+                            <div className={dayStyle.timeSlotTop}>
+                                <h3>{this.state.dow.substring(0, 3)}</h3>
+                            </div>
+                            
+                            {this.state.timeSlots.map(function (timeInfo) {
+                                if (timeInfo.start.substring(3) == "00"){
+                                    return  <div className={dayStyle.timeSlotTop} value={timeInfo.start}>&nbsp;</div>;                    
+                                }
+                                else if (timeInfo.start.substring(4) == "0")
+                                {
+                                    return  <div className={dayStyle.timeSlot} value={timeInfo.start}>&nbsp;</div>;
+        
+                                }
+                                else
+                                    return <div className={dayStyle.slot} value={timeInfo.start}></div>;
+                            })}
+        
+                        </div>
+                        
+        
+                        {this.state.events.map(function (eventInfo) {
+                            return <Event eventInfo={eventInfo}> </Event>
+                        }, this)}
+                     
+        
+        
+                    </div>
+                )
+            }
+            
         }
         
 
