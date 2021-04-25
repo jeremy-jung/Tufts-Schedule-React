@@ -84,3 +84,109 @@ h3 {
     color: #ffffff;
 
 }
+
+@media screen and (max-width: 600px) 
+{
+    .dayContainer {
+        display: flex;
+        flex-direction: column;
+        border: solid 1px #DEE5E5;
+        flex-grow: 3;
+        position: relative;
+        text-align: center;
+        align-items: stretch;
+        height: 716px;
+        width: 70vw;
+    
+    }
+
+    .timeBarContainer {
+        display: flex;
+        flex-direction: column;
+        border: solid 1px #DEE5E5;
+        flex-grow: 1;
+        position: relative;
+        text-align: center;    
+        align-items: stretch;
+        height: 716px;
+        width: 20vw;
+    
+    
+    }
+    .dragDayContainer {
+        display: flex;
+        flex-direction: column;
+        border: solid 1px #DEE5E5;
+        /* background-color: #DEE5E5; */
+        flex-grow: 3;
+        position: relative;
+        text-align: center;
+        align-items: stretch;
+        height: 716px;
+        width: 70vw;
+
+    
+    }
+
+    .timeSlots {
+        position: relative;
+        z-index: 1;
+        height: 630px;
+    
+    }
+    
+  
+
+    .timeSlot {
+        font-size: 15px;
+        color: #28464B;
+        font-family: Helvetica, Arial, sans-serif;
+        border-top: solid 1px #F0F7EE;
+        height: 20px;
+        width: 20vw;
+        /* height: 3vh; */
+    
+    }
+
+    .timeSlotMobile {
+        font-size: 15px;
+        color: #28464B;
+        font-family: Helvetica, Arial, sans-serif;
+        border-top: solid 1px #F0F7EE;
+        height: 20px;
+        width: 70vw;
+        /* height: 3vh; */
+    
+    }
+    
+    .timeSlotTop {
+        /* background-color: #ffffff; */
+        font-size: 15px;
+        color: #28464B;
+        font-family: Helvetica, Arial, sans-serif;
+      
+        border-top: solid 1px #DEE5E5;
+
+        width: 20vw;
+    
+        height: 20px;
+        /* height: 3vh; */
+    
+    }
+
+    .timeSlotTopMobile {
+        /* background-color: #ffffff; */
+        font-size: 15px;
+        color: #28464B;
+        font-family: Helvetica, Arial, sans-serif;
+      
+        border-top: solid 1px #DEE5E5;
+
+        width: 70vw;
+    
+        height: 20px;
+        /* height: 3vh; */
+    
+    }
+
+}

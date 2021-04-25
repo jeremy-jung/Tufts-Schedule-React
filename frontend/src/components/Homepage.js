@@ -609,8 +609,8 @@ class Homepage extends React.Component {
     
                                 {this.state.renderSchedule ? <input type="button" className={csStyle.timePref} value={this.state.drag ? "View Schedule" : "Edit Time Preference"} onClick={()=> this.handleReload()}/> : <br></br>}
                                 <br/>
-                                {this.state.renderSchedule ? <Week courseSchedule={true} selectedCourses={this.state.selectedCourses} eventInfo={this.state.eventInfo} drag={false} dayTimePref={this.state.dayTimePref} postReqTime={this.state.postReqTime} showUnscheduled={this.showUnscheduled.bind(this)}></Week> : <p></p>}
-                                {this.state.drag ? <Week courseSchedule={true} selectedCourses={this.state.selectedCourses} eventInfo={{}} drag={true} storeTimePref={() => this.storeTimePref.bind(this)} dayTimePref={this.state.dayTimePref}></Week> : <p></p>}
+                                {this.state.renderSchedule ? <Week courseSchedule={true} selectedCourses={this.state.selectedCourses} eventInfo={this.state.eventInfo} drag={false} dayTimePref={this.state.dayTimePref} postReqTime={this.state.postReqTime} showUnscheduled={this.showUnscheduled.bind(this)} mobile={this.state.mobile}></Week> : <p></p>}
+                                {this.state.drag ? <Week courseSchedule={true} selectedCourses={this.state.selectedCourses} eventInfo={{}} drag={true} storeTimePref={() => this.storeTimePref.bind(this)} dayTimePref={this.state.dayTimePref} mobile={this.state.mobile}></Week> : <p></p>}
         
         
                             </div>
@@ -746,8 +746,8 @@ class Homepage extends React.Component {
     
                             {this.state.renderSchedule ? <input type="button" className={csStyle.timePref} value={this.state.drag ? "View Schedule" : "Edit Time Preference"} onClick={()=> this.handleReload()}/> : <br></br>}
                             <br/>
-                            {this.state.renderSchedule ? <Week courseSchedule={true} selectedCourses={this.state.selectedCourses} eventInfo={this.state.eventInfo} drag={false} dayTimePref={this.state.dayTimePref} postReqTime={this.state.postReqTime} showUnscheduled={this.showUnscheduled.bind(this)}></Week> : <p></p>}
-                            {this.state.drag ? <Week courseSchedule={true} selectedCourses={this.state.selectedCourses} eventInfo={{}} drag={true} storeTimePref={() => this.storeTimePref.bind(this)} dayTimePref={this.state.dayTimePref}></Week> : <p></p>}
+                            {this.state.renderSchedule ? <Week courseSchedule={true} selectedCourses={this.state.selectedCourses} eventInfo={this.state.eventInfo} drag={false} dayTimePref={this.state.dayTimePref} postReqTime={this.state.postReqTime} showUnscheduled={this.showUnscheduled.bind(this)} mobile={this.state.mobile}></Week> : <p></p>}
+                            {this.state.drag ? <Week courseSchedule={true} selectedCourses={this.state.selectedCourses} eventInfo={{}} drag={true} storeTimePref={() => this.storeTimePref.bind(this)} dayTimePref={this.state.dayTimePref} mobile={this.state.mobile}></Week> : <p></p>}
         
         
                         </div>
